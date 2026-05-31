@@ -1,26 +1,137 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+button {
+  cursor: pointer;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary-light: #FED8B1;
+  --color-primary-light2: #ffe9d3;
+  --color-primary-lighter: #DABA9A;
+  --color-primary-dark: #776F65;
+  --color-primary-darker: #504a44;
+
+  --color-green-lighter: #C5FF60;
+  --color-green-light: #3DFF4F;
+  --color-green-light2: #00FF40;
+  --color-green-yellow: #A5FF4B;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@font-face {
+  font-family: estedad;
+  src: url('../font/Estedad-v7.3/Estedad-v7.3/webfonts/statics/Estedad-Regular.woff2');
+  font-weight: 400;
+  color: #ffe9d3;
+}
+
+@font-face {
+  font-family: estedad;
+  src: url('../font/Estedad-v7.3/Estedad-v7.3/webfonts/statics/Estedad-Medium.woff2');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: estedad-bold;
+  src: url('../font/Estedad-v7.3/Estedad-v7.3/webfonts/statics/Estedad-SemiBold.woff2');
+  font-weight: 600;
+}
+
+.estedad-bold {
+  font-family: vazir-medium;
+}
+
+/* vazir font with number */
+@font-face {
+  font-family: vazir;
+  src: url('../font/vazir-font-v18.0.0/Farsi-Digits/Vazir-Light-FD.woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: vazir-medium;
+  src: url('../font/vazir-font-v18.0.0/Farsi-Digits/Vazir-Medium-FD.woff2');
+  font-weight: 400;
+}
+
+.moveUpDown {
+  animation: moveUpDown 1s ease-in-out infinite;
+}
+
+.moveUpDown:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.moveUpDown:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.moveUpDown:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+/*----------*/
+
+.moveUpDown2 {
+  animation: moveUpDown 1s ease-in-out infinite;
+}
+
+.moveUpDown2:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.moveUpDown2:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.moveUpDown2:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+/*----------*/
+
+.moveUpDown3 {
+  animation: moveUpDown 1.4s ease-in-out infinite;
+}
+
+.moveUpDown3:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.moveUpDown3:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+.moveUpDown3:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.selectIngredient::-webkit-scrollbar {
+  width: 5px;
 }
+
+.selectIngredient::-webkit-scrollbar-track {
+  background: none;
+}
+
+.selectIngredient::-webkit-scrollbar-thumb {
+  background-color: #52caa2;
+  border-radius: 5px;
+}
+
+/* body {
+  scroll-behavior: smooth;
+} */

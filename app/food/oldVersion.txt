@@ -1,0 +1,268 @@
+"use client"
+
+import Container from "@/components/container";
+import HandleLoadingAndError from "@/components/handleLoadingAndError";
+import SelectIngredient from "@/components/ingredient/selectIngredient";
+import LoadingComponent from "@/components/loading";
+import useGetFoodDetail from "@/react-query/Food/useGetFoodDetail";
+import UseDeleteIngredientOfFood from "@/react-query/IngredientOfFood/useDeleteIngredientOfFood";
+import UseGetAllIngredientOfFood from "@/react-query/IngredientOfFood/useGetAllIngredientOfFood";
+import UseUpdateIngredientOfFood from "@/react-query/IngredientOfFood/useUpdateIngredientOfFood";
+import { UpdateIngredientFormData, UpdateIngredientSchema } from "@/schemas/UpdateIngredient.schemas";
+import { parseApiError } from "@/utils/apiError";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import CreateOrUpdateIOF from "../components/createOrUpdateIOF";
+
+interface FoodDetailProp {
+    params: Promise<{ id: string }>
+}
+
+export default function FoodDetail({ params }: FoodDetailProp) {
+
+    //const [resolvedId, setResolvedId] = useState<string | null>(null);
+    const [resolvedId, setResolvedId] = useState<string>('');
+    const [isEditing, setIsEditing] = useState(false)
+    const [isEditingIngredientItem, setIsEditingIngredientItem] = useState(false)
+
+    //------ Select ingredient variables
+
+    // This id come from selectIngredient Component
+    // const [selectedIngredientId, setSelectedIngredientId] = useState("");
+    
+    const [ingredientOfFoodId, setIngredientOfFoodId] = useState("");
+
+    // const handleSlection = (id: string) => {
+    //     setSelectedIngredientId(id)
+    //     console.log("ID دریافت شده در والد:", id);
+    // }
+
+    //-------------------
+
+    useEffect(() => {
+        const resolveParams = async () => {
+            const result = await params;
+            setResolvedId(result.id);
+        };
+        resolveParams();
+    }, [params]);
+
+    const {
+        data,
+        isLoading,
+        isError,
+        error,
+    } = useGetFoodDetail(resolvedId);
+
+    const {
+        data: ingredientData,
+        isLoading: ingredientIsLoading,
+        isError: ingredientIsError,
+        error: ingredientError,
+    } = UseGetAllIngredientOfFood(resolvedId);
+
+    const { mutate: updateIngredientOfFoodMutate,
+        isPending: updateIIsPending,
+        isError: updateIIsError,
+        error: updateIError
+    } = UseUpdateIngredientOfFood()
+
+    const { mutate: dMutate,
+        isPending: dIsPending,
+        isError: dIsError,
+        error: dError
+    } = UseDeleteIngredientOfFood()
+
+    const parsedError = isError ? parseApiError(error) : null;
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        reset,
+    } = useForm<UpdateIngredientFormData>({
+        resolver: zodResolver(UpdateIngredientSchema),
+    })
+
+    // const onSubmit = (data: UpdateIngredientFormData) => {
+    //     updateIngredientOfFoodMutate({
+    //         id: ingredientOfFoodId,
+    //         ingredientId: selectedIngredientId,
+    //         value: data.name,
+    //     }, {
+    //         onSuccess: () => {
+    //             reset()
+    //             setIngredientOfFoodId("")
+    //             setSelectedIngredientId("")
+    //             setIsEditingIngredientItem(false)
+    //         },
+    //         onError: (err: any) => {
+    //             console.error("Mutation Error:", err);
+    //             console.log("id", ingredientOfFoodId)
+    //             console.log("ingredientId", selectedIngredientId)
+    //             console.log("value", data.name)
+    //         }
+    //     })
+    // }
+
+    if (isLoading) return (
+        <LoadingComponent />
+    )
+
+    if (isError) {
+        return (
+            <div className="absolute inset-0 z-10 flex items-center justify-center">
+                <p className="text-red-500 text-center p-4">
+                    {(error as Error).message}
+                    {/* {toast.error((error as Error).message)} */}
+                </p>
+            </div>
+        );
+    }
+
+    //<HandleLoadingAndError isLoading={isLoading} isError={isError} error={error}/>
+
+    return (
+        <div className="min-h-screen bg-linear-to-bl from-emerald-100 to bg-emerald-50">
+            <Container>
+                <div className="pt-30 flex flex-col items-start gap-2">
+                    <div>{data?.name}</div>
+                    <div>دسته بندی: {data?.categoryName}</div>
+
+                    {/* Ingredients List */}
+
+                    <div className="flex flex-col gap-2 divide divide-gray-300">
+                        {ingredientData && ingredientData.length > 0 ? (
+                            ingredientData.map(i => (
+                                <div
+                                    key={i.ingredientId}
+                                    className="flex items-center gap-3 relative px-3 py-2 cursor-pointer">
+                                    <div className="flex items-center gap-1.5">
+                                        <div>{i.ingredientName} :</div>
+                                        <div>{i.value}</div>
+                                    </div>
+
+                                    {isEditing && (
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    setIsEditingIngredientItem(true)
+                                                    setIngredientOfFoodId(i.id)
+                                                }}
+                                                className="text-amber-500 transition-all duration-200
+                                            px-1.5 py-1 hover:bg-amber-400 rounded-md hover:text-white
+                                            text-xs ring ring-amber-300"
+                                            >ویرایش
+                                            </button>
+                                            <button
+
+                                                className="text-red-500 transition-all duration-200
+                                            px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white
+                                            text-xs ring ring-red-300"
+                                            >حذف
+                                            </button>
+                                        </div>
+                                    )}
+
+                                </div>
+                            ))
+                        ) : (
+                            <div>
+                                {ingredientIsLoading == false && (
+                                    <div>مواد اولیه در دسترس نیست.</div>
+                                )}
+                            </div>
+                        )}
+                        {ingredientIsLoading && (
+                            <div>در حال بارگذاری...</div>
+                        )}
+                    </div>
+
+                    <button
+                        onClick={() => setIsEditing(!isEditing)}
+                        className={`my-4 ${isEditing ? 'text-red-500' : 'text-blue-500'} text-shadow-md`}>
+                        {isEditing ? 'خروج از ویرایش' : 'ویرایش'}
+                    </button>
+
+                    {/* {isEditingIngredientItem && (
+                        <div
+                            className="absolute flex items-center justify-center inset-0
+                                            z-40 bg-black/50">
+                            <div className="bg-white rounded-lg w-96 z-50
+                                                        border border-gray-400 shadow-md
+                                                        py-8 px-10">
+
+                                <form
+                                    onSubmit={handleSubmit(onSubmit)}
+                                    className="flex flex-col gap-4 items-center">
+                                    <span className="text-xl">ویرایش ماده اولیه</span>
+
+                                    <SelectIngredient
+                                        onSelect={handleSlection}
+                                    />
+
+                                    <TextField style={{ width: "100%" }} size="small"
+                                        placeholder="مقدار ماده اولیه"
+                                        variant="outlined"
+                                        {...register("name")}
+                                        error={!!parsedError?.fieldErrors?.Name}
+                                        helperText={!!parsedError?.fieldErrors?.Name?.[0]}
+                                    />
+                                    {errors.name && (
+                                        <p className="text-red-400">{errors.name.message}</p>
+                                    )}
+                                    <div className="flex items-center gap-2 w-full">
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting || updateIIsPending}
+                                            className="bg-blue-400 text-white px-4 py-1.5
+                                                                    rounded-lg transition-all duration-200 hover:scale-105
+                                                                    shadow-md hover:shadow-xl"
+                                        >
+
+                                            {isSubmitting || updateIIsPending ? "در حال ارسال..." : "ثبت"}
+                                        </button>
+
+                                        <button
+                                            onClick={() => setIsEditingIngredientItem(false)}
+                                            className="bg-red-500 text-white px-3 py-1.5 rounded-lg
+                                                                            transition-all duration-200 hover:scale-105
+                                                                            shadow-md hover:shadow-xl"
+                                        >انصراف
+                                        </button>
+                                    </div>
+
+                                    {isError && (
+                                        <p className="text-sm text-red-500 text-center">
+                                            {(error as Error).message}
+                                        </p>
+                                    )}
+
+                                    {parsedError?.message && (
+                                        <p className="text-sm text-red-500 text-center">
+                                            {parsedError.message}
+                                        </p>
+                                    )}
+                                </form>
+
+
+                            </div>
+                        </div>
+                    )} */}
+
+                    <CreateOrUpdateIOF 
+                    isEditingIngredientItem={isEditingIngredientItem}
+                    setIsEditingIngredientItem={setIsEditingIngredientItem}
+                    ingredientOfFoodId={ingredientOfFoodId}
+                    setIngredientOfFoodId={setIngredientOfFoodId}
+                    />
+                </div>
+            </Container>
+        </div>
+    )
+
+}
+
+                                
