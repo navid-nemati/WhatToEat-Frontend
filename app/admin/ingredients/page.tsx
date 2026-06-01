@@ -1,10 +1,10 @@
 'use client'
 
 import Container from "@/components/container";
-import CreateIngredientComponent from "@/components/ingredient/createIngredient";
-import IngredientItem from "@/components/ingredient/ingredientItem";
+import CreateIngredientComponent from "@/features/Ingredient/components/createIngredient";
+import IngredientItem from "@/features/Ingredient/components/ingredientItem";
 import LoadingComponent from "@/components/loading";
-import useGetAllIngredients from "@/react-query/Ingredient/useGetAllIngredients";
+import useGetAllIngredients from "@/features/Ingredient/hooks/useGetAllIngredients";
 import { useState } from "react";
 
 export default function IngredientsPage() {

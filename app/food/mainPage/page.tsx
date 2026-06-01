@@ -1,5 +1,5 @@
 import Container from "@/components/container";
-import GetFoods from "@/components/Food/getFoods";
+import GetFoods from "@/features/Food/components/getFoods";
 
 export default function Food() {
     return (

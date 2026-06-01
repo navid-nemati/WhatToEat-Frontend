@@ -1,6 +1,6 @@
 import CardItem from "@/components/card-item";
 import Container from "@/components/container";
-import GetFoods from "@/components/Food/getFoods";
+import GetFoods from "@/features/Food/components/getFoods";
 import { formatNumberWithCommas } from "@/utils/number";
 import Link from "next/link";
 

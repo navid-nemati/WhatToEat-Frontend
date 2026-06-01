@@ -2,9 +2,9 @@
 
 import Container from "@/components/container";
 import LoadingComponent from "@/components/loading";
-import useGetFoodDetail from "@/react-query/Food/useGetFoodDetail";
-import UseDeleteIngredientOfFood from "@/react-query/IngredientOfFood/useDeleteIngredientOfFood";
-import UseGetAllIngredientOfFood from "@/react-query/IngredientOfFood/useGetAllIngredientOfFood";
+import useGetFoodDetail from "@/features/Food/hooks/useGetFoodDetail";
+import UseDeleteIngredientOfFood from "@/features/IngredientOfFood/hooks/useDeleteIngredientOfFood";
+import UseGetAllIngredientOfFood from "@/features/IngredientOfFood/hooks/useGetAllIngredientOfFood";
 import { useEffect, useState } from "react";
 import CreateOrUpdateIOF from "../../admin/foods/components/createOrUpdateIOF";
 

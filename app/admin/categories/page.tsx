@@ -1,13 +1,13 @@
 'use client'
 
-import CategoryItem from "@/components/Category/categoryItem";
-import CreateCategoryComponent from "@/components/Category/CreateCategory";
+import CategoryItem from "@/features/Category/components/categoryItem";
+import CreateCategoryComponent from "@/features/Category/components/CreateCategory";
 import Container from "@/components/container";
-import CreateIngredientComponent from "@/components/ingredient/createIngredient";
-import IngredientItem from "@/components/ingredient/ingredientItem";
+import CreateIngredientComponent from "@/features/Ingredient/components/createIngredient";
+import IngredientItem from "@/features/Ingredient/components/ingredientItem";
 import LoadingComponent from "@/components/loading";
-import useGetAllCategories from "@/react-query/Category/useGetAllCategories";
-import useGetAllIngredients from "@/react-query/Ingredient/useGetAllIngredients";
+import useGetAllCategories from "@/features/Category/hooks/useGetAllCategories";
+import useGetAllIngredients from "@/features/Ingredient/hooks/useGetAllIngredients";
 import { useState } from "react";
 
 export default function AdminCategoriesPage() {

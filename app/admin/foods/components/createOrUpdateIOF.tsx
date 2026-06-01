@@ -1,9 +1,9 @@
 "use client"
 
-import SelectIngredient from "@/components/ingredient/selectIngredient"
-import UseCreateIngredientOfFood from "@/react-query/IngredientOfFood/useCreateIngredientOfFood"
-import UseUpdateIngredientOfFood from "@/react-query/IngredientOfFood/useUpdateIngredientOfFood"
-import { UpdateIngredientFormData, UpdateIngredientSchema } from "@/schemas/UpdateIngredient.schemas"
+import SelectIngredient from "@/features/Ingredient/components/selectIngredient"
+import UseCreateIngredientOfFood from "@/features/IngredientOfFood/hooks/useCreateIngredientOfFood"
+import UseUpdateIngredientOfFood from "@/features/IngredientOfFood/hooks/useUpdateIngredientOfFood"
+import { UpdateIngredientFormData, UpdateIngredientSchema } from "@/features/IngredientOfFood/schemas/UpdateIngredient.schemas"
 import { parseApiError } from "@/utils/apiError"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { TextField } from "@mui/material"
