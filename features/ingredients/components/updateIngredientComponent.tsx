@@ -1,6 +1,5 @@
-import useUpdateIngredient from "@/features/Ingredient/hooks/useUpdateIngredient";
-import { UpdateIngredientFormData, UpdateIngredientSchema } from "@/features/IngredientOfFood/schemas/UpdateIngredient.schemas";
-import { UpdateIngredientItemFormData, UpdateIngredientItemSchema } from "@/features/Ingredient/schemas/UpdateIngredientItem.schema";
+import useUpdateIngredient from "@/features/ingredients/hooks/useUpdateIngredient";
+import { UpdateIngredientItemFormData, UpdateIngredientItemSchema } from "@/features/ingredients/schemas/UpdateIngredientItem.schema";
 import { parseApiError } from "@/utils/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";

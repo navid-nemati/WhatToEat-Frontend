@@ -1,8 +1,5 @@
-import CardItem from "@/components/card-item";
 import Container from "@/components/container";
-import GetFoods from "@/features/Food/components/getFoods";
-import { formatNumberWithCommas } from "@/utils/number";
-import Link from "next/link";
+import GetFoods from "@/features/foods/components/foodList";
 
 export default function Home() {
 

@@ -1,7 +1,8 @@
-import { UpdateIngredient } from "@/features/Ingredient/api/Ingredient.service";
-import { IUpdateIngredient } from "@/features/Ingredient/types/Ingredient";
+import { UpdateIngredient } from "@/features/ingredients/api/Ingredient.service";
+import { IUpdateIngredient } from "@/features/ingredients/types/Ingredient";
+import { queryKeys } from "@/lib/react-query/Keys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "../../../react-query/Keys";
+
 
 export default function useUpdateIngredient() {
 

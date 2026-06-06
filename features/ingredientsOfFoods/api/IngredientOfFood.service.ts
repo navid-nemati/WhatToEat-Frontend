@@ -1,5 +1,5 @@
 import { ApiError } from "@/types/api-error";
-import { ICreateIngredientsOfFood, IIngredientsOfFoodDto, IUpdateIngredientsOfFood } from "@/features/IngredientOfFood/types/IngredientOfFood";
+import { ICreateIngredientsOfFood, IIngredientsOfFoodDto, IUpdateIngredientsOfFood } from "@/features/ingredientsOfFoods/types/IngredientOfFood";
 
 const BaseUrl = "https://localhost:7232/api/IngredientsOfFood"
 

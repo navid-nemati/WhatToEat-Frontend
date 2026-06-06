@@ -1,5 +1,5 @@
-import useCreateIngredient from "@/features/Ingredient/hooks/useCreateIngredient";
-import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/Ingredient/schemas/CreateIngredient.schemas";
+import useCreateIngredient from "@/features/ingredients/hooks/useCreateIngredient";
+import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/ingredients/schemas/CreateIngredient.schemas";
 import { parseApiError } from "@/utils/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";

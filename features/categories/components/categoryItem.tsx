@@ -1,12 +1,11 @@
-import { UpdateIngredientFormData, UpdateIngredientSchema } from "@/features/IngredientOfFood/schemas/UpdateIngredient.schemas"
 import { parseApiError } from "@/utils/apiError"
 import { TextField } from "@mui/material"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import useUpdateCategory from "@/features/Category/hooks/useUpdateCategory"
-import useDeleteCategory from "@/features/Category/hooks/useDeleteCategory"
-import { UpdateCategoryFormData, UpdateCategorySchema } from "@/features/Category/schemas/UpdateCategory.schema"
+import useUpdateCategory from "@/features/categories/hooks/useUpdateCategory"
+import useDeleteCategory from "@/features/categories/hooks/useDeleteCategory"
+import { UpdateCategoryFormData, UpdateCategorySchema } from "@/features/categories/schemas/UpdateCategory.schema"
 
 interface CategoryItemProp {
     id: string

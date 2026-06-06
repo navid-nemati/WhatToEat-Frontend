@@ -1,6 +1,7 @@
-import { DeleteFood } from "@/features/Food/api/Food.service";
+import { DeleteFood } from "@/features/foods/api/Food.service";
+import { queryKeys } from "@/lib/react-query/Keys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "../../../react-query/Keys";
+
 
 export function useDeleteFood() {
     const queryClient = useQueryClient();

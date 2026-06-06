@@ -1,6 +1,6 @@
-import { CreateCategory } from "@/features/Category/api/Category.service";
+import { CreateCategory } from "@/features/categories/api/Category.service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "../../../react-query/Keys";
+import { queryKeys } from "@/lib/react-query/Keys";
 
 export default function useCreateCategory() {
 

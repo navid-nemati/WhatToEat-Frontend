@@ -1,7 +1,7 @@
-import { UpdateIngredientOfFood } from "@/features/IngredientOfFood/api/IngredientOfFood.service"
+import { UpdateIngredientOfFood } from "@/features/ingredientsOfFoods/api/IngredientOfFood.service"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { queryKeys } from "../../../react-query/Keys"
-import { IUpdateIngredientsOfFood } from "@/features/IngredientOfFood/types/IngredientOfFood"
+import { IUpdateIngredientsOfFood } from "@/features/ingredientsOfFoods/types/IngredientOfFood"
+import { queryKeys } from "@/lib/react-query/Keys"
 
 export default function UseUpdateIngredientOfFood() {
     const queryClient = useQueryClient()

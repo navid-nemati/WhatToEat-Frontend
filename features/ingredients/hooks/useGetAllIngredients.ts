@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "../../../react-query/Keys";
-import { GetAllIngredients } from "@/features/Ingredient/api/Ingredient.service";
-import { IngredientQueryParams } from "@/features/Ingredient/types/Ingredient";
+import { GetAllIngredients } from "@/features/ingredients/api/Ingredient.service";
+import { IngredientQueryParams } from "@/features/ingredients/types/Ingredient";
+import { queryKeys } from "@/lib/react-query/Keys";
 
 
 export default function useGetAllIngredients (params?: IngredientQueryParams) {

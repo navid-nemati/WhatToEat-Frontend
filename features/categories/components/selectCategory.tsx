@@ -1,6 +1,6 @@
 "use client"
 
-import useGetAllCategories from "@/features/Category/hooks/useGetAllCategories";
+import useGetAllCategories from "@/features/categories/hooks/useGetAllCategories";
 import { useState } from "react"
 
 interface props {

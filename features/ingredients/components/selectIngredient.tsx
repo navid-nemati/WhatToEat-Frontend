@@ -1,6 +1,6 @@
 "use client"
 
-import useGetAllIngredients from "@/features/Ingredient/hooks/useGetAllIngredients";
+import useGetAllIngredients from "@/features/ingredients/hooks/useGetAllIngredients";
 import { useState } from "react"
 
 interface props {

@@ -1,6 +1,5 @@
-import useCreateCategory from "@/features/Category/hooks/useCreateCategory";
-import useCreateIngredient from "@/features/Ingredient/hooks/useCreateIngredient";
-import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/Ingredient/schemas/CreateIngredient.schemas";
+import useCreateCategory from "@/features/categories/hooks/useCreateCategory";
+import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/ingredients/schemas/CreateIngredient.schemas";
 import { parseApiError } from "@/utils/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";

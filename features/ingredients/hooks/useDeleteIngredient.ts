@@ -1,6 +1,6 @@
-import { DeleteIngredient } from "@/features/Ingredient/api/Ingredient.service";
+import { DeleteIngredient } from "@/features/ingredients/api/Ingredient.service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "../../../react-query/Keys";
+import { queryKeys } from "@/lib/react-query/Keys";
 
 export default function useDeleteIngredient() {
     const queryClient = useQueryClient()

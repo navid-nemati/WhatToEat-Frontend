@@ -1,7 +1,6 @@
 "use client"
 
-import { useGetAllFoods } from "@/features/Food/hooks/useGetAllFoods";
-import Container from "../../../components/container";
+import { useGetAllFoods } from "@/features/foods/hooks/useGetAllFoods";
 import LoadingComponent from "../../../components/loading";
 import Link from "next/link";
 

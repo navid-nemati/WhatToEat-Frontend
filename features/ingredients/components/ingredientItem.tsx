@@ -1,12 +1,11 @@
-import useUpdateIngredient from "@/features/Ingredient/hooks/useUpdateIngredient"
-import { UpdateIngredientFormData, UpdateIngredientSchema } from "@/features/IngredientOfFood/schemas/UpdateIngredient.schemas"
+import useUpdateIngredient from "@/features/ingredients/hooks/useUpdateIngredient"
 import { parseApiError } from "@/utils/apiError"
 import { TextField } from "@mui/material"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import useDeleteIngredient from "@/features/Ingredient/hooks/useDeleteIngredient"
-import { UpdateIngredientItemFormData, UpdateIngredientItemSchema } from "@/features/Ingredient/schemas/UpdateIngredientItem.schema"
+import useDeleteIngredient from "@/features/ingredients/hooks/useDeleteIngredient"
+import { UpdateIngredientItemFormData, UpdateIngredientItemSchema } from "@/features/ingredients/schemas/UpdateIngredientItem.schema"
 
 interface IngredientItemProp {
     id: string

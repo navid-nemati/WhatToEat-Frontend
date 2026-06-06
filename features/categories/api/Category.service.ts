@@ -1,5 +1,5 @@
 import { ApiError } from "@/types/api-error";
-import { ICategoryItem, ICategoryQueryParams, ICreateCategory, IUpdateCategory } from "@/features/Category/types/Category";
+import { ICategoryItem, ICategoryQueryParams, ICreateCategory, IUpdateCategory } from "@/features/categories/types/Category";
 
 const BaseUrl = "https://localhost:7232/api/Category"
 
