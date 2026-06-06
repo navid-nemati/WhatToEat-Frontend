@@ -1,9 +1,9 @@
 "use client"
 
-import SelectCategory from "@/features/Category/components/selectCategory"
-import { useCreateFood } from "@/features/Food/hooks/useCreateFood"
-import { useUpdateFood } from "@/features/Food/hooks/useUpdateFood"
-import { UpdateFoodFormData, UpdateFoodSchema } from "@/features/Food/schemas/UpdateFood.schema"
+import SelectCategory from "@/features/categories/components/selectCategory"
+import { useCreateFood } from "@/features/foods/hooks/useCreateFood"
+import { useUpdateFood } from "@/features/foods/hooks/useUpdateFood"
+import { UpdateFoodFormData, UpdateFoodSchema } from "@/features/foods/schemas/UpdateFood.schema"
 import { parseApiError } from "@/utils/apiError"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { TextField } from "@mui/material"

@@ -1,4 +1,4 @@
-import Container from "@/components/container";
+import Container from "@/shared/components/container";
 import GetFoods from "@/features/Food/components/getFoods";
 
 export default function Food() {

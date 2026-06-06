@@ -1,4 +1,4 @@
-import Container from "@/components/container";
+import Container from "@/shared/components/container";
 import AdminGetFoods from "./components/adminGetFood";
 
 export default function AdminFoodPage() {

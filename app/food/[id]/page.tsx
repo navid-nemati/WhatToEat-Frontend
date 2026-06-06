@@ -1,7 +1,7 @@
 "use client"
 
-import Container from "@/components/container";
-import LoadingComponent from "@/components/loading";
+import Container from "@/shared/components/container";
+import LoadingComponent from "@/shared/components/loading";
 import useGetFoodDetail from "@/features/Food/hooks/useGetFoodDetail";
 import UseDeleteIngredientOfFood from "@/features/IngredientOfFood/hooks/useDeleteIngredientOfFood";
 import UseGetAllIngredientOfFood from "@/features/IngredientOfFood/hooks/useGetAllIngredientOfFood";

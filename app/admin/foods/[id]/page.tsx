@@ -1,11 +1,11 @@
 "use client"
 
 import CreateOrUpdateIOF from "@/app/admin/foods/components/createOrUpdateIOF";
-import Container from "@/components/container";
-import LoadingComponent from "@/components/loading";
-import useGetFoodDetail from "@/features/Food/hooks/useGetFoodDetail";
-import UseDeleteIngredientOfFood from "@/features/IngredientOfFood/hooks/useDeleteIngredientOfFood";
-import UseGetAllIngredientOfFood from "@/features/IngredientOfFood/hooks/useGetAllIngredientOfFood";
+import Container from "@/shared/components/container";
+import LoadingComponent from "@/shared/components/loading";
+import useGetFoodDetail from "@/features/foods/hooks/useGetFoodDetail";
+import UseDeleteIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useDeleteIngredientOfFood";
+import UseGetAllIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useGetAllIngredientOfFood";
 import { useEffect, useState } from "react";
 
 interface FoodDetailProp {

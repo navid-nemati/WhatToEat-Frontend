@@ -1,4 +1,4 @@
-import { IIngredientsOfFoodDto } from "../../IngredientOfFood/types/IngredientOfFood";
+import { IIngredientsOfFoodDto } from "../../ingredientsOfFoods/types/IngredientOfFood";
 
 
 export interface IFoodDto {

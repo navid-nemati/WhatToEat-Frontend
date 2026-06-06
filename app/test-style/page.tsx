@@ -1,5 +1,5 @@
-import CardItem from "@/components/card-item";
-import Container from "@/components/container";
+import CardItem from "@/shared/components/card-item";
+import Container from "@/shared/components/container";
 import { formatNumberWithCommas } from "@/utils/number";
 
 export default function TestStyle ()

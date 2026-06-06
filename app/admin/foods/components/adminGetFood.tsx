@@ -1,11 +1,11 @@
 "use client"
 
-import LoadingComponent from "@/components/loading";
-import { useGetAllFoods } from "@/features/Food/hooks/useGetAllFoods";
+import LoadingComponent from "@/shared/components/loading";
+import { useGetAllFoods } from "@/features/foods/hooks/useGetAllFoods";
 import Link from "next/link";
 import { useState } from "react";
 import CreateOrUpdateFoods from "./createOrUpdateFoods";
-import { useDeleteFood } from "@/features/Food/hooks/useDeleteFood";
+import { useDeleteFood } from "@/features/foods/hooks/useDeleteFood";
 
 export default function AdminGetFoods() {
 
