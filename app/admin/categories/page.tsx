@@ -9,11 +9,14 @@ import { useState } from "react";
 
 export default function AdminCategoriesPage() {
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [submitSearch, setSubmitSearch] = useState('');
+    // const [searchTerm, setSearchTerm] = useState('');
+    // const [submitSearch, setSubmitSearch] = useState('');
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchInput, setSearchInput] = useState('');
 
     const SubmitSearch = () => {
-        setSearchTerm(submitSearch)
+        setSearchQuery(searchInput)
     }
 
     const {
@@ -21,10 +24,10 @@ export default function AdminCategoriesPage() {
         isLoading,
         isError,
         error
-    } = useGetAllCategories({ name: searchTerm })
+    } = useGetAllCategories({ name: searchQuery })
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSubmitSearch(event.target.value);
+        setSearchInput(event.target.value);
     };
 
     if (isLoading) return (
@@ -51,12 +54,12 @@ export default function AdminCategoriesPage() {
                     </div>
                     <div className="flex gap-4">
                         <span className="text-2xl text-primary-darker">دسته بندی ها</span>
-                        <form className="flex gap-2">
+                        <form onSubmit={SubmitSearch} className="flex gap-2">
                             <div className="relative">
                                 <input
                                     type="text"
                                     placeholder="جستجو..."
-                                    value={submitSearch}
+                                    value={searchInput}
                                     onChange={handleSearchChange}
                                     className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-1 outline-sky-300"
                                 />
@@ -64,7 +67,6 @@ export default function AdminCategoriesPage() {
 
                             <button
                                 type="submit"
-                                onClick={SubmitSearch}
                                 className="bg-sky-300 px-3 py-2 rounded-md text-white
                                 text-shadow-sm transition-all duration-200 hover:scale-105
                                 hover:shadow-md"

@@ -1,9 +1,9 @@
 import useCreateCategory from "@/features/categories/hooks/useCreateCategory";
-import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/ingredients/schemas/CreateIngredient.schemas";
 import { parseApiError } from "@/utils/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { CreateCategoryFormData, CreateCategorySchema } from "../schemas/CreateCategory.schema";
 
 export default function CreateCategoryComponent() {
 
@@ -15,11 +15,11 @@ export default function CreateCategoryComponent() {
         handleSubmit,
         formState: { errors, isSubmitting },
         reset
-    } = useForm<CreateIngredientFormData>({
-        resolver: zodResolver(CreateIngredientSchema)
+    } = useForm<CreateCategoryFormData>({
+        resolver: zodResolver(CreateCategorySchema)
     })
 
-    const onSubmit = (data: CreateIngredientFormData) => {
+    const onSubmit = (data: CreateCategoryFormData) => {
         mutate(data, {
             onSuccess: () => {
                 reset();

@@ -56,7 +56,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
 
     }
 
-    const onDeleteIngredient = (ingredientId: string) => {
+    const onDeleteCategory = (categoryId: string) => {
         const result = confirm("مطمئن هستید که حذف شود ؟")
 
         if (result) {
@@ -96,7 +96,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                         >ویرایش
                         </button>
                         <button
-                            onClick={() => onDeleteIngredient(id)}
+                            onClick={() => onDeleteCategory(id)}
                             className="text-red-500 transition-all duration-200
                             px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
                         >
