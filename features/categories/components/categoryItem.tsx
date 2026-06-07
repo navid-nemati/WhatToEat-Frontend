@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useUpdateCategory from "@/features/categories/hooks/useUpdateCategory"
 import useDeleteCategory from "@/features/categories/hooks/useDeleteCategory"
 import { UpdateCategoryFormData, UpdateCategorySchema } from "@/features/categories/schemas/UpdateCategory.schema"
+import UpdateCategoryModal from "./updateCategoryModal";
 
 interface CategoryItemProp {
     id: string
@@ -17,44 +18,12 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
     const [isOpen, setIsOpen] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
-    const { mutate, isPending, isError, error } = useUpdateCategory()
     const { mutate: dMutate,
         isPending: dIsPending,
         isError: dIsError,
         error: dError
     } = useDeleteCategory()
-    const parsedError = isError ? parseApiError(error) : null;
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-        reset,
-    } = useForm<UpdateCategoryFormData>({
-        resolver: zodResolver(UpdateCategorySchema),
-    })
-
-    const onSubmit = (data: UpdateCategoryFormData) => {
-        console.log("Form submitted:", data);
-        console.log("ID:", id);
-
-        if (!id) {
-            console.error("ID is undefined!");
-            return;
-        }
-
-        mutate({ id, name: data.name }, {
-            onSuccess: () => {
-                reset();
-                setIsEditing(false);
-            },
-            onError: (err: any) => {
-                console.error("Mutation Error:", err);
-            }
-        });
-
-
-    }
+    const parsedError = dIsError ? parseApiError(dError) : null;
 
     const onDeleteCategory = (categoryId: string) => {
         const result = confirm("مطمئن هستید که حذف شود ؟")
@@ -67,8 +36,6 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                 onError: (err: any) => {
                     alert(err.message)
                     console.log("message", err.message)
-                    console.log("error", error)
-                    console.log("errors", errors)
                     console.log("parsed", parsedError?.message)
                     console.error("Mutation Error:", err);
                 }
@@ -100,72 +67,17 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                             className="text-red-500 transition-all duration-200
                             px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
                         >
-                            {isPending || isSubmitting ? "تأمل" : "حذف"}
+                            {dIsPending ? "تأمل" : "حذف"}
                         </button>
                     </div>
                 )}
             </div>
 
-            {isEditing && (
-                <div
-                    className="absolute flex items-center justify-center inset-0 
-                    z-40 bg-black/50">
-                    <div className="bg-white rounded-lg w-96 z-50
-                    border border-gray-400 shadow-md
-                    py-8 px-10">
-
-                        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4
-                        items-center">
-                            <span className="text-xl">ویرایش دسته بندی</span>
-                            <TextField style={{ width: "100%" }} size="small"
-                                placeholder="نام دسته بندی"
-                                variant="outlined"
-                                {...register("name")}
-                                error={!!parsedError?.fieldErrors?.Name}
-                                helperText={!!parsedError?.fieldErrors?.Name?.[0]}
-                            />
-                            {errors.name && (
-                                <p className="text-red-400">{errors.name.message}</p>
-                            )}
-                            <div className="flex items-center gap-2 w-full">
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting || isPending}
-                                    className="bg-blue-400 text-white px-4 py-1.5 
-                                rounded-lg transition-all duration-200 hover:scale-105
-                                shadow-md hover:shadow-xl"
-                                >
-
-                                    {isSubmitting || isPending ? "در حال ارسال..." : "ثبت"}
-                                </button>
-
-                                <button
-                                    onClick={() => setIsEditing(false)}
-                                    className="bg-red-500 text-white px-3 py-1.5 rounded-lg
-                                        transition-all duration-200 hover:scale-105
-                                        shadow-md hover:shadow-xl"
-                                >انصراف
-                                </button>
-                            </div>
-
-                            {isError && (
-                                <p className="text-sm text-red-500 text-center">
-                                    {(error as Error).message}
-                                </p>
-                            )}
-
-                            {parsedError?.message && (
-                                <p className="text-sm text-red-500 text-center">
-                                    {parsedError.message}
-                                </p>
-                            )}
-                        </form>
-
-
-                    </div>
-                </div>
-            )}
-
+            <UpdateCategoryModal 
+                isOpen={isEditing}
+                onClose={() => setIsEditing(false)}
+                categoryId={id}
+            />
         </>
     )
 
