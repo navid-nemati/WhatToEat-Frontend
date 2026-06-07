@@ -1,11 +1,6 @@
 import { parseApiError } from "@/utils/apiError"
-import { TextField } from "@mui/material"
 import React, { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod";
-import useUpdateCategory from "@/features/categories/hooks/useUpdateCategory"
 import useDeleteCategory from "@/features/categories/hooks/useDeleteCategory"
-import { UpdateCategoryFormData, UpdateCategorySchema } from "@/features/categories/schemas/UpdateCategory.schema"
 import UpdateCategoryModal from "./updateCategoryModal";
 
 interface CategoryItemProp {
@@ -25,7 +20,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
     } = useDeleteCategory()
     const parsedError = dIsError ? parseApiError(dError) : null;
 
-    const onDeleteCategory = (categoryId: string) => {
+    const onDeleteCategory = () => {
         const result = confirm("مطمئن هستید که حذف شود ؟")
 
         if (result) {
@@ -63,7 +58,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                         >ویرایش
                         </button>
                         <button
-                            onClick={() => onDeleteCategory(id)}
+                            onClick={onDeleteCategory}
                             className="text-red-500 transition-all duration-200
                             px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
                         >
