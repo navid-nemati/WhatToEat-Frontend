@@ -8,10 +8,10 @@ import useUpdateIngredient from "../hooks/useUpdateIngredient";
 interface UpdateIngredientModalProps {
     isOpen: boolean
     onClose: () => void
-    categoryId: string
+    ingredientId: string
 }
 
-export default function UpdateIngredientModal({ isOpen, onClose, categoryId }: UpdateIngredientModalProps) {
+export default function UpdateIngredientModal({ isOpen, onClose, ingredientId }: UpdateIngredientModalProps) {
 
     const { mutate, isPending, isError, error } = useUpdateIngredient()
 
@@ -28,12 +28,12 @@ export default function UpdateIngredientModal({ isOpen, onClose, categoryId }: U
 
     const onSubmit = (data: UpdateIngredientItemFormData) => {
 
-        if (!categoryId) {
+        if (!ingredientId) {
             console.error("ID is undefined!");
             return;
         }
 
-        mutate({ id: categoryId, name: data.name }, {
+        mutate({ id: ingredientId, name: data.name }, {
             onSuccess: () => {
                 reset();
                 onClose();
@@ -82,6 +82,7 @@ export default function UpdateIngredientModal({ isOpen, onClose, categoryId }: U
                         </button>
 
                         <button
+                            type="button"
                             onClick={onClose}
                             className="bg-red-500 text-white px-3 py-1.5 rounded-lg
                                                 transition-all duration-200 hover:scale-105

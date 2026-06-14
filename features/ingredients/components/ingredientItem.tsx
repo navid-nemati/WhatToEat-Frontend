@@ -30,7 +30,8 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                     alert("آیتم مورد نظر به درک واصل شد")
                 },
                 onError: (err: any) => {
-                    alert(err.message)
+                    console.log(err.message)
+                    alert(parsedError?.message)
                 }
             })
         }
@@ -67,10 +68,10 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                 )}
             </div>
 
-            <UpdateIngredientModal
+            <UpdateIngredientModal 
                 isOpen={isEditing}
                 onClose={() => setIsEditing(false)}
-                categoryId={id}
+                ingredientId={id}
             />
 
         </>
