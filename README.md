@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# What To Eat 🍽️
 
-## Getting Started
+A web application for discovering meal ideas and managing recipes based on available ingredients.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Manage ingredients
+- Associate ingredients with foods
+- Admin panel for managing application data
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend
+- Next.js
+- TypeScript
+- React Query (TanStack Query)
+- React Hook Form
+- Zod
+- Tailwind CSS
+- Material UI
+- NextAuth.js
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Backend
+- ASP.NET Core Web API
+- Entity Framework Core
+- SQL Server
+- JWT Authentication
+- Refresh Token
 
-## Learn More
+## Project Status
 
-To learn more about Next.js, take a look at the following resources:
+🚧 This project is currently under active development.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Some planned improvements include:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Browse food recipes
+- Organize foods by categories
+- Favorites
+- Shopping list
+- Better UI with shadcn/ui
+- Search improvements
+- More recipe filtering options
+- Authentication with JWT
 
-## Deploy on Vercel
+## Learning Goals
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project focuses on improving skills in:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Full-stack development
+- Feature-based architecture
+- Clean code
+- React Query
+- Authentication & Authorization
+- ASP.NET Core Web API
