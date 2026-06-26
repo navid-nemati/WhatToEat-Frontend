@@ -1,5 +1,6 @@
-import { ICategoryQueryParams } from "@/features/Category/types/Category";
-import { IngredientQueryParams } from "@/features/Ingredient/types/Ingredient";
+import { ICategoryQueryParams } from "@/features/categories/types/Category";
+import { IngredientQueryParams } from "@/features/ingredients/types/Ingredient";
+
 
 export const queryKeys = {
     foods: ["foods"] as const,

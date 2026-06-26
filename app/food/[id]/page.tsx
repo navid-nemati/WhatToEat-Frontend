@@ -1,12 +1,11 @@
 "use client"
 
+import useGetFoodDetail from "@/features/foods/hooks/useGetFoodDetail";
+import UseDeleteIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useDeleteIngredientOfFood";
+import UseGetAllIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useGetAllIngredientOfFood";
 import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
-import useGetFoodDetail from "@/features/Food/hooks/useGetFoodDetail";
-import UseDeleteIngredientOfFood from "@/features/IngredientOfFood/hooks/useDeleteIngredientOfFood";
-import UseGetAllIngredientOfFood from "@/features/IngredientOfFood/hooks/useGetAllIngredientOfFood";
 import { useEffect, useState } from "react";
-import CreateOrUpdateIOF from "../../admin/foods/components/createOrUpdateIOF";
 
 interface FoodDetailProp {
     params: Promise<{ id: string }>
