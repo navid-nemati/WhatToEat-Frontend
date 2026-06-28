@@ -99,11 +99,13 @@
 import { useGetAllFoods } from "@/features/foods/hooks/useGetAllFoods";
 import LoadingComponent from "../../../shared/components/loading";
 import Link from "next/link";
-import Image from "next/image";
 import { Clock, Star, Flame } from "lucide-react";
+import { parseApiError } from "@/utils/apiError";
 
 export default function GetFoods({ adminMode = false }: { adminMode?: boolean }) {
+
   const { data, isLoading, isError, error } = useGetAllFoods();
+  const parsedError = isError ? parseApiError(error) : null;
 
   if (isLoading) return <LoadingComponent />;
 
@@ -111,7 +113,8 @@ export default function GetFoods({ adminMode = false }: { adminMode?: boolean })
     return (
       <div className="flex items-center justify-center py-20">
         <p className="text-red-500 text-center p-4 bg-red-50 rounded-xl ring-1 ring-red-200">
-          {(error as Error).message}
+          {/* {(error as Error).message} */}
+          {parsedError?.message}
         </p>
       </div>
     );

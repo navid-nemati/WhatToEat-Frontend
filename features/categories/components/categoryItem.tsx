@@ -43,6 +43,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
             <div
                 onMouseEnter={() => setIsOpen(true)}
                 onMouseLeave={() => setIsOpen(false)}
+                onFocus={() => setIsOpen(true)}
                 className="relative px-3 py-2 bg-emerald-100 border border-emerald-200 
                 rounded-lg cursor-pointer transition-all duration-150 
                 hover:ring ring-emerald-300">
