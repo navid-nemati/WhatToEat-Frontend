@@ -54,11 +54,12 @@ export default function Home() {
               {/* بَج بالای عنوان */}
               <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-medium text-emerald-700 ring-1 ring-emerald-200">
                 <Sparkles size={16} />
-                هر روز یه غذای جدید
+                {/* هر روز یه غذای جدید */}
+                نگران ناهار نباش، ردیفه !
               </span>
 
               {/* عنوان اصلی */}
-              <h1 className="estedad-bold text-4xl md:text-5xl lg:text-6xl text-emerald-900 leading-tight">
+              <h1 className="estedad-bold text-4xl md:text-5xl lg:text-6xl text-emerald-900 leading-tight drop-shadow-md">
                 امروز
                 <br />
                 <span className="bg-linear-to-l from-emerald-600 to-green-400 bg-clip-text text-transparent">
@@ -73,13 +74,13 @@ export default function Home() {
               {/* دکمه‌ها */}
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/food/mainPage">
-                  <button className="group flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-lg font-medium text-emerald-950 shadow-lg shadow-amber-400/30 transition-all duration-200 hover:bg-amber-500 hover:shadow-xl hover:shadow-amber-400/40 hover:scale-105 active:scale-95">
+                  <button className="group flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-lg font-medium text-emerald-950 shadow-lg shadow-amber-400/30 transition-all duration-200 ring-amber-200 hover:ring-2 hover:shadow-xl hover:shadow-amber-400/40 hover:scale-105 active:scale-95 text-shadow-sm">
                     <ChefHat size={20} className="transition-transform group-hover:rotate-12" />
                     شروع آشپزی
                   </button>
                 </Link>
                 <Link href="#foods">
-                  <button className="flex items-center gap-2 rounded-full border-2 border-emerald-200 px-6 py-3 text-lg text-emerald-800 transition-all duration-200 hover:bg-emerald-50 hover:scale-105 active:scale-95">
+                  <button className="flex items-center gap-2 rounded-full border-2 border-emerald-200 px-6 py-3 text-lg text-emerald-800 transition-all duration-200 hover:border-emerald-400 hover:scale-105 active:scale-95 text-shadow-sm">
                     مرور غذاها
                     <ArrowLeft size={20} />
                   </button>
