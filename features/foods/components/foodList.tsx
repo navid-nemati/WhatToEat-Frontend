@@ -101,6 +101,7 @@ import LoadingComponent from "../../../shared/components/loading";
 import Link from "next/link";
 import { Clock, Star, Flame } from "lucide-react";
 import { parseApiError } from "@/utils/apiError";
+import Image from "next/image";
 
 export default function GetFoods({ adminMode = false }: { adminMode?: boolean }) {
 
@@ -127,7 +128,7 @@ export default function GetFoods({ adminMode = false }: { adminMode?: boolean })
           key={food.id}
           href={`${adminMode ? `/admin/foods/${food.id}` : `/food/${food.id}`}`}
           className="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-emerald-200
-                     transition-all duration-200 hover:-translate-y-2 hover:shadow-2xl hover:ring-3"
+                     transition-all duration-200 hover:-translate-y-2 hover:shadow-2xl hover:ring-3 hover:ring-emerald-400"
         >
           {/* 🖼️ قسمت عکس */}
           <div className="relative h-44 w-full overflow-hidden">
@@ -144,9 +145,18 @@ export default function GetFoods({ adminMode = false }: { adminMode?: boolean })
                 🍽️
               </div>
             )} */}
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-amber-100 text-5xl">
+
+            {/* <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-amber-100 text-5xl">
                 🍽️
-              </div>
+            </div> */}
+
+            <Image
+              src={'/foodImage.webp'}
+              alt="foodImage"
+              fill
+              sizes="(max-width: 768px) 100vw, 25vw"
+              className="object-cover"
+            />
 
             {/* بَج دسته‌بندی روی عکس */}
             <span className="absolute top-3 right-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">

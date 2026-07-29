@@ -1,4 +1,5 @@
 import Container from "@/shared/components/container";
+import ProtectedRoute from "@/shared/components/ProtectedRoute";
 import Link from "next/link";
 
 export default function AdminPanel() {
@@ -19,10 +20,11 @@ export default function AdminPanel() {
     ]
 
     return (
-        <div>
-            <Container>
-                <div className="flex items-center gap-5 pt-30">
-                    {/* <Link href={'/admin/ingredients'} className="bg-emerald-200
+        <ProtectedRoute role="Admin">
+            <div>
+                <Container>
+                    <div className="flex items-center gap-5 pt-30">
+                        {/* <Link href={'/admin/ingredients'} className="bg-emerald-200
                     rounded-lg px-3 py-2 shadow-sm transition-all duration-200
                     hover:scale-105 hover:shadow-lg text-shadow-sm
                     ring ring-emerald-300">
@@ -42,19 +44,20 @@ export default function AdminPanel() {
                     ring ring-emerald-300">
                         مدیریت غذاها
                     </Link> */}
-                    {navItems.map((item, index) => (
-                        <Link
-                        key={index}
-                            className="bg-emerald-200
+                        {navItems.map((item, index) => (
+                            <Link
+                                key={index}
+                                className="bg-emerald-200
                     rounded-lg px-3 py-2 shadow-sm transition-all duration-200
                     hover:scale-105 hover:shadow-lg text-shadow-sm
                     ring ring-emerald-300 hover:ring-2"
-                            href={`${item.link}`}>
-                            {item.title}
-                        </Link>
-                    ))}
-                </div>
-            </Container>
-        </div>
+                                href={`${item.link}`}>
+                                {item.title}
+                            </Link>
+                        ))}
+                    </div>
+                </Container>
+            </div>
+        </ProtectedRoute>
     )
 }

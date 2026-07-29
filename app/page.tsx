@@ -35,6 +35,7 @@ import Container from "@/shared/components/container";
 import GetFoods from "@/features/foods/components/foodList";
 import Link from "next/link";
 import { ChefHat, Sparkles, ArrowLeft, Clock, Star, Flame } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -110,7 +111,17 @@ export default function Home() {
             <div className="relative hidden md:block h-[460px]">
               {/* دایره مرکزی با گرادینت و اموجی غذا */}
               <div className="absolute inset-0 m-auto h-72 w-72 rounded-full bg-linear-to-br from-emerald-200 via-emerald-100 to-amber-100 shadow-2xl shadow-emerald-300/40 flex items-center justify-center animate-float-slow">
-                <span className="text-[140px] leading-none">🍝</span>
+                {/* <span className="text-[140px] leading-none">🍝</span> */}
+
+                  <Image
+                    src={'/heroImage.png'}
+                    alt="heroImage"
+                    className="object-cover"
+                    width={'288'}
+                    height={'288'}
+                  />
+
+                  
               </div>
 
               {/* کارت شناور ۱: زمان */}

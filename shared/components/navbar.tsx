@@ -5,8 +5,11 @@ import Image from "next/image";
 import Sidebar from "./sidebar";
 import Link from "next/link";
 import { ShoppingBasket } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
+
+    const { user, logout, loading } = useAuth()
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -25,8 +28,8 @@ export default function Navbar() {
                         </div>
 
                         <div className={`transition-all duration-300 ${scrolled ? 'text-md md:text-xl' : 'text:xl md:text-2xl'}`}>
-                            <span 
-                            className="estedad-bold bg-linear-to-l from-emerald-700 to-emerald-500 
+                            <span
+                                className="estedad-bold bg-linear-to-l from-emerald-700 to-emerald-500 
                             bg-clip-text text-transparent drop-shadow-sm"
                             >غذا چی بخوریم ؟</span>
                         </div>
@@ -41,17 +44,17 @@ export default function Navbar() {
                                 href={''}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >دسته‌بندی</Link>
-                            <Link
+                            {/* <Link
                                 href={'/admin'}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
-                            >پنل ادمین</Link>
+                            >پنل ادمین</Link> */}
                             <Link
                                 href={'/food/mainPage'}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >غذاها</Link>
                         </nav>
 
-                        <div className="hidden md:flex items-center gap-4">
+                        {/* <div className="hidden md:flex items-center gap-4">
                             <div className="group p-1.5 border border-emerald-950/50 rounded-full transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer">
                                 <ShoppingBasket size={22} className="transition-all duration-200 text-emerald-950 group-hover:rotate-360" />
                             </div>
@@ -63,6 +66,33 @@ export default function Navbar() {
                                     <span className="text-white">ورود</span>
                                 </button>
                             </Link>
+                        </div> */}
+
+                        <div className="hidden md:flex gap-4 items-center">
+                            {!loading && user ? (
+                                <>
+                                    <Link href="/profile" className="text-emerald-700 transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115">پروفایل</Link>
+
+                                    {/* ⭐ فقط اگه ادمین بود این دکمه رو نشون بده */}
+                                    {user?.roles?.includes("Admin") && (
+                                        <Link href="/admin" className="text-rose-600 transition-all duration-200 hover:text-rose-700 text-shadow-xs hover:text-shadow-lg hover:scale-115">
+                                            پنل مدیریت
+                                        </Link>
+                                    )}
+
+                                    <button onClick={logout} className="bg-rose-600 ring ring-rose-400 transition-all duration-200 px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:scale-110 text-shadow-sm">
+                                        <span className="text-white">خروج</span>
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                <Link href="/register" className="text-emerald-950 transition-all duration-150 hover:text-emerald-800 text-shadow-sm hover:text-shadow-lg hover:scale-110">ثبت نام</Link>
+                                    <Link href="/login" className="bg-emerald-600 ring ring-emerald-400 transition-all duration-200 px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:scale-110 text-shadow-sm">
+                                        <span className="text-white">ورود</span>
+                                    </Link>
+                                    
+                                </>
+                            )}
                         </div>
                     </div>
 

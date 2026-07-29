@@ -6,8 +6,9 @@ import QueryProviders from "@/shared/components/provider";
 import Footer from "@/shared/components/footer";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/context/AuthContext";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,18 +21,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={cn("font-sans", geist.variable)}>
-      <body className="flex flex-col min-h-screen bg-linear-to-bl from-emerald-100 to-emerald-50">
-        <ThemeRegistry>
-          <QueryProviders>
-            <Navbar />
-            <main className="grow">
-              {children}
-            </main>
-            <Footer />
-          </QueryProviders>
-        </ThemeRegistry>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="fa" dir="rtl" className={cn("font-sans", geist.variable)}>
+        <body className="flex flex-col min-h-screen bg-linear-to-bl from-emerald-100 to-emerald-50">
+          <ThemeRegistry>
+            <QueryProviders>
+              <Navbar />
+              <main className="grow">
+                {children}
+              </main>
+              <Footer />
+            </QueryProviders>
+          </ThemeRegistry>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

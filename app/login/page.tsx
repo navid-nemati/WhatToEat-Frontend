@@ -1,23 +1,33 @@
 'use client'
 
+import { useAuth } from "@/context/AuthContext"
 import { LoginUserFormData, LoginUserSchema } from "@/schemas/LoginUser.Schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, TextField } from "@mui/material"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 export default function Login() {
+
+    const { login } = useAuth()
+    const [apiError, setApiError] = useState<string | null>(null);
 
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        reset,
     } = useForm<LoginUserFormData>({
         resolver: zodResolver(LoginUserSchema)
     })
 
-    const onSubmit = (data: LoginUserFormData) => {
-
+    const onSubmit = async (data: LoginUserFormData) => {
+        setApiError(null)
+        try {
+            await login(data.username, data.password)
+        }
+        catch (err: any) {
+            setApiError(err.response?.data?.message || "خطا در ورود")
+        }
     }
 
     //const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;
@@ -27,6 +37,8 @@ export default function Login() {
             <div className="w-70 md:w-80 px-8 py-7 bg-emerald-50 rounded-xl
                 border-2 border-emerald-100 flex flex-col items-center gap-5">
                 <span className="text-xl text-emerald-900 estedad-bold">ورود</span>
+
+                {apiError && <div className="text-sm text-rose-500 bg-rose-50 p-2 rounded w-full text-center">{apiError}</div>}
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -72,8 +84,11 @@ export default function Login() {
                         <div className="text-sm text-rose-500">{errors.password?.message}</div>
                     </div>
                     
-                    <Button variant="contained" type="submit">
-                        ورود
+                    <Button 
+                    variant="contained" 
+                    type="submit"
+                    disabled={isSubmitting}>
+                        {isSubmitting ? "در حال ورود" : "ورود"}
                     </Button>
                 </form>
             </div>
