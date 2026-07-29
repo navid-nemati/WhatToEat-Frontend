@@ -5,6 +5,8 @@ import UseDeleteIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useDe
 import UseGetAllIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useGetAllIngredientOfFood";
 import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
+import { Card, CardContent, CardHeader } from "@mui/material";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface FoodDetailProp {
@@ -80,117 +82,79 @@ export default function FoodDetail({ params }: FoodDetailProp) {
     return (
         <div className="">
             <Container>
-                <div className="pt-30 flex flex-col items-start gap-2">
-                    <div className="text-xl">{data?.name}</div>
-                    <div className="text-xl">دسته بندی: {data?.categoryName}</div>
+                <div className="pt-30 flex lg:flex-row flex-col gap-10">
+                    {/* right side */}
+                    <div className="flex flex-col">
+                        {/* Image */}
+                        <div className="relative w-60 rounded-lg overflow-hidden">
+                            <div className="relative h-40 w-full overflow-hidden">
+                                <Image
+                                    src={'/foodImage.webp'}
+                                    alt="foodImage"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 25vw"
+                                    className="object-contain"
+                                />
+                            </div>
 
-                    {/* Ingredients List */}
+                        </div>
 
-                    {/* <table className="min-w-64 mt-6 rounded-lg overflow-hidden border border-emerald-300">
-                        <thead className="bg-emerald-50">
-                            <tr className="divide-x border-b border-emerald-950/20 divide-emerald-950/20">
-                                <th scope="col" className="px-6 py-2 rounded-tr-lg">
-                                    ماده اولیه
-                                </th>
+                        <div className="text-xl">{data?.name}</div>
+                        <div className="text-xl">دسته بندی: {data?.categoryName}</div>
 
-                                <th scope="col" className="px-6 py-2 rounded-tl-lg">
-                                    مقدار مورد نیاز
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody className="divide-y divide-emerald-950/20">
-                            {ingredientData && ingredientData.length > 0 ? (
-                                ingredientData.map(i => (
-
-                                    <tr className="bg-emerald-100/60 divide-x divide-emerald-950/20">
-                                        <th scope="row" className="px-6 py-3 whitespace-nowrap ">
-                                            {i.ingredientName}
-                                        </th>
-
-                                        <td className="px-6 py-3">
-                                            {i.value}
-                                            {isEditing && (
-                                                <div className="flex gap-2">
-                                                    <button
-                                                        onClick={() => {
-                                                            //setIsEditingIngredientItem(true)
-                                                            setIngredientOfFoodId(i.id)
-                                                            setIsEditingMode("Edit")
-                                                        }}
-                                                        className="text-amber-500 transition-all duration-200
-                                            px-1.5 py-1 hover:bg-amber-400 rounded-md hover:text-white
-                                            text-xs ring ring-amber-300"
-                                                    >ویرایش
-                                                    </button>
-                                                    <button
-
-                                                        className="text-red-500 transition-all duration-200
-                                            px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white
-                                            text-xs ring ring-red-300"
-                                                    >حذف
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <div>
-                                    {ingredientIsLoading == false && (
-                                        <div>مواد اولیه در دسترس نیست.</div>
-                                    )}
-                                </div>
-                            )}
-                            {ingredientIsLoading && (
-                                <div>در حال بارگذاری...</div>
-                            )}
-
-
-                        </tbody>
-                    </table> */}
-
-                    <table className="min-w-64 mt-6 rounded-lg overflow-hidden ring ring-emerald-300 border-collapse">
-                        <thead className="bg-emerald-50">
-                            <tr className="divide-x">
-                                <th scope="col" className="px-6 py-2 text-right border-b border-emerald-300">
-                                    ماده اولیه
-                                </th>
-                                <th scope="col" className="px-6 py-2 text-right border-b border-emerald-300">
-                                    مقدار مورد نیاز
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {ingredientData && ingredientData.length > 0 ? (
-                                ingredientData.map((i) => (
-                                    <tr
-                                        key={i.id}
-                                        className="bg-emerald-50/60 hover:bg-emerald-100/30 transition-colors divide-x divide-emerald-300 select-none"
-                                    >
-                                        <th
-                                            scope="row"
-                                            className="px-6 py-3 whitespace-nowrap  text-right"
+                        {/* Ingredients List */}
+                        <table className="min-w-64 mt-6 rounded-lg overflow-hidden ring ring-emerald-300 border-collapse">
+                            <thead className="bg-emerald-50">
+                                <tr className="divide-x">
+                                    <th scope="col" className="px-6 py-2 text-right border-b border-emerald-300">
+                                        ماده اولیه
+                                    </th>
+                                    <th scope="col" className="px-6 py-2 text-right border-b border-emerald-300">
+                                        مقدار مورد نیاز
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ingredientData && ingredientData.length > 0 ? (
+                                    ingredientData.map((i) => (
+                                        <tr
+                                            key={i.id}
+                                            className="bg-emerald-50/60 hover:bg-emerald-100/30 transition-colors divide-x divide-emerald-300 select-none"
                                         >
-                                            {i.ingredientName}
-                                        </th>
-                                        <td className="px-6 py-3  text-right">
-                                            <span className="">{i.value}</span>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <div>
-                                    {ingredientIsLoading == false && (
-                                        <div className="p-2">مواد اولیه در دسترس نیستند.</div>
-                                    )}
-                                </div>
-                            )}
-                            {ingredientIsLoading && (
-                                <div>در حال بارگذاری...</div>
-                            )}
-                        </tbody>
-                    </table>
+                                            <th
+                                                scope="row"
+                                                className="px-6 py-3 whitespace-nowrap  text-right"
+                                            >
+                                                {i.ingredientName}
+                                            </th>
+                                            <td className="px-6 py-3  text-right">
+                                                <span className="">{i.value}</span>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <div>
+                                        {ingredientIsLoading == false && (
+                                            <div className="p-2">مواد اولیه در دسترس نیستند.</div>
+                                        )}
+                                    </div>
+                                )}
+                                {ingredientIsLoading && (
+                                    <div>در حال بارگذاری...</div>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* left side */}
+                    <div className="">
+                        <h3 className="text-2xl drop-shadow-lg text-shadow-sm mb-3">طرز تهیه</h3>
+
+                        <div className="leading-8 text-justify">
+                            {data?.recipe}
+                        </div>
+                    </div>
+
                 </div>
             </Container>
         </div>

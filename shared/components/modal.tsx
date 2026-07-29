@@ -1,39 +1,55 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog"
 
 interface ModalProps {
-    isOpen: boolean
-    children: React.ReactNode
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    title?: string;
+    description?: string;
+    size?: "xs" | "sm" | "md" | "lg" | "xl";
+    children: React.ReactNode;
 }
 
-export default function Modal({ isOpen, children }: ModalProps) {
+export default function Modal({
+    open,
+    onOpenChange,
+    title,
+    description,
+    size = "md",
+    children,
+}: ModalProps) {
 
-    if (!isOpen) return null;
+    const sizes = {
+        xs: "sm:max-w-sm",
+        sm: "sm:max-w-md",
+        md: "sm:max-w-lg",
+        lg: "sm:max-w-2xl",
+        xl: "sm:max-w-4xl",
+    };
 
     return (
-        // <div className="absolute flex items-center justify-center inset-0 
-        //                 z-40 bg-black/50">
-        //     <div className="bg-white rounded-lg w-96 z-50
-        //                 border border-gray-400 shadow-md
-        //                 py-8 px-10">
-        //         {children}
-        //     </div>
+        <Dialog
+            open={open}
+            onOpenChange={onOpenChange}
+        >
+            <DialogContent className={`${sizes[size ?? "md"]} max-h-[90vh] overflow-y-auto p-5`}>
+                {(title || description) && (
+                    <DialogHeader className="flex items-center justify-center">
+                        {title && <span className="text-lg">{title}</span>}
+                        {description && (
+                            <DialogDescription>
+                                {description}
+                            </DialogDescription>
+                        )}
+                    </DialogHeader>
+                )}
 
-        // </div>
-
-        <Dialog open={isOpen}>
-            <DialogContent>
-                {/* <DialogHeader>
-                    <DialogTitle>
-                        ویرایش
-                    </DialogTitle>
-                </DialogHeader> */}
                 {children}
             </DialogContent>
         </Dialog>

@@ -6,6 +6,7 @@ export interface IFoodDto {
     name: string;
     categoryId: string;
     categoryName: string;
+    recipe: string
 }
 
 export interface IFoodDetailDto extends IFoodDto{
@@ -15,10 +16,12 @@ export interface IFoodDetailDto extends IFoodDto{
 export interface ICreateFoodDto {
     name: string;
     categoryId: string;
+    recipe: string
 }
 
 export interface IUpdateFoodDto {
     id: string;
     name: string;
     categoryId: string;
+    recipe: string
 }

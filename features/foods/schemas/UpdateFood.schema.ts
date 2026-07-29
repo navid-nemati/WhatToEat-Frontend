@@ -7,6 +7,8 @@ export const UpdateFoodSchema = z.object({
         string()
         .min(2, "نام حداقل باید 2 کاراکتر باشد")
         .max(50, "نام نمی تواند بیشتر از 50 حرف باشد"),
+
+    recipe: z.string(),
 })
 
 export type UpdateFoodFormData = z.infer<typeof UpdateFoodSchema>;

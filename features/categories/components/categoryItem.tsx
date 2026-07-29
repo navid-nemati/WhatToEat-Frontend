@@ -1,7 +1,8 @@
 import { parseApiError } from "@/utils/apiError"
 import React, { useState } from "react"
 import useDeleteCategory from "@/features/categories/hooks/useDeleteCategory"
-import UpdateCategoryModal from "./updateCategoryModal";
+import Modal from "@/shared/components/modal";
+import UpdateCategoryForm from "./UpdateCategoryForm";
 
 interface CategoryItemProp {
     id: string
@@ -11,7 +12,8 @@ interface CategoryItemProp {
 export default function CategoryItem({ id, name }: CategoryItemProp) {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [isEditing, setIsEditing] = useState(false)
+    // const [isEditing, setIsEditing] = useState(false)
+    const [editModalOpen, setEditModalOpen] = useState(false)
 
     const { mutate: dMutate,
         isPending: dIsPending,
@@ -53,7 +55,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                         left-1/2 -translate-x-1/2
                         border-emerald-200 flex items-center gap-1 text-xs -top-8.75 z-10">
                         <button
-                            onClick={() => setIsEditing(true)}
+                            onClick={() => setEditModalOpen(true)}
                             className="text-amber-500 transition-all duration-200
                         px-1.5 py-1 hover:bg-amber-400 rounded-md hover:text-white"
                         >ویرایش
@@ -69,11 +71,23 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                 )}
             </div>
 
-            <UpdateCategoryModal 
+            {/* <UpdateCategoryModal 
                 isOpen={isEditing}
                 onClose={() => setIsEditing(false)}
                 categoryId={id}
-            />
+            /> */}
+
+            <Modal
+                open={editModalOpen}
+                onOpenChange={setEditModalOpen}
+                title="ویرایش دسته بندی"
+                size="xs"
+            >
+                <UpdateCategoryForm
+                    categoryId={id}
+                    onSuccess={() => setEditModalOpen(false)}
+                />
+            </Modal>
         </>
     )
 

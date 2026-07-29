@@ -1,7 +1,8 @@
 import { parseApiError } from "@/utils/apiError"
 import React, { useState } from "react"
 import useDeleteIngredient from "@/features/ingredients/hooks/useDeleteIngredient"
-import UpdateIngredientModal from "./updateIngredientModal"
+import Modal from "@/shared/components/modal"
+import UpdateIngredientForm from "./UpdateIngredientForm"
 
 interface IngredientItemProp {
     id: string
@@ -11,7 +12,7 @@ interface IngredientItemProp {
 export default function IngredientItem({ id, name }: IngredientItemProp) {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [isEditing, setIsEditing] = useState(false)
+    const [editModalOpen, setEditModalOpen] = useState(false)
 
     const { mutate: dMutate,
         isPending: dIsPending,
@@ -52,7 +53,7 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                         left-1/2 -translate-x-1/2
                         border-emerald-200 flex items-center gap-1 text-xs -top-8.75 z-10">
                         <button
-                            onClick={() => { setIsEditing(true), setIsOpen(false) }}
+                            onClick={() => { setEditModalOpen(true), setIsOpen(false) }}
                             className="text-amber-500 transition-all duration-200
                         px-1.5 py-1 hover:bg-amber-400 rounded-md hover:text-white"
                         >ویرایش
@@ -68,11 +69,23 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                 )}
             </div>
 
-            <UpdateIngredientModal 
+            {/* <UpdateIngredientModal 
                 isOpen={isEditing}
                 onClose={() => setIsEditing(false)}
                 ingredientId={id}
-            />
+            /> */}
+
+            <Modal
+                open={editModalOpen}
+                onOpenChange={setEditModalOpen}
+                title="ویرایش ماده اولیه"
+                size="xs"
+            >
+                <UpdateIngredientForm
+                    ingredientId={id}
+                    onSuccess={() => setEditModalOpen(false)}
+                />
+            </Modal>
 
         </>
     )

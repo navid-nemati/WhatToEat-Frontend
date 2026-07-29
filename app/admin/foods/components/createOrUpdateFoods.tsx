@@ -6,7 +6,7 @@ import { useUpdateFood } from "@/features/foods/hooks/useUpdateFood"
 import { UpdateFoodFormData, UpdateFoodSchema } from "@/features/foods/schemas/UpdateFood.schema"
 import { parseApiError } from "@/utils/apiError"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { TextField } from "@mui/material"
+import { TextareaAutosize, TextField } from "@mui/material"
 import { SetStateAction, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
@@ -71,6 +71,7 @@ export default function CreateOrUpdateFoods({
             id: foodId,
             categoryId: selectedCategoryId,
             name: data.name,
+            recipe: data.recipe,
         }, {
             onSuccess: () => {
                 reset()
@@ -80,7 +81,7 @@ export default function CreateOrUpdateFoods({
             },
             onError: (err: any) => {
                 console.error("Mutation Error:", err);
-                console.log("سلااااااام دیس ایز ارور",parsedError?.message)
+                console.log("سلااااااام دیس ایز ارور", parsedError?.message)
                 if (selectedCategoryId == "")
                     setCategoryIdError("لطفا یک دسته بندی انتخاب کنید")
             }
@@ -100,6 +101,7 @@ export default function CreateOrUpdateFoods({
         createFoodMutate({
             name: data.name,
             categoryId: selectedCategoryId,
+            recipe: data.recipe,
         }, {
             onSuccess: () => {
                 reset()
@@ -136,6 +138,12 @@ export default function CreateOrUpdateFoods({
                                 helperText={!!parsedError?.fieldErrors?.Name?.[0]}
                             />
 
+                            <TextareaAutosize
+                                style={{ width: "100%" }}
+                                placeholder="طرز تهیه: "
+                                {...register("recipe")}
+                            />
+
                             {errors.name && (
                                 <p className="text-red-400">{errors.name.message}</p>
                             )}
@@ -161,8 +169,8 @@ export default function CreateOrUpdateFoods({
                                 <button
                                     onClick={() => {
                                         setIsEditingMode("close"),
-                                        reset(),
-                                        setCategoryIdError("")
+                                            reset(),
+                                            setCategoryIdError("")
                                     }}
                                     className="bg-red-500 text-white px-3 py-1.5 rounded-lg
                                                                             transition-all duration-200 hover:scale-105
@@ -215,7 +223,7 @@ export default function CreateOrUpdateFoods({
                                 />
 
                                 <div className="text-red-400">{categoryIdError}</div>
-                                
+
                                 <div className="flex items-center gap-2 w-full">
                                     <button
                                         type="submit"
@@ -230,10 +238,10 @@ export default function CreateOrUpdateFoods({
 
                                     <button
                                         onClick={() => {
-                                        setIsEditingMode("close"),
-                                        reset(),
-                                        setCategoryIdError("")
-                                    }}
+                                            setIsEditingMode("close"),
+                                                reset(),
+                                                setCategoryIdError("")
+                                        }}
                                         className="bg-red-500 text-white px-3 
                                         py-1.5 rounded-lg transition-all duration-200 
                                         hover:scale-105 shadow-md hover:shadow-xl"
