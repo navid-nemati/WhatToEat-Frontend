@@ -46,27 +46,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 🟢 لاگین
     const login = async (username: string, password: string) => {
 
-        console.log("login");
+        setLoading(true);
 
-        await api.post("/account/login", {
-            username,
-            password
-        });
+        try {
+            await api.post("/account/login", {
+                username,
+                password
+            });
 
-        console.log("login success");
+            // بعد از لاگین موفق، اطلاعات کاربر رو می‌گیریم
+            const { data } = await api.get("/account/me");
 
-        // بعد از لاگین موفق، اطلاعات کاربر رو می‌گیریم
-        const { data } = await api.get("/account/me");
+            setUser(data);
 
-        console.log(data);
-
-        setUser(data);
-
-        // هدایت بر اساس نقش کاربر
-        if (data.roles?.includes("Admin")) {
-            router.push("/admin");
-        } else {
-            router.push("/profile");
+            // هدایت بر اساس نقش کاربر
+            if (data.roles?.includes("Admin")) {
+                router.push("/admin");
+            } else {
+                router.push("/profile");
+            }
+        }
+        finally {
+            setLoading(false)
         }
     };
 

@@ -4,7 +4,8 @@ import { GetAllIngredientByFoodId } from "@/features/ingredientsOfFoods/api/Ingr
 
 export default function UseGetAllIngredientOfFood(foodId: string) {
     return useQuery({
-        queryKey: queryKeys.ingredientOfFood,
-        queryFn: () => GetAllIngredientByFoodId(foodId)
+        queryKey: [...queryKeys.ingredientOfFood, foodId],
+        queryFn: () => GetAllIngredientByFoodId(foodId),
+        enabled: !!foodId,
     })
 }

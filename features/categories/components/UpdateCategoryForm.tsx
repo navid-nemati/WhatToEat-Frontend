@@ -11,11 +11,13 @@ import useUpdateCategory from "../hooks/useUpdateCategory";
 import { parseApiError } from "@/utils/apiError";
 
 interface Props {
+    categoryName: string
     categoryId: string;
     onSuccess: () => void;
 }
 
 export default function UpdateCategoryForm({
+    categoryName,
     categoryId,
     onSuccess,
 }: Props) {
@@ -33,6 +35,9 @@ export default function UpdateCategoryForm({
         reset,
     } = useForm<UpdateCategoryFormData>({
         resolver: zodResolver(UpdateCategorySchema),
+        defaultValues: {
+            name: categoryName
+        }
     });
 
     const onSubmit = (data: UpdateCategoryFormData) => {

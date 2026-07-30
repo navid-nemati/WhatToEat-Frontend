@@ -16,13 +16,6 @@ interface FoodDetailProp {
 export default function FoodDetail({ params }: FoodDetailProp) {
 
     const [resolvedId, setResolvedId] = useState<string>('');
-    const [isEditing, setIsEditing] = useState(false)
-    //const [isEditingIngredientItem, setIsEditingIngredientItem] = useState(false)
-
-    const [ingredientOfFoodId, setIngredientOfFoodId] = useState("");
-
-    // this is for CreateOrUpdateIOF component, the description is there
-    const [isEditingMode, setIsEditingMode] = useState<"Edit" | "Create" | "close">("close")
 
     useEffect(() => {
         const resolveParams = async () => {
@@ -46,23 +39,6 @@ export default function FoodDetail({ params }: FoodDetailProp) {
         error: ingredientError,
     } = UseGetAllIngredientOfFood(resolvedId);
 
-    const { mutate: deleteMutate,
-        isPending: deleteIsPending,
-        isError: deleteIsError,
-        error: deleteError
-    } = UseDeleteIngredientOfFood()
-
-    const onDeleteSubmit = (id: string) => {
-        deleteMutate(id, {
-            onSuccess: () => {
-                alert("آیتم مورد نظر رفت تو چاه دیتابیس")
-            },
-            onError: (err: any) => {
-                alert("Delete Mutation Error : " + err)
-                console.error("Delete Mutation Error:", err);
-            }
-        })
-    }
 
     if (isLoading) return (
         <LoadingComponent />
@@ -114,7 +90,7 @@ export default function FoodDetail({ params }: FoodDetailProp) {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {/* <tbody>
                                 {ingredientData && ingredientData.length > 0 ? (
                                     ingredientData.map((i) => (
                                         <tr
@@ -141,6 +117,28 @@ export default function FoodDetail({ params }: FoodDetailProp) {
                                 )}
                                 {ingredientIsLoading && (
                                     <div>در حال بارگذاری...</div>
+                                )}
+                            </tbody> */}
+                            <tbody>
+                                {ingredientIsLoading ? (
+                                    <tr className="bg-emerald-50/60 hover:bg-emerald-100/30 transition-colors divide-x divide-emerald-300 select-none">
+                                        <td colSpan={2} className="text-center p-4">
+                                            در حال بارگذاری...
+                                        </td>
+                                    </tr>
+                                ) : ingredientData?.length ? (
+                                    ingredientData.map((i) => (
+                                        <tr className="px-6 py-3  text-right" key={i.id}>
+                                            <td>{i.ingredientName}</td>
+                                            <td>{i.value}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={2} className="text-center p-4">
+                                            مواد اولیه در دسترس نیستند.
+                                        </td>
+                                    </tr>
                                 )}
                             </tbody>
                         </table>

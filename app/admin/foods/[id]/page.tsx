@@ -268,7 +268,7 @@ export default function AdminFoodDetail({ params }: FoodDetailProp) {
                     <button
                         onClick={() => setIsEditing(!isEditing)}
                         className={`my-4 text-lg ${isEditing ? 'text-red-500' : 'text-blue-500'} text-shadow-md transition-all duration-150 hover:scale-105 hover:text-shadow-md`}>
-                        {isEditing ? 'خروج از ویرایش' : 'ویرایش'}
+                        {isEditing ? 'خروج از ویرایش' : 'ویرایش مواد اولیه'}
                     </button>
 
                     {isEditing && (

@@ -84,6 +84,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                 size="xs"
             >
                 <UpdateCategoryForm
+                    categoryName={name}
                     categoryId={id}
                     onSuccess={() => setEditModalOpen(false)}
                 />
