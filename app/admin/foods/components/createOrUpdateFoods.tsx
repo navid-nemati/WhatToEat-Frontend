@@ -1,5 +1,276 @@
 "use client"
 
+// import SelectCategory from "@/features/categories/components/selectCategory"
+// import { useCreateFood } from "@/features/foods/hooks/useCreateFood"
+// import { useUpdateFood } from "@/features/foods/hooks/useUpdateFood"
+// import { UpdateFoodFormData, UpdateFoodSchema } from "@/features/foods/schemas/UpdateFood.schema"
+// import { parseApiError } from "@/utils/apiError"
+// import { zodResolver } from "@hookform/resolvers/zod"
+// import { TextareaAutosize, TextField } from "@mui/material"
+// import { SetStateAction, useEffect, useState } from "react"
+// import { useForm } from "react-hook-form"
+
+// interface props {
+//     foodId: string
+//     defaultFoodName: string
+//     //categoryId: string
+//     //setCategoryId: (value: SetStateAction<string>) => void
+//     isEditingMode: "Edit" | "Create" | "close"
+//     setIsEditingMode: (value: SetStateAction<"Edit" | "Create" | "close">) => void
+// }
+
+// export default function CreateOrUpdateFoods({
+//     foodId,
+//     defaultFoodName,
+//     //categoryId,
+//     //setCategoryId,
+//     isEditingMode,
+//     setIsEditingMode,
+// }: props) {
+
+//     // This id come from selectIngredient Component
+//     const [selectedCategoryId, setSelectedCategoryId] = useState("");
+//     const [categoryIdError, setCategoryIdError] = useState("");
+
+//     const handleSlection = (id: string) => {
+//         setSelectedCategoryId(id)
+//         console.log("ID دریافت شده در والد:", id);
+//     }
+
+//     const { mutate: updateFoodMutate,
+//         isPending: updateFoodIsPending,
+//         isError: updateFoodIsError,
+//         error: updateFoodError
+//     } = useUpdateFood()
+
+//     const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;
+
+//     useEffect(() => {
+//         if (defaultFoodName) {
+//             reset({
+//                 name: defaultFoodName,
+//             });
+//         }
+//     }, [defaultFoodName]); // هر وقت defaultFoodName تغییر کرد، فرم آپدیت میشه
+
+
+//     const {
+//         register,
+//         handleSubmit,
+//         formState: { errors, isSubmitting },
+//         reset,
+//     } = useForm<UpdateFoodFormData>({
+//         resolver: zodResolver(UpdateFoodSchema),
+//         defaultValues: {
+//             name: defaultFoodName
+//         }
+//     })
+
+//     const onSubmit = (data: UpdateFoodFormData) => {
+//         updateFoodMutate({
+//             id: foodId,
+//             categoryId: selectedCategoryId,
+//             name: data.name,
+//             recipe: data.recipe,
+//         }, {
+//             onSuccess: () => {
+//                 reset()
+//                 //setCategoryId("")
+//                 setSelectedCategoryId("")
+//                 setIsEditingMode("close")
+//             },
+//             onError: (err: any) => {
+//                 console.error("Mutation Error:", err);
+//                 console.log("سلااااااام دیس ایز ارور", parsedError?.message)
+//                 if (selectedCategoryId == "")
+//                     setCategoryIdError("لطفا یک دسته بندی انتخاب کنید")
+//             }
+//         })
+//     }
+
+//     // Create ------------------
+
+//     const {
+//         mutate: createFoodMutate,
+//         isPending: createFoodIsPendig,
+//         isError: createFoodIsError,
+//         error: createFoodError
+//     } = useCreateFood()
+
+//     const onCreateSubmit = (data: UpdateFoodFormData) => {
+//         createFoodMutate({
+//             name: data.name,
+//             categoryId: selectedCategoryId,
+//             recipe: data.recipe,
+//         }, {
+//             onSuccess: () => {
+//                 reset()
+//                 setSelectedCategoryId("")
+//                 setIsEditingMode("close")
+//             },
+//             onError: (err: any) => {
+//                 console.error("Mutation Error:", err);
+//                 if (selectedCategoryId == "")
+//                     setCategoryIdError("لطفا یک دسته بندی انتخاب کنید")
+//             }
+//         })
+//     }
+
+//     return (
+//         <div className="">
+//             {isEditingMode == "Edit" && (
+//                 <div
+//                     className="absolute flex items-center justify-center inset-0
+//                                             z-40 bg-black/50">
+//                     <div className="bg-emerald-50 rounded-lg w-96 z-50
+//                                                         border border-gray-400 shadow-md
+//                                                         py-8 px-10">
+//                         <form
+//                             onSubmit={handleSubmit(onSubmit)}
+//                             className="flex flex-col gap-4 items-center">
+//                             <span className="text-xl">ویرایش غذا</span>
+
+//                             <TextField style={{ width: "100%" }} size="small"
+//                                 placeholder="نام غذا :"
+//                                 variant="outlined"
+//                                 {...register("name")}
+//                                 error={!!parsedError?.fieldErrors?.Name}
+//                                 helperText={!!parsedError?.fieldErrors?.Name?.[0]}
+//                             />
+
+//                             <TextareaAutosize
+//                                 style={{ width: "100%" }}
+//                                 placeholder="طرز تهیه: "
+//                                 {...register("recipe")}
+//                             />
+
+//                             {errors.name && (
+//                                 <p className="text-red-400">{errors.name.message}</p>
+//                             )}
+
+//                             <SelectCategory
+//                                 onSelect={handleSlection}
+//                             />
+
+//                             <div className="text-red-400">{categoryIdError}</div>
+
+//                             <div className="flex items-center gap-2 w-full">
+//                                 <button
+//                                     type="submit"
+//                                     disabled={isSubmitting || updateFoodIsPending}
+//                                     className="bg-blue-400 text-white px-4 py-1.5
+//                                                                     rounded-lg transition-all duration-200 hover:scale-105
+//                                                                     shadow-md hover:shadow-xl"
+//                                 >
+
+//                                     {isSubmitting || updateFoodIsPending ? "در حال ارسال..." : "ثبت"}
+//                                 </button>
+
+//                                 <button
+//                                     onClick={() => {
+//                                         setIsEditingMode("close"),
+//                                             reset(),
+//                                             setCategoryIdError("")
+//                                     }}
+//                                     className="bg-red-500 text-white px-3 py-1.5 rounded-lg
+//                                                                             transition-all duration-200 hover:scale-105
+//                                                                             shadow-md hover:shadow-xl"
+//                                 >انصراف
+//                                 </button>
+//                             </div>
+
+//                             {updateFoodIsError && (
+//                                 <p className="text-red-500 text-center">
+//                                     {(updateFoodError as Error).message}
+//                                 </p>
+//                             )}
+
+//                             {parsedError?.message && (
+//                                 <p className="text-red-500 text-center">
+//                                     {parsedError.message}
+//                                 </p>
+//                             )}
+//                         </form>
+//                     </div>
+//                 </div>
+//             )}
+//             {isEditingMode == "Create" && (
+//                 <div>
+//                     <div
+//                         className="fixed flex items-center justify-center inset-0
+//                                             z-40 bg-black/50">
+//                         <div className="bg-emerald-50 rounded-lg w-96 z-50 border 
+//                         border-gray-400 shadow-md py-8 px-10">
+//                             <form
+//                                 onSubmit={handleSubmit(onCreateSubmit)}
+//                                 className="flex flex-col gap-4 items-center">
+//                                 <span className="text-xl">افزودن غذا</span>
+
+//                                 <TextField style={{ width: "100%" }} size="small"
+//                                     placeholder="نام غذا :"
+//                                     variant="outlined"
+//                                     {...register("name")}
+//                                     error={!!parsedError?.fieldErrors?.Name}
+//                                     helperText={!!parsedError?.fieldErrors?.Name?.[0]}
+//                                 />
+
+//                                 {errors.name && (
+//                                     <p className="text-red-400">{errors.name.message}</p>
+//                                 )}
+
+//                                 <SelectCategory
+//                                     onSelect={handleSlection}
+//                                 />
+
+//                                 <div className="text-red-400">{categoryIdError}</div>
+
+//                                 <div className="flex items-center gap-2 w-full">
+//                                     <button
+//                                         type="submit"
+//                                         disabled={isSubmitting || createFoodIsPendig}
+//                                         className="bg-blue-400 text-white px-4 py-1.5
+//                                                                     rounded-lg transition-all duration-200 hover:scale-105
+//                                                                     shadow-md hover:shadow-xl"
+//                                     >
+
+//                                         {isSubmitting || createFoodIsPendig ? "در حال ارسال..." : "ثبت"}
+//                                     </button>
+
+//                                     <button
+//                                         onClick={() => {
+//                                             setIsEditingMode("close"),
+//                                                 reset(),
+//                                                 setCategoryIdError("")
+//                                         }}
+//                                         className="bg-red-500 text-white px-3 
+//                                         py-1.5 rounded-lg transition-all duration-200 
+//                                         hover:scale-105 shadow-md hover:shadow-xl"
+//                                     >انصراف
+//                                     </button>
+//                                 </div>
+
+//                                 {createFoodIsError && (
+//                                     <p className="text-red-500 text-center">
+//                                         {(createFoodError as Error).message}
+//                                     </p>
+//                                 )}
+
+//                                 {parsedError?.message && (
+//                                     <p className="text-red-500 text-center">
+//                                         {parsedError.message}
+//                                     </p>
+//                                 )}
+//                             </form>
+//                         </div>
+//                     </div>
+//                 </div>
+//             )}
+//         </div>
+//     )
+// }
+
+//"use client"
+
 import SelectCategory from "@/features/categories/components/selectCategory"
 import { useCreateFood } from "@/features/foods/hooks/useCreateFood"
 import { useUpdateFood } from "@/features/foods/hooks/useUpdateFood"
@@ -13,8 +284,6 @@ import { useForm } from "react-hook-form"
 interface props {
     foodId: string
     defaultFoodName: string
-    //categoryId: string
-    //setCategoryId: (value: SetStateAction<string>) => void
     isEditingMode: "Edit" | "Create" | "close"
     setIsEditingMode: (value: SetStateAction<"Edit" | "Create" | "close">) => void
 }
@@ -22,249 +291,149 @@ interface props {
 export default function CreateOrUpdateFoods({
     foodId,
     defaultFoodName,
-    //categoryId,
-    //setCategoryId,
     isEditingMode,
     setIsEditingMode,
 }: props) {
 
-    // This id come from selectIngredient Component
     const [selectedCategoryId, setSelectedCategoryId] = useState("");
     const [categoryIdError, setCategoryIdError] = useState("");
 
-    const handleSlection = (id: string) => {
-        setSelectedCategoryId(id)
-        console.log("ID دریافت شده در والد:", id);
-    }
+    const { mutate: updateFoodMutate, isPending: updateFoodIsPending, isError: updateFoodIsError, error: updateFoodError } = useUpdateFood()
+    const { mutate: createFoodMutate, isPending: createFoodIsPending, isError: createFoodIsError, error: createFoodError } = useCreateFood()
 
-    const { mutate: updateFoodMutate,
-        isPending: updateFoodIsPending,
-        isError: updateFoodIsError,
-        error: updateFoodError
-    } = useUpdateFood()
+    const isPending = isEditingMode === "Edit" ? updateFoodIsPending : createFoodIsPending;
+    const isError = isEditingMode === "Edit" ? updateFoodIsError : createFoodIsError;
+    const error = isEditingMode === "Edit" ? updateFoodError : createFoodError;
 
-    const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;
-
-    useEffect(() => {
-        if (defaultFoodName) {
-            reset({
-                name: defaultFoodName,
-            });
-        }
-    }, [defaultFoodName]); // هر وقت defaultFoodName تغییر کرد، فرم آپدیت میشه
-
+    const parsedError = isError ? parseApiError(error) : null;
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors },
         reset,
     } = useForm<UpdateFoodFormData>({
         resolver: zodResolver(UpdateFoodSchema),
-        defaultValues: {
-            name: defaultFoodName
-        }
+        defaultValues: { name: "" }
     })
 
+    // وقتی مد تغییر کرد یا نام پیش‌فرض عوض شد، فرم رو آپدیت کن
+    useEffect(() => {
+        if (isEditingMode !== "close") {
+            reset({ name: defaultFoodName || "" });
+            setSelectedCategoryId("");
+            setCategoryIdError("");
+        }
+    }, [isEditingMode, defaultFoodName, reset]);
+
+    const handleSelection = (id: string) => {
+        setSelectedCategoryId(id)
+        setCategoryIdError("")
+    }
+
     const onSubmit = (data: UpdateFoodFormData) => {
-        updateFoodMutate({
-            id: foodId,
-            categoryId: selectedCategoryId,
-            name: data.name,
-            recipe: data.recipe,
-        }, {
-            onSuccess: () => {
-                reset()
-                //setCategoryId("")
-                setSelectedCategoryId("")
-                setIsEditingMode("close")
-            },
-            onError: (err: any) => {
-                console.error("Mutation Error:", err);
-                console.log("سلااااااام دیس ایز ارور", parsedError?.message)
-                if (selectedCategoryId == "")
-                    setCategoryIdError("لطفا یک دسته بندی انتخاب کنید")
-            }
-        })
-    }
+        if (selectedCategoryId === "") {
+            setCategoryIdError("لطفا یک دسته بندی انتخاب کنید")
+            return
+        }
 
-    // Create ------------------
-
-    const {
-        mutate: createFoodMutate,
-        isPending: createFoodIsPendig,
-        isError: createFoodIsError,
-        error: createFoodError
-    } = useCreateFood()
-
-    const onCreateSubmit = (data: UpdateFoodFormData) => {
-        createFoodMutate({
+        const payload = {
             name: data.name,
             categoryId: selectedCategoryId,
             recipe: data.recipe,
-        }, {
-            onSuccess: () => {
-                reset()
-                setSelectedCategoryId("")
-                setIsEditingMode("close")
-            },
-            onError: (err: any) => {
-                console.error("Mutation Error:", err);
-                if (selectedCategoryId == "")
-                    setCategoryIdError("لطفا یک دسته بندی انتخاب کنید")
-            }
-        })
+        }
+
+        if (isEditingMode === "Create") {
+            createFoodMutate(payload, {
+                onSuccess: () => {
+                    reset()
+                    setSelectedCategoryId("")
+                    setIsEditingMode("close")
+                },
+                onError: (err: any) => console.error("Mutation Error:", err)
+            })
+        } else if (isEditingMode === "Edit") {
+            updateFoodMutate({ ...payload, id: foodId }, {
+                onSuccess: () => {
+                    reset()
+                    setSelectedCategoryId("")
+                    setIsEditingMode("close")
+                },
+                onError: (err: any) => console.error("Mutation Error:", err)
+            })
+        }
     }
+
+    // اگر بسته است، چیزی رندر نکن
+    if (isEditingMode === "close") return null;
 
     return (
-        <div className="">
-            {isEditingMode == "Edit" && (
-                <div
-                    className="absolute flex items-center justify-center inset-0
-                                            z-40 bg-black/50">
-                    <div className="bg-emerald-50 rounded-lg w-96 z-50
-                                                        border border-gray-400 shadow-md
-                                                        py-8 px-10">
-                        <form
-                            onSubmit={handleSubmit(onSubmit)}
-                            className="flex flex-col gap-4 items-center">
-                            <span className="text-xl">ویرایش غذا</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+            <div className="bg-white rounded-xl w-full max-w-md shadow-2xl p-6 md:p-8 flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
+                <span className="text-xl font-bold text-gray-800 border-b pb-3">
+                    {isEditingMode === "Create" ? "افزودن غذای جدید" : "ویرایش غذا"}
+                </span>
 
-                            <TextField style={{ width: "100%" }} size="small"
-                                placeholder="نام غذا :"
-                                variant="outlined"
-                                {...register("name")}
-                                error={!!parsedError?.fieldErrors?.Name}
-                                helperText={!!parsedError?.fieldErrors?.Name?.[0]}
-                            />
-
-                            <TextareaAutosize
-                                style={{ width: "100%" }}
-                                placeholder="طرز تهیه: "
-                                {...register("recipe")}
-                            />
-
-                            {errors.name && (
-                                <p className="text-red-400">{errors.name.message}</p>
-                            )}
-
-                            <SelectCategory
-                                onSelect={handleSlection}
-                            />
-
-                            <div className="text-red-400">{categoryIdError}</div>
-
-                            <div className="flex items-center gap-2 w-full">
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting || updateFoodIsPending}
-                                    className="bg-blue-400 text-white px-4 py-1.5
-                                                                    rounded-lg transition-all duration-200 hover:scale-105
-                                                                    shadow-md hover:shadow-xl"
-                                >
-
-                                    {isSubmitting || updateFoodIsPending ? "در حال ارسال..." : "ثبت"}
-                                </button>
-
-                                <button
-                                    onClick={() => {
-                                        setIsEditingMode("close"),
-                                            reset(),
-                                            setCategoryIdError("")
-                                    }}
-                                    className="bg-red-500 text-white px-3 py-1.5 rounded-lg
-                                                                            transition-all duration-200 hover:scale-105
-                                                                            shadow-md hover:shadow-xl"
-                                >انصراف
-                                </button>
-                            </div>
-
-                            {updateFoodIsError && (
-                                <p className="text-red-500 text-center">
-                                    {(updateFoodError as Error).message}
-                                </p>
-                            )}
-
-                            {parsedError?.message && (
-                                <p className="text-red-500 text-center">
-                                    {parsedError.message}
-                                </p>
-                            )}
-                        </form>
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-600">نام غذا</label>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            placeholder="مثال: پاستا آلفردو"
+                            variant="outlined"
+                            {...register("name")}
+                            error={!!errors.name || !!parsedError?.fieldErrors?.Name}
+                            helperText={errors.name?.message || parsedError?.fieldErrors?.Name?.[0]}
+                        />
                     </div>
-                </div>
-            )}
-            {isEditingMode == "Create" && (
-                <div>
-                    <div
-                        className="fixed flex items-center justify-center inset-0
-                                            z-40 bg-black/50">
-                        <div className="bg-emerald-50 rounded-lg w-96 z-50 border 
-                        border-gray-400 shadow-md py-8 px-10">
-                            <form
-                                onSubmit={handleSubmit(onCreateSubmit)}
-                                className="flex flex-col gap-4 items-center">
-                                <span className="text-xl">افزودن غذا</span>
 
-                                <TextField style={{ width: "100%" }} size="small"
-                                    placeholder="نام غذا :"
-                                    variant="outlined"
-                                    {...register("name")}
-                                    error={!!parsedError?.fieldErrors?.Name}
-                                    helperText={!!parsedError?.fieldErrors?.Name?.[0]}
-                                />
-
-                                {errors.name && (
-                                    <p className="text-red-400">{errors.name.message}</p>
-                                )}
-
-                                <SelectCategory
-                                    onSelect={handleSlection}
-                                />
-
-                                <div className="text-red-400">{categoryIdError}</div>
-
-                                <div className="flex items-center gap-2 w-full">
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting || createFoodIsPendig}
-                                        className="bg-blue-400 text-white px-4 py-1.5
-                                                                    rounded-lg transition-all duration-200 hover:scale-105
-                                                                    shadow-md hover:shadow-xl"
-                                    >
-
-                                        {isSubmitting || createFoodIsPendig ? "در حال ارسال..." : "ثبت"}
-                                    </button>
-
-                                    <button
-                                        onClick={() => {
-                                            setIsEditingMode("close"),
-                                                reset(),
-                                                setCategoryIdError("")
-                                        }}
-                                        className="bg-red-500 text-white px-3 
-                                        py-1.5 rounded-lg transition-all duration-200 
-                                        hover:scale-105 shadow-md hover:shadow-xl"
-                                    >انصراف
-                                    </button>
-                                </div>
-
-                                {createFoodIsError && (
-                                    <p className="text-red-500 text-center">
-                                        {(createFoodError as Error).message}
-                                    </p>
-                                )}
-
-                                {parsedError?.message && (
-                                    <p className="text-red-500 text-center">
-                                        {parsedError.message}
-                                    </p>
-                                )}
-                            </form>
-                        </div>
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-600">طرز تهیه</label>
+                        <TextareaAutosize
+                            minRows={3}
+                            placeholder="دستور پخت را وارد کنید..."
+                            {...register("recipe")}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all"
+                        />
                     </div>
-                </div>
-            )}
+
+                    <SelectCategory key={isEditingMode + foodId} onSelect={handleSelection} />
+
+                    {categoryIdError && (
+                        <p className="text-red-500 text-sm text-center -mt-2">{categoryIdError}</p>
+                    )}
+
+                    <div className="flex items-center gap-3 mt-4">
+                        <button
+                            type="submit"
+                            disabled={isPending}
+                            className="flex-1 bg-emerald-500 text-white py-2.5 rounded-lg transition-all hover:bg-emerald-600 disabled:bg-emerald-300 font-medium"
+                        >
+                            {isPending ? "در حال ارسال..." : "ثبت اطلاعات"}
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsEditingMode("close")
+                                reset()
+                                setSelectedCategoryId("")
+                                setCategoryIdError("")
+                            }}
+                            className="flex-1 bg-gray-100 text-gray-600 py-2.5 rounded-lg transition-all hover:bg-gray-200 font-medium"
+                        >
+                            انصراف
+                        </button>
+                    </div>
+
+                    {isError && (
+                        <p className="text-red-500 text-sm text-center bg-red-50 p-2 rounded-lg">
+                            {parsedError?.message || (error as Error).message}
+                        </p>
+                    )}
+                </form>
+            </div>
         </div>
     )
 }
