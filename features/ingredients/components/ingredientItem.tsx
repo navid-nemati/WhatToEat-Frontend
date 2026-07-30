@@ -82,6 +82,7 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                 size="xs"
             >
                 <UpdateIngredientForm
+                    ingredientName={name}
                     ingredientId={id}
                     onSuccess={() => setEditModalOpen(false)}
                 />

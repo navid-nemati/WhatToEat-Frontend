@@ -6,11 +6,12 @@ import { UpdateIngredientItemFormData, UpdateIngredientItemSchema } from "../sch
 import useUpdateIngredient from "../hooks/useUpdateIngredient";
 
 interface UpdateIngredientModalProps {
+    ingredientName: string
     ingredientId: string
     onSuccess: () => void
 }
 
-export default function UpdateIngredientForm({ ingredientId, onSuccess }: UpdateIngredientModalProps) {
+export default function UpdateIngredientForm({ ingredientName, ingredientId, onSuccess }: UpdateIngredientModalProps) {
 
     const { mutate, isPending, isError, error } = useUpdateIngredient()
 
@@ -23,6 +24,9 @@ export default function UpdateIngredientForm({ ingredientId, onSuccess }: Update
         reset,
     } = useForm<UpdateIngredientItemFormData>({
         resolver: zodResolver(UpdateIngredientItemSchema),
+        defaultValues: {
+            name: ingredientName
+        }
     })
 
     const onSubmit = (data: UpdateIngredientItemFormData) => {
