@@ -1,172 +1,196 @@
-// import { UpdateFoodFormData } from "../schemas/UpdateFood.schema";
+"use client";
 
-// interface FoodFormProps{
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TextareaAutosize, TextField } from "@mui/material";
 
-//     defaultValues?:{
-//         name:string;
-//         recipe:string;
-//         categoryId:string;
-//     }
+import SelectCategory from "@/features/categories/components/selectCategory";
 
-//     loading:boolean;
+import {
+    UpdateFoodFormData,
+    UpdateFoodSchema,
+} from "../schemas/UpdateFood.schema";
 
-//     onSubmit:(data:UpdateFoodFormData)=>void;
-// }
+interface FoodFormProps {
+    title?: string;
 
-// export default function FoodForm({
-//     defaultValues,
-//     loading,
-//     onSubmit,
-// }: FoodFormProps) {
-//     return (
-//         <div className="">
-//             {isEditingMode == "Edit" && (
-//                 <div
-//                     className="absolute flex items-center justify-center inset-0
-//                                             z-40 bg-black/50">
-//                     <div className="bg-emerald-50 rounded-lg w-96 z-50
-//                                                         border border-gray-400 shadow-md
-//                                                         py-8 px-10">
-//                         <form
-//                             onSubmit={handleSubmit(onSubmit)}
-//                             className="flex flex-col gap-4 items-center">
-//                             <span className="text-xl">ویرایش غذا</span>
+    defaultValues?: {
+        name: string;
+        recipe: string;
+        categoryId: string;
+    };
 
-//                             <TextField style={{ width: "100%" }} size="small"
-//                                 placeholder="نام غذا :"
-//                                 variant="outlined"
-//                                 {...register("name")}
-//                                 error={!!parsedError?.fieldErrors?.Name}
-//                                 helperText={!!parsedError?.fieldErrors?.Name?.[0]}
-//                             />
+    loading: boolean;
 
-//                             <TextareaAutosize
-//                                 style={{ width: "100%" }}
-//                                 placeholder="طرز تهیه: "
-//                                 {...register("recipe")}
-//                             />
+    apiError?: string;
 
-//                             {errors.name && (
-//                                 <p className="text-red-400">{errors.name.message}</p>
-//                             )}
+    fieldErrors?: {
+        Name?: string[];
+        Recipe?: string[];
+        CategoryId?: string[];
+    };
 
-//                             <SelectCategory
-//                                 onSelect={handleSlection}
-//                             />
+    submitButtonText?: string;
 
-//                             <div className="text-red-400">{categoryIdError}</div>
+    onSubmit: (data: UpdateFoodFormData) => void;
+}
 
-//                             <div className="flex items-center gap-2 w-full">
-//                                 <button
-//                                     type="submit"
-//                                     disabled={isSubmitting || updateFoodIsPending}
-//                                     className="bg-blue-400 text-white px-4 py-1.5
-//                                                                     rounded-lg transition-all duration-200 hover:scale-105
-//                                                                     shadow-md hover:shadow-xl"
-//                                 >
+export default function FoodForm({
+    title,
+    defaultValues,
+    loading,
+    apiError,
+    fieldErrors,
+    submitButtonText = "ثبت اطلاعات",
+    onSubmit,
+}: FoodFormProps) {
+    const [selectedCategoryId, setSelectedCategoryId] = useState(
+        defaultValues?.categoryId ?? ""
+    );
 
-//                                     {isSubmitting || updateFoodIsPending ? "در حال ارسال..." : "ثبت"}
-//                                 </button>
+    const [categoryError, setCategoryError] = useState("");
 
-//                                 <button
-//                                     onClick={() => {
-//                                         setIsEditingMode("close"),
-//                                             reset(),
-//                                             setCategoryIdError("")
-//                                     }}
-//                                     className="bg-red-500 text-white px-3 py-1.5 rounded-lg
-//                                                                             transition-all duration-200 hover:scale-105
-//                                                                             shadow-md hover:shadow-xl"
-//                                 >انصراف
-//                                 </button>
-//                             </div>
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<UpdateFoodFormData>({
+        resolver: zodResolver(UpdateFoodSchema),
 
-//                             {updateFoodIsError && (
-//                                 <p className="text-red-500 text-center">
-//                                     {(updateFoodError as Error).message}
-//                                 </p>
-//                             )}
+        defaultValues: {
+            name: defaultValues?.name ?? "",
+            recipe: defaultValues?.recipe ?? "",
+            categoryId: defaultValues?.categoryId ?? "",
+        },
+    });
 
-//                             {parsedError?.message && (
-//                                 <p className="text-red-500 text-center">
-//                                     {parsedError.message}
-//                                 </p>
-//                             )}
-//                         </form>
-//                     </div>
-//                 </div>
-//             )}
-//             {isEditingMode == "Create" && (
-//                 <div>
-//                     <div
-//                         className="fixed flex items-center justify-center inset-0
-//                                             z-40 bg-black/50">
-//                         <div className="bg-emerald-50 rounded-lg w-96 z-50 border 
-//                         border-gray-400 shadow-md py-8 px-10">
-//                             <form
-//                                 onSubmit={handleSubmit(onCreateSubmit)}
-//                                 className="flex flex-col gap-4 items-center">
-//                                 <span className="text-xl">افزودن غذا</span>
+    useEffect(() => {
+        reset({
+            name: defaultValues?.name ?? "",
+            recipe: defaultValues?.recipe ?? "",
+            categoryId: defaultValues?.categoryId ?? "",
+        });
 
-//                                 <TextField style={{ width: "100%" }} size="small"
-//                                     placeholder="نام غذا :"
-//                                     variant="outlined"
-//                                     {...register("name")}
-//                                     error={!!parsedError?.fieldErrors?.Name}
-//                                     helperText={!!parsedError?.fieldErrors?.Name?.[0]}
-//                                 />
+        setSelectedCategoryId(defaultValues?.categoryId ?? "");
+        setCategoryError("");
+    }, [defaultValues, reset]);
 
-//                                 {errors.name && (
-//                                     <p className="text-red-400">{errors.name.message}</p>
-//                                 )}
+    const handleCategorySelect = (id: string) => {
+        setSelectedCategoryId(id);
+        setCategoryError("");
+    };
 
-//                                 <SelectCategory
-//                                     onSelect={handleSlection}
-//                                 />
+    const handleFoodSubmit = (data: UpdateFoodFormData) => {
+        if (!selectedCategoryId) {
+            setCategoryError("لطفاً یک دسته‌بندی انتخاب کنید");
+            return;
+        }
 
-//                                 <div className="text-red-400">{categoryIdError}</div>
+        setCategoryError("");
 
-//                                 <div className="flex items-center gap-2 w-full">
-//                                     <button
-//                                         type="submit"
-//                                         disabled={isSubmitting || createFoodIsPendig}
-//                                         className="bg-blue-400 text-white px-4 py-1.5
-//                                                                     rounded-lg transition-all duration-200 hover:scale-105
-//                                                                     shadow-md hover:shadow-xl"
-//                                     >
+        onSubmit({
+            ...data,
+            categoryId: selectedCategoryId,
+        });
+    };
 
-//                                         {isSubmitting || createFoodIsPendig ? "در حال ارسال..." : "ثبت"}
-//                                     </button>
+    return (
+        <form
+            onSubmit={handleSubmit(handleFoodSubmit)}
+            className="flex w-full flex-col gap-5"
+        >
+            {title && (
+                <h2 className="text-xl font-bold text-gray-800">
+                    {title}
+                </h2>
+            )}
 
-//                                     <button
-//                                         onClick={() => {
-//                                             setIsEditingMode("close"),
-//                                                 reset(),
-//                                                 setCategoryIdError("")
-//                                         }}
-//                                         className="bg-red-500 text-white px-3 
-//                                         py-1.5 rounded-lg transition-all duration-200 
-//                                         hover:scale-105 shadow-md hover:shadow-xl"
-//                                     >انصراف
-//                                     </button>
-//                                 </div>
+            <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-600">
+                    نام غذا
+                </label>
 
-//                                 {createFoodIsError && (
-//                                     <p className="text-red-500 text-center">
-//                                         {(createFoodError as Error).message}
-//                                     </p>
-//                                 )}
+                <TextField
+                    fullWidth
+                    size="small"
+                    placeholder="مثال: پاستا آلفردو"
+                    variant="outlined"
+                    {...register("name")}
+                    error={
+                        Boolean(errors.name) ||
+                        Boolean(fieldErrors?.Name?.length)
+                    }
+                    helperText={
+                        errors.name?.message ??
+                        fieldErrors?.Name?.[0]
+                    }
+                />
+            </div>
 
-//                                 {parsedError?.message && (
-//                                     <p className="text-red-500 text-center">
-//                                         {parsedError.message}
-//                                     </p>
-//                                 )}
-//                             </form>
-//                         </div>
-//                     </div>
-//                 </div>
-//             )}
-//         </div>
-//     )
-// }
+            <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-600">
+                    طرز تهیه
+                </label>
+
+                <TextareaAutosize
+                    minRows={5}
+                    placeholder="دستور پخت را وارد کنید..."
+                    {...register("recipe")}
+                    className={`
+                        w-full resize-y rounded-lg border p-3
+                        outline-none transition-all
+                        focus:ring-2 focus:ring-emerald-400
+                        ${
+                            errors.recipe || fieldErrors?.Recipe?.length
+                                ? "border-red-500"
+                                : "border-gray-300"
+                        }
+                    `}
+                />
+
+                {(errors.recipe?.message ||
+                    fieldErrors?.Recipe?.[0]) && (
+                    <p className="text-sm text-red-500">
+                        {errors.recipe?.message ??
+                            fieldErrors?.Recipe?.[0]}
+                    </p>
+                )}
+            </div>
+
+            <SelectCategory
+                value={selectedCategoryId}
+                onSelect={handleCategorySelect}
+            />
+
+            {(categoryError ||
+                fieldErrors?.CategoryId?.[0]) && (
+                <p className="text-sm text-red-500">
+                    {categoryError ||
+                        fieldErrors?.CategoryId?.[0]}
+                </p>
+            )}
+
+            {apiError && (
+                <p className="rounded-lg bg-red-50 p-3 text-center text-sm text-red-600">
+                    {apiError}
+                </p>
+            )}
+
+            <button
+                type="submit"
+                disabled={loading}
+                className="
+                    w-full rounded-lg bg-emerald-500 py-2.5
+                    font-medium text-white transition-colors
+                    hover:bg-emerald-600
+                    disabled:cursor-not-allowed
+                    disabled:bg-emerald-300
+                "
+            >
+                {loading ? "در حال ارسال..." : submitButtonText}
+            </button>
+        </form>
+    );
+}

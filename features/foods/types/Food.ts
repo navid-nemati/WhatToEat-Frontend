@@ -16,7 +16,7 @@ export interface IFoodDetailDto extends IFoodDto{
 export interface ICreateFoodDto {
     name: string;
     categoryId: string;
-    recipe: string
+    recipe?: string
 }
 
 export interface IUpdateFoodDto {

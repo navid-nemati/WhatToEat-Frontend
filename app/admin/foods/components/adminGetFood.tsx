@@ -27,7 +27,7 @@
 //             isError: deleteIsError,
 //             error: deleteError
 //         } = useDeleteFood()
-    
+
 //         const onDeleteSubmit = (id: string) => {
 //             deleteMutate(id, {
 //                 onSuccess: () => {
@@ -128,18 +128,21 @@
 import LoadingComponent from "@/shared/components/loading";
 import { useGetAllFoods } from "@/features/foods/hooks/useGetAllFoods";
 import { useState } from "react";
-import CreateOrUpdateFoods from "./createOrUpdateFoods";
 import { useDeleteFood } from "@/features/foods/hooks/useDeleteFood";
 import Link from "next/link";
+import Modal from "@/shared/components/modal";
+import CreateFood from "./createFood";
 
 export default function AdminGetFoods() {
-    const [foodId, setFoodId] = useState("")
-    const [defaultFoodName, setDefaultFoodName] = useState("")
-    const [isEditingMode, setIsEditingMode] = useState<"Edit" | "Create" | "close">("close")
+    // const [foodId, setFoodId] = useState("")
+    // const [defaultFoodName, setDefaultFoodName] = useState("")
+    // const [isEditingMode, setIsEditingMode] = useState<"Edit" | "Create" | "close">("close")
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
     const { data, isLoading, isError, error } = useGetAllFoods()
     const { mutate: deleteMutate, isPending: deleteIsPending } = useDeleteFood()
-    
+
     const onDeleteSubmit = (id: string) => {
         if (window.confirm("آیا از حذف این غذا مطمئن هستید؟")) {
             deleteMutate(id, {
@@ -161,15 +164,10 @@ export default function AdminGetFoods() {
 
     return (
         <div className="w-full">
-            {/* دکمه ساخت غذا از گرید خارج شد تا ظاهر بهتری داشته باشد */}
             <div className="flex justify-start mb-8">
                 <button
                     className="bg-emerald-500 rounded-lg text-xl text-white px-6 py-3 shadow-md hover:bg-emerald-600 transition-all duration-200 hover:scale-105"
-                    onClick={() => {
-                        setFoodId("")
-                        setDefaultFoodName("")
-                        setIsEditingMode("Create")
-                    }}
+                    onClick={() => setIsCreateModalOpen(true)}
                 >
                     + افزودن غذای جدید
                 </button>
@@ -178,8 +176,8 @@ export default function AdminGetFoods() {
             {/* لیست غذاها */}
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {data?.map(food => (
-                    <Link
-                        href={`/admin/foods/${food.id}`}
+                    <div
+
                         key={food.id}
                         className="w-full p-5 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between"
                     >
@@ -189,18 +187,19 @@ export default function AdminGetFoods() {
                                 دسته‌بندی: <span className="font-medium text-gray-700">{food.categoryName}</span>
                             </div>
                         </div>
-                        
+
                         <div className="flex items-center gap-2 mt-4 pt-4 border-t border-gray-100">
-                            <button
-                                onClick={() => {
-                                    setFoodId(food.id)
-                                    setDefaultFoodName(food.name)
-                                    setIsEditingMode("Edit")
-                                }}
+                            <Link
+                                href={`/admin/foods/${food.id}`}
+                                // onClick={() => {
+                                //     setFoodId(food.id)
+                                //     setDefaultFoodName(food.name)
+                                //     setIsEditingMode("Edit")
+                                // }}
                                 className="flex-1 px-3 py-2 text-sm rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-200 hover:bg-amber-100 transition-all"
                             >
                                 ویرایش
-                            </button>
+                            </Link>
                             <button
                                 onClick={() => onDeleteSubmit(food.id)}
                                 disabled={deleteIsPending}
@@ -209,16 +208,20 @@ export default function AdminGetFoods() {
                                 حذف
                             </button>
                         </div>
-                    </Link>
+                    </div>
                 ))}
             </div>
 
-            <CreateOrUpdateFoods
-                foodId={foodId}
-                defaultFoodName={defaultFoodName}
-                isEditingMode={isEditingMode}
-                setIsEditingMode={setIsEditingMode}
-            />
+            <Modal
+                open={isCreateModalOpen}
+                onOpenChange={setIsCreateModalOpen}
+                title="افزودن غذای جدید"
+                size="xs"
+            >
+                <CreateFood
+                    onSuccess={() => setIsCreateModalOpen(false)} />
+            </Modal>
+
         </div>
     )
 }

@@ -1,99 +1,130 @@
-"use client"
+"use client";
+
+import { useEffect, useState } from "react";
 
 import useGetAllCategories from "@/features/categories/hooks/useGetAllCategories";
-import { useState } from "react"
 
-interface props {
-    onSelect: (id: string) => void
+interface SelectCategoryProps {
+    value?: string;
+    onSelect: (id: string) => void;
 }
 
-export default function SelectCategory({ onSelect }: props) {
-
-    const [searchTerm, setSearchTerm] = useState('');
-    const [submitSearch, setSubmitSearch] = useState('');
-
-    const SubmitSearch = () => {
-        setSearchTerm(submitSearch)
-    }
-
-    const [selectedId, setSelectedId] = useState('');
+export default function SelectCategory({
+    value = "",
+    onSelect,
+}: SelectCategoryProps) {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchInput, setSearchInput] = useState("");
+    const [selectedId, setSelectedId] = useState(value);
 
     const {
-        data: ingredient,
+        data: categories,
         isLoading,
         isError,
-        error
-    } = useGetAllCategories({ name: searchTerm })
+        error,
+    } = useGetAllCategories({
+        name: searchTerm,
+    });
 
-    const handleSearchChange = (evemt: React.ChangeEvent<HTMLInputElement>) => {
-        setSubmitSearch(evemt.target.value)
-    }
+    useEffect(() => {
+        setSelectedId(value);
+    }, [value]);
 
-    const handleChangeBtn = (id: string) => {
+    const handleSearch = () => {
+        setSearchTerm(searchInput.trim());
+    };
+
+    const handleCategorySelect = (id: string) => {
         setSelectedId(id);
-
-        if (id) {
-            onSelect(id);
-        }
-    }
+        onSelect(id);
+    };
 
     if (isError) {
         return (
-            <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <p className="text-red-500 text-center p-4">
+            <div className="rounded-lg bg-red-50 p-4">
+                <p className="text-center text-sm text-red-500">
                     {(error as Error).message}
                 </p>
             </div>
         );
     }
 
-    if (isLoading) {
-        return (
-            <div className="p-3">
-                <span>در حال بارگذاری...</span>
-            </div>
-        )
-    }
-
     return (
-        <div className="p-3 w-full rounded-lg border border-gray-300 shadow-md
-         flex flex-col gap-2 bg-slate-100">
-            <div className="flex flex-col items-center gap-1.5">
-                <label>انتخاب دسته بندی</label>
-                <div className="flex items-center gap-2">
-                    <input
-                        type="text"
-                        placeholder="جستجو دسته بندی..."
-                        value={submitSearch}
-                        onChange={handleSearchChange}
-                        autoComplete="off"
-                        className="px-3 py-2 w-full rounded-lg border border-gray-300 focus:outline-1 outline-sky-300 placeholder:text-sm"
-                    />
-                    <button
-                        className="text-lg"
-                        onClick={SubmitSearch}
-                    >
-                        🔎
-                    </button>
-                </div>
+        <div className="flex w-full flex-col gap-3 rounded-lg border border-gray-300 bg-slate-50 p-3">
+            <label className="text-sm font-medium text-gray-600">
+                انتخاب دسته‌بندی
+            </label>
 
+            <div className="flex items-center gap-2">
+                <input
+                    type="text"
+                    placeholder="جست‌وجوی دسته‌بندی..."
+                    value={searchInput}
+                    onChange={(event) =>
+                        setSearchInput(event.target.value)
+                    }
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            handleSearch();
+                        }
+                    }}
+                    autoComplete="off"
+                    className="
+                        w-full rounded-lg border border-gray-300
+                        px-3 py-2 outline-none
+                        focus:ring-2 focus:ring-emerald-400
+                    "
+                />
+
+                <button
+                    type="button"
+                    onClick={handleSearch}
+                    className="
+                        rounded-lg border border-gray-300
+                        bg-white px-3 py-2
+                        transition-colors hover:bg-gray-100
+                    "
+                    aria-label="جست‌وجوی دسته‌بندی"
+                >
+                    🔎
+                </button>
             </div>
 
-            <div className="h-52 overflow-y-auto selectIngredient">
-                <div className="flex flex-col gap-1 selectIngredient mx-1 select-none">
-                    {ingredient?.map((i) => (
-                        <div
-                            key={i.id}
-                            onClick={() => handleChangeBtn(i.id)}
-                            className={`px-2 py-1 rounded-sm 
-                        ${i.id == selectedId ? 'bg-emerald-200' : 'bg-white'}
-                        `}>
-                            {i.name}
-                        </div>
-                    ))}
-                </div>
+            <div className="h-52 overflow-y-auto">
+                {isLoading ? (
+                    <p className="py-4 text-center text-sm text-gray-500">
+                        در حال بارگذاری...
+                    </p>
+                ) : categories && categories.length > 0 ? (
+                    <div className="flex flex-col gap-1">
+                        {categories.map((category) => (
+                            <button
+                                key={category.id}
+                                type="button"
+                                onClick={() =>
+                                    handleCategorySelect(category.id)
+                                }
+                                className={`
+                                    rounded-md px-3 py-2 text-right
+                                    transition-colors
+                                    ${
+                                        category.id === selectedId
+                                            ? "bg-emerald-200 text-emerald-900"
+                                            : "bg-white hover:bg-emerald-50"
+                                    }
+                                `}
+                            >
+                                {category.name}
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="py-4 text-center text-sm text-gray-500">
+                        دسته‌بندی‌ای پیدا نشد.
+                    </p>
+                )}
             </div>
-
         </div>
-    )
+    );
 }
