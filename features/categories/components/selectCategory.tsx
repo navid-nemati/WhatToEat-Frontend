@@ -97,7 +97,7 @@ export default function SelectCategory({
                         در حال بارگذاری...
                     </p>
                 ) : categories && categories.length > 0 ? (
-                    <div className="flex flex-col gap-1">
+                    <div className="grid grid-cols-2 gap-1.5">
                         {categories.map((category) => (
                             <button
                                 key={category.id}

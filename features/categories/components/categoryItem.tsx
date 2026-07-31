@@ -12,7 +12,6 @@ interface CategoryItemProp {
 export default function CategoryItem({ id, name }: CategoryItemProp) {
 
     const [isOpen, setIsOpen] = useState(false)
-    // const [isEditing, setIsEditing] = useState(false)
     const [editModalOpen, setEditModalOpen] = useState(false)
 
     const { mutate: dMutate,
@@ -70,12 +69,6 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                     </div>
                 )}
             </div>
-
-            {/* <UpdateCategoryModal 
-                isOpen={isEditing}
-                onClose={() => setIsEditing(false)}
-                categoryId={id}
-            /> */}
 
             <Modal
                 open={editModalOpen}

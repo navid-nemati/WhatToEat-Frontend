@@ -1,5 +1,5 @@
 import Container from "@/shared/components/container";
-import AdminGetFoods from "./components/adminGetFood";
+import AdminGetFoods from "../../../features/foods/components/adminGetFood";
 
 export default function AdminFoodPage() {
     return (

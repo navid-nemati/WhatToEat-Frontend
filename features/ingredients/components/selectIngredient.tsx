@@ -1,113 +1,130 @@
 "use client"
 
+import { useEffect, useState } from "react";
 import useGetAllIngredients from "@/features/ingredients/hooks/useGetAllIngredients";
-import { useState } from "react"
 
-interface props {
-    onSelect: (id: string) => void
+interface SelectIngredientProps {
+    value?: string;
+
+    onSelect: (id: string) => void;
 }
 
-export default function SelectIngredient({ onSelect }: props) {
+export default function SelectIngredient({
+    value = "",
+    onSelect,
+}: SelectIngredientProps) {
+    const [searchTerm, setSearchTerm] = useState("");
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [submitSearch, setSubmitSearch] = useState('');
+    const [searchInput, setSearchInput] = useState("");
 
-    const SubmitSearch = () => {
-        setSearchTerm(submitSearch)
-    }
-
-    const [selectedId, setSelectedId] = useState('');
+    const [selectedId, setSelectedId] =
+        useState(value);
 
     const {
-        data: ingredient,
+        data: ingredients,
         isLoading,
         isError,
-        error
-    } = useGetAllIngredients({ name: searchTerm })
+        error,
+    } = useGetAllIngredients({
+        name: searchTerm,
+    });
 
-    const handleSearchChange = (evemt: React.ChangeEvent<HTMLInputElement>) => {
-        setSubmitSearch(evemt.target.value)
-    }
+    useEffect(() => {
+        setSelectedId(value);
+    }, [value]);
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const id = e.target.value;
-    //     setSelectedId(id);
+    const handleSearch = () => {
+        setSearchTerm(searchInput.trim());
+    };
 
-    //     if (id) {
-    //         onSelect(id);
-    //     }
-    // }
-
-    const handleChangeBtn = (id: string) => {
+    const handleIngredientSelect = (id: string) => {
         setSelectedId(id);
-
-        if (id) {
-            onSelect(id);
-        }
-    }
-
-    // const clearId = () => {
-    //     setSelectedId('');
-    //     onSelect('');
-    // }
+        onSelect(id);
+    };
 
     if (isError) {
         return (
-            <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <p className="text-red-500 text-center p-4">
+            <div className="rounded-lg bg-red-50 p-4">
+                <p className="text-center text-sm text-red-500">
                     {(error as Error).message}
                 </p>
             </div>
         );
     }
 
-    if (isLoading) {
-        return (
-            <div className="p-3">
-                <span>در حال بارگذاری...</span>
-            </div>
-        )
-    }
-
     return (
-        <div className="p-3 rounded-lg border border-gray-300 shadow-md
-         flex flex-col gap-2 bg-slate-100">
-            <div className="flex flex-col items-center gap-1.5">
-                <label>انتخاب ماده اولیه</label>
-                <div className="flex items-center gap-2">
-                    <input
-                        type="text"
-                        placeholder="جستجو ماده اولیه ..."
-                        value={submitSearch}
-                        onChange={handleSearchChange}
-                        autoComplete="off"
-                        className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-1 outline-sky-300 placeholder:text-sm"
-                    />
-                    <button
-                        className="text-lg"
-                        onClick={SubmitSearch}
-                    >
-                        🔎
-                    </button>
-                </div>
+        <div className="flex w-full flex-col gap-3 rounded-lg border border-gray-300 bg-slate-50 p-3">
+            <label className="text-sm font-medium text-gray-600">
+                انتخاب ماده اولیه
+            </label>
 
+            <div className="flex items-center gap-2">
+                <input
+                    type="text"
+                    placeholder="جست‌وجوی ماده اولیه..."
+                    value={searchInput}
+                    onChange={(event) =>
+                        setSearchInput(event.target.value)
+                    }
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            handleSearch();
+                        }
+                    }}
+                    autoComplete="off"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none transition-shadow focus:ring-2 focus:ring-emerald-400"
+                />
+
+                <button
+                    type="button"
+                    onClick={handleSearch}
+                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 transition-colors hover:bg-gray-100"
+                    aria-label="جست‌وجوی ماده اولیه"
+                >
+                    🔎
+                </button>
             </div>
 
-            <div className="h-52 overflow-y-auto selectIngredient">
-                <div className="flex flex-col gap-1 selectIngredient select-none mx-1">
-                    {ingredient?.map((i) => (
-                        <div
-                            key={i.id}
-                            onClick={() => handleChangeBtn(i.id)}
-                            className={`px-2 py-1 rounded-sm 
-                        ${i.id == selectedId ? 'bg-emerald-200' : 'bg-white'}
-                        `}>
-                            {i.name}
-                        </div>
-                    ))}
-                </div>
+            <div className="h-52 overflow-y-auto">
+                {isLoading ? (
+                    <p className="py-5 text-center text-sm text-gray-500">
+                        در حال بارگذاری...
+                    </p>
+                ) : ingredients &&
+                  ingredients.length > 0 ? (
+                    // <div className="flex flex-col gap-1">
+                    <div className="grid grid-cols-2 gap-1.5">
+                        {ingredients.map((ingredient) => (
+                            <button
+                                key={ingredient.id}
+                                type="button"
+                                onClick={() =>
+                                    handleIngredientSelect(
+                                        ingredient.id
+                                    )
+                                }
+                                className={`
+                                    rounded-md px-3 py-2 text-right
+                                    transition-colors
+                                    ${
+                                        ingredient.id ===
+                                        selectedId
+                                            ? "bg-emerald-200 text-emerald-900"
+                                            : "bg-white hover:bg-emerald-50"
+                                    }
+                                `}
+                            >
+                                {ingredient.name}
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="py-5 text-center text-sm text-gray-500">
+                        ماده اولیه‌ای پیدا نشد.
+                    </p>
+                )}
             </div>
-
         </div>
-    )
+    );
 }

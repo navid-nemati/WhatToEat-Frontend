@@ -68,13 +68,7 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                     </div>
                 )}
             </div>
-
-            {/* <UpdateIngredientModal 
-                isOpen={isEditing}
-                onClose={() => setIsEditing(false)}
-                ingredientId={id}
-            /> */}
-
+            
             <Modal
                 open={editModalOpen}
                 onOpenChange={setEditModalOpen}

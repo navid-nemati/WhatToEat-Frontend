@@ -55,8 +55,6 @@ export default function CreateIngredientComponent() {
                     )}
                 </div>
 
-
-
                 <button
                     type="submit"
                     disabled={isPending || isSubmitting}
@@ -65,8 +63,6 @@ export default function CreateIngredientComponent() {
                     hover:shadow-md">
                     {isPending || isSubmitting ? "اندکی تأمل" : "افزودن"}
                 </button>
-
-
 
             </form>
         </div>

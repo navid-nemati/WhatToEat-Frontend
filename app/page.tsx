@@ -42,7 +42,7 @@ export default function Home() {
     <div className="relative overflow-hidden">
       {/* بک‌گراند تزئینی: دو تا بلاب گرادینت محو */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-300/30 blur-3xl" />
+        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-200/30 blur-3xl" />
         <div className="absolute top-32 -left-24 h-80 w-80 rounded-full bg-amber-300/30 blur-3xl" />
       </div>
 

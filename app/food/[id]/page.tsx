@@ -7,6 +7,7 @@ import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface FoodDetailProp {
@@ -15,29 +16,30 @@ interface FoodDetailProp {
 
 export default function FoodDetail({ params }: FoodDetailProp) {
 
-    const [resolvedId, setResolvedId] = useState<string>('');
+    //const [resolvedId, setResolvedId] = useState<string>('');
+    const { id } = useParams<{ id: string }>();
 
-    useEffect(() => {
-        const resolveParams = async () => {
-            const result = await params;
-            setResolvedId(result.id);
-        };
-        resolveParams();
-    }, [params]);
+    // useEffect(() => {
+    //     const resolveParams = async () => {
+    //         const result = await params;
+    //         setResolvedId(result.id);
+    //     };
+    //     resolveParams();
+    // }, [params]);
 
     const {
         data,
         isLoading,
         isError,
         error,
-    } = useGetFoodDetail(resolvedId);
+    } = useGetFoodDetail(id);
 
     const {
         data: ingredientData,
         isLoading: ingredientIsLoading,
         isError: ingredientIsError,
         error: ingredientError,
-    } = UseGetAllIngredientOfFood(resolvedId);
+    } = UseGetAllIngredientOfFood(id);
 
 
     if (isLoading) return (
@@ -144,7 +146,7 @@ export default function FoodDetail({ params }: FoodDetailProp) {
                         </table>
                     </div>
 
-                    {/* left side */}
+                    {/* left side | recipe */}
                     <div className="">
                         <h3 className="text-2xl drop-shadow-lg text-shadow-sm mb-3">طرز تهیه</h3>
 

@@ -6,5 +6,6 @@ export default function useGetFoodDetail(id: string) {
     return useQuery({
         queryKey: [queryKeys.foods, id],
         queryFn: () => GetFoodDetail(id),
+        enabled: !!id,
     })
 }

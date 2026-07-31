@@ -75,18 +75,6 @@ export default function UpdateIngredientForm({ ingredientName, ingredientId, onS
                     ? "در حال ذخیره..."
                     : "ثبت"}
             </button>
-
-            {/* {isError && (
-                <p className="text-sm text-red-500 text-center">
-                    {(error as Error).message}
-                </p>
-            )}
-
-            {parsedError?.message && (
-                <p className="text-sm text-red-500 text-center">
-                    {parsedError.message}
-                </p>
-            )} */}
         </form>
     );
 }
