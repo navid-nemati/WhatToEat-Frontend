@@ -2,15 +2,41 @@
 
 A web application for discovering meal ideas and managing recipes based on available ingredients.
 
-## Features
+---
 
-- Manage ingredients
+# ✨ Features
+
+## 👤 Authentication
+
+- Login & Logout
+- JWT Authentication
+- Refresh Token
+- Protected Routes
+- Role-based Authorization (Admin / User)
+
+---
+
+## 🍔 Foods
+
+- Browse foods
+- Create food
+- Edit food
+- Delete food
 - Associate ingredients with foods
-- Admin panel for managing application data
+- Assign category to food
 
-## Tech Stack
+---
 
-### Frontend
+## 🛠 Admin Dashboard
+
+- Manage Foods
+- Manage Ingredients
+- Manage Categories
+
+# 🛠 Tech Stack
+
+## Frontend
+
 - Next.js
 - TypeScript
 - React Query (TanStack Query)
@@ -18,37 +44,35 @@ A web application for discovering meal ideas and managing recipes based on avail
 - Zod
 - Tailwind CSS
 - Material UI
-- NextAuth.js
+- Axios
 
-### Backend
+## Backend
+
 - ASP.NET Core Web API
 - Entity Framework Core
 - SQL Server
-- JWT Authentication
+- ASP.NET Identity
+- JWT
 - Refresh Token
 
-## Project Status
+---
 
-🚧 This project is currently under active development.
+# 🚀 Planned Features
 
-Some planned improvements include:
-
-- Browse food recipes
+- Filter foods by ingredients
+- Favorite foods
+- Better mobile experience
 - Organize foods by categories
-- Favorites
-- Shopping list
-- Better UI with shadcn/ui
-- Search improvements
-- More recipe filtering options
-- Authentication with JWT
 
-## Learning Goals
+
+# 🎯 Learning Goals
 
 This project focuses on improving skills in:
 
-- Full-stack development
-- Feature-based architecture
-- Clean code
+- Full-stack Development
+- Feature-based Architecture
 - React Query
 - Authentication & Authorization
+- Clean Code
+- TypeScript
 - ASP.NET Core Web API
