@@ -97,7 +97,7 @@ export default function AdminCategoriesPage() {
                     </div>
 
                     <div className="w-full flex flex-col lg:flex-row gap-4">
-                        {/* کامپوننت ساخت دسته */}
+                        {/* ساخت دسته */}
                         <CreateCategoryComponent />
 
                         {/* بخش جستجو */}
@@ -106,9 +106,11 @@ export default function AdminCategoriesPage() {
                                 <div className="w-1 h-6 bg-emerald-500 rounded-full"></div>
                                 <h2 className="text-lg font-bold text-slate-800">جستجو</h2>
                             </div>
-                            <form className="relative">
+                            <form onSubmit={SubmitSearch} className="relative">
                                 <input
                                     type="text"
+                                    value={searchInput}
+                                    onChange={handleSearchChange}
                                     placeholder="نام دسته‌بندی مورد نظر را جستجو کنید..."
                                     className="w-full pr-12 pl-32 py-3 bg-slate-50 border border-slate-200 rounded-xl 
                                 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white 

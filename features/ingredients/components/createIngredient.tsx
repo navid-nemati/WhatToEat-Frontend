@@ -35,36 +35,29 @@ export default function CreateIngredientComponent() {
     }
 
     return (
-        <div className="p-5 bg-emerald-100 border border-emerald-200 rounded-lg">
-            <div className="mb-3">
-                <span className="text-lg">افزودن ماده اولیه</span>
+        <div className="flex-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+            <div className="mb-4 flex items-center gap-2">
+                <div className="w-1 h-6 bg-emerald-500 rounded-full"></div>
+                <h2 className="text-lg font-bold text-slate-800">افزودن ماده اولیه</h2>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="flex items-start gap-2">
-                <div className="flex flex-col">
-                    <TextField size="small"
-                        placeholder="نام ماده اولیه"
-                        variant="outlined"
-                        {...register("name")}
-                        error={!!error?.message}
-                        helperText={errors.name?.message || parsedError?.fieldErrors?.Name?.[0]}
-                    />
-
-                    {isError && (
-                        <p className="text-sm text-red-500 text-center">
-                            {(error as Error).message}
-                        </p>
-                    )}
-                </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="relative">
+                <input
+                    type="text"
+                    placeholder="مثال: برنج"
+                    className="w-full pr-4 pl-32 py-3 bg-slate-50 border border-slate-200 rounded-xl 
+                                focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white 
+                                transition-all duration-200"
+                    {...register("name")}
+                />
 
                 <button
                     type="submit"
                     disabled={isPending || isSubmitting}
-                    className="bg-sky-300 px-3 py-2 rounded-md text-white
-                    text-shadow-sm transition-all duration-200 hover:scale-105
-                    hover:shadow-md">
-                    {isPending || isSubmitting ? "اندکی تأمل" : "افزودن"}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-emerald-600 px-4 py-2 rounded-lg 
+                                text-white text-sm font-medium transition-all hover:bg-emerald-700 hover:shadow-md"
+                >
+                    {isPending || isSubmitting ? " در حال ثبت..." : "افزودن دسته"}
                 </button>
-
             </form>
         </div>
     )

@@ -9,11 +9,11 @@ import { useState } from "react";
 
 export default function IngredientsPage() {
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [submitSearch, setSubmitSearch] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchInput, setSearchInput] = useState('');
 
     const SubmitSearch = () => {
-        setSearchTerm(submitSearch)
+        setSearchQuery(searchInput)
     }
 
     const {
@@ -21,10 +21,10 @@ export default function IngredientsPage() {
         isLoading,
         isError,
         error
-    } = useGetAllIngredients({ name: searchTerm })
+    } = useGetAllIngredients({ name: searchQuery })
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSubmitSearch(event.target.value);
+        setSearchInput(event.target.value);
 
         //setSearchTerm(event.target.value);
         // توجه: با هر تغییر در searchTerm، useQuery دوباره اجرا خواهد شد
@@ -47,87 +47,79 @@ export default function IngredientsPage() {
     }
 
     return (
-        <div>
+        <div className="pt-30 pb-10">
             <Container>
-                <div className="pt-30">
-                    <div className="flex flex-col lg:flex-row mb-10">
-                        <CreateIngredientComponent />
+                <div className="max-w-4xl mx-auto">
+
+                    {/* هدر صفحه */}
+                    <div className="mb-8">
+                        <h1 className="text-2xl font-bold text-slate-800">مدیریت مواد اولیه</h1>
+                        <p className="text-slate-500 mt-1">مواد اولیه سایت را مدیریت و ایجاد کنید.</p>
                     </div>
-                    <div className="flex gap-4">
-                        <span className="text-2xl text-primary-darker">مواد اولیه</span>
-                        <form className="flex gap-2">
-                            <div className="relative">
+
+                    <div className="w-full flex flex-col lg:flex-row gap-4">
+                        {/* ساخت ماده اولیه*/}
+                        <CreateIngredientComponent />
+
+                        {/* بخش جستجو */}
+                        <div className="flex-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+                            <div className="mb-4 flex items-center gap-2">
+                                <div className="w-1 h-6 bg-emerald-500 rounded-full"></div>
+                                <h2 className="text-lg font-bold text-slate-800">جستجو</h2>
+                            </div>
+                            <form onSubmit={SubmitSearch} className="relative">
                                 <input
                                     type="text"
-                                    placeholder="جستجو..."
-                                    value={submitSearch}
+                                    value={searchInput}
                                     onChange={handleSearchChange}
-                                    className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-1 outline-sky-300"
+                                    placeholder="نام دسته‌بندی مورد نظر را جستجو کنید..."
+                                    className="w-full pr-12 pl-32 py-3 bg-slate-50 border border-slate-200 rounded-xl 
+                                focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white 
+                                transition-all duration-200"
                                 />
-                                {/* {submitSearch != '' && (
-                                    <button
-                                        type="submit"
-                                        onClick={() => {
-                                            setSubmitSearch(''),
-                                            SubmitSearch
-                                        }}
-                                        className="absolute left-2 top-1/2
-                                -translate-y-1/2 cursor-pointer text-gray-400
-                                hover:text-gray-600 p-2
-                                ">x</button>
-                                )} */}
-
-                            </div>
-
-                            <button
-                                type="submit"
-                                onClick={SubmitSearch}
-                                className="bg-sky-300 px-3 py-2 rounded-md text-white
-                                text-shadow-sm transition-all duration-200 hover:scale-105
-                                hover:shadow-md"
-                            >
-                                جستجو
-                            </button>
-                        </form>
-
+                                {/* آیکون جستجو */}
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                    </svg>
+                                </div>
+                                {/* دکمه جستجو به صورت Overlay داخل اینپوت */}
+                                <button
+                                    type="submit"
+                                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-emerald-600 px-4 py-2 rounded-lg 
+                                text-white text-sm font-medium transition-all hover:bg-emerald-700 hover:shadow-md"
+                                >
+                                    جستجو
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
-                    <hr className="my-6 text-gray-300" />
-                    <div className="flex gap-2 flex-wrap">
-                        {data?.map(i => (
-                            <IngredientItem key={i.id} id={i.id} name={i.name} />
-                            // <div key={i.id}>
-                            //     <div
-                            //         onMouseEnter={() => setIsOpen(i.id)}
-                            //         onMouseLeave={() => setIsOpen(null)}
-                            //         className="relative px-3 py-2 bg-gray-100 border border-gray-300 
-                            //     rounded-lg cursor-pointer">
-                            //         {i.name}
-                            //         {isOpen == i.id && (
-                            //             <div className="absolute px-2 py-1 bg-gray-50 rounded-md border 
-                            //     left-1/2 -translate-x-1/2
-                            //   border-gray-300 flex items-center gap-1 text-xs -top-8.5 z-10">
-                            //                 <button
-                            //                     onClick={() => setEditingId(i.id)}
-                            //                     className="text-amber-500 transition-all duration-200
-                            //                  px-1.5 py-1 hover:bg-amber-400 rounded-md hover:text-white"
-                            //                 >ویرایش
-                            //                 </button>
-                            //                 <button className="text-red-500 transition-all duration-200
-                            //             px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
-                            //                 >حذف
-                            //                 </button>
-                            //             </div>
-                            //         )}
-                            //     </div>
+                    {/* بخش لیست مواد اولیه*/}
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div className="mb-4 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1 h-6 bg-emerald-500 rounded-full"></div>
+                                <h2 className="text-lg font-bold text-slate-800">لیست مواد اولیه</h2>
+                            </div>
+                            <span className="text-sm bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">
+                                {data?.length || 0} ماده اولیه
+                            </span>
+                        </div>
 
-                            //     {editingId == i.id && (
-                            //         <UpdateIngredientComponent id={i.id} />
-                            //     )}
-                            // </div>
-                        ))}
+                        <hr className="mb-6 border-slate-100" />
 
-
+                        <div className="flex gap-2 flex-wrap">
+                            {data?.length === 0 ? (
+                                <div className="w-full text-center py-10 text-slate-400">
+                                    <p>هنوز هیچ ماده اولیه ای ثبت نشده است.</p>
+                                </div>
+                            ) : (
+                                data?.map(i => (
+                                    <IngredientItem key={i.id} id={i.id} name={i.name} />
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
             </Container>

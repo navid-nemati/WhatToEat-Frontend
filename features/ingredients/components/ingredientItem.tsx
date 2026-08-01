@@ -45,14 +45,14 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                 onMouseEnter={() => setIsOpen(true)}
                 onMouseLeave={() => setIsOpen(false)}
                 onClick={() => setIsOpen(true)}
-                className="relative px-3 py-2 bg-emerald-100 border border-emerald-200 
-                rounded-lg cursor-pointer transition-all duration-150 
-                hover:ring ring-emerald-300">
+                className="relative bg-slate-50 border border-slate-200 px-4 py-2 rounded-lg text-slate-700 
+                hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 
+                transition-all duration-200 cursor-pointer flex items-center">
                 {name}
                 {isOpen && (
-                    <div className="absolute px-2 py-1 bg-emerald-50 rounded-md border 
+                    <div className="absolute px-2 py-1 bg-white rounded-md border 
                         left-1/2 -translate-x-1/2
-                        border-emerald-200 flex items-center gap-1 text-xs -top-8.75 z-10">
+                        border-slate-200 flex items-center gap-1 text-xs -top-8.75 z-10">
                         <button
                             onClick={() => { setEditModalOpen(true), setIsOpen(false) }}
                             className="text-amber-500 transition-all duration-200
