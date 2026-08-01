@@ -15,6 +15,16 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    const url = originalRequest.url ?? "";
+
+    if (
+      url.includes("/account/login") ||
+      url.includes("/account/register") ||
+      url.includes("/account/refresh")
+    ) {
+      return Promise.reject(error);
+    }
+
     // اگر 401 گرفتیم و قبلا retry نشده
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {

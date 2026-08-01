@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 🟢 لاگین
     const login = async (username: string, password: string) => {
 
-        setLoading(true);
+        //setLoading(true);
 
         try {
             await api.post("/account/login", {
@@ -68,7 +68,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
         }
         finally {
-            setLoading(false)
+            console.log("finally");
+            //setLoading(false)
         }
     };
 
@@ -81,11 +82,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // 🔴 خروج
     const logout = async () => {
-        await api.post("/account/logout");
-        setUser(null);
-        AppToast.success("بای بای 👋")
-        //router.push("/login");
-        router.push("/");
+        try {
+            await api.post("/account/logout");
+            AppToast.success("بای بای 👋")
+        } finally {
+            setUser(null);
+            router.replace("/");
+        }
     };
 
     return (

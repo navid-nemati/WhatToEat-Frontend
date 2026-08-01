@@ -28,8 +28,9 @@ export default function Login() {
             AppToast.success("خوش اومدی 🥰")
         }
         catch (err: any) {
+            console.log("catch");
             setApiError(err.response?.data?.message || "خطا در ورود")
-            AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
+            //AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
         }
     }
 
