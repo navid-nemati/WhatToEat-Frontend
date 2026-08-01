@@ -3,6 +3,7 @@ import UseDeleteIngredientOfFood from "../hooks/useDeleteIngredientOfFood";
 import { IIngredientsOfFoodDto } from "../types/IngredientOfFood";
 import EditIngredientOfFoodModal from "./editINgredientOfFood";
 import { useState } from "react";
+import AppToast from "@/lib/toast";
 
 interface Props {
     data: IIngredientsOfFoodDto
@@ -28,11 +29,12 @@ export default function IngredientOfFoodItem({ data }: Props) {
 
         deleteIngredient(ingredientOfFoodId, {
             onSuccess: () => {
-                alert("ماده اولیه با موفقیت حذف شد");
+                AppToast.success("ماده اولیه از غذا حذف شد")
             },
 
-            onError: (error: unknown) => {
+            onError: (error) => {
                 console.error("Delete ingredient error:", error);
+                AppToast.error(error.message)
             },
         });
     };

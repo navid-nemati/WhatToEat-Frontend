@@ -9,6 +9,7 @@ import {
 
 import useUpdateCategory from "../hooks/useUpdateCategory";
 import { parseApiError } from "@/utils/apiError";
+import AppToast from "@/lib/toast";
 
 interface Props {
     categoryName: string
@@ -51,6 +52,7 @@ export default function UpdateCategoryForm({
                 onSuccess: () => {
                     reset();
                     onSuccess();
+                    AppToast.success("دسته بندی با موفقیت به روزرسانی شد")
                 },
             }
         );

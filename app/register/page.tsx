@@ -1,23 +1,36 @@
 'use client'
 
+import { useAuth } from "@/context/AuthContext";
+import AppToast from "@/lib/toast";
 import { RegisterUserFormData, RegisterUserSchema } from "@/schemas/RegisterUser.Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, FormLabel, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Register() {
+
+    const { register: registerUser } = useAuth()
+    const [apiError, setApiError] = useState<string | null>(null);
 
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        reset,
     } = useForm<RegisterUserFormData>({
         resolver: zodResolver(RegisterUserSchema)
     })
 
-    const onSubmit = (data: RegisterUserFormData) => {
-
+    const onSubmit = async (data: RegisterUserFormData) => {
+        setApiError(null)
+        try {
+            await registerUser(data.username, data.email, data.password)
+            AppToast.success("سلااااام چطوری 😍")
+        }
+        catch (err: any) {
+            setApiError(err.response?.data?.message || "خطا در ورود")
+            AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
+        }
     }
 
     //const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;
@@ -27,6 +40,8 @@ export default function Register() {
             <div className="w-70 md:w-80 px-8 py-7 bg-emerald-50 rounded-xl
             border-2 border-emerald-100 flex flex-col items-center gap-5">
                 <span className="text-xl text-emerald-900 estedad-bold">ثبت نام</span>
+
+                {apiError && <div className="text-sm text-rose-500 bg-rose-50 p-2 rounded w-full text-center">{apiError}</div>}
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}

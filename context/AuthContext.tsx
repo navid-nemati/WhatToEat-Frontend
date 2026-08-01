@@ -4,6 +4,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "@/lib/api"; // همون فایل axios که با withCredentials ساختی
 import { useRouter } from "next/navigation";
+import AppToast from "@/lib/toast";
 
 type User = {
     username: string;
@@ -82,7 +83,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = async () => {
         await api.post("/account/logout");
         setUser(null);
-        router.push("/login");
+        AppToast.success("بای بای 👋")
+        //router.push("/login");
+        router.push("/");
     };
 
     return (

@@ -3,6 +3,7 @@
 import FoodForm from "@/features/foods/components/foodForm";
 import { useCreateFood } from "@/features/foods/hooks/useCreateFood";
 import { UpdateFoodFormData } from "@/features/foods/schemas/UpdateFood.schema";
+import AppToast from "@/lib/toast";
 import { parseApiError } from "@/utils/apiError";
 
 interface CreateFoodProps {
@@ -35,9 +36,11 @@ export default function CreateFood({
             {
                 onSuccess: () => {
                     onSuccess();
+                    AppToast.success("مبارک باشه یه غذا خوشمزه اضافه شد 🎉")
                 },
 
                 onError: (mutationError) => {
+                    AppToast.error(mutationError.message)
                     console.error(
                         "Create food error:",
                         mutationError

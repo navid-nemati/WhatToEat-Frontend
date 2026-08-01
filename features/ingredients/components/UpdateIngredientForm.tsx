@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { parseApiError } from "@/utils/apiError";
 import { UpdateIngredientItemFormData, UpdateIngredientItemSchema } from "../schemas/UpdateIngredientItem.schema";
 import useUpdateIngredient from "../hooks/useUpdateIngredient";
+import AppToast from "@/lib/toast";
 
 interface UpdateIngredientModalProps {
     ingredientName: string
@@ -40,9 +41,11 @@ export default function UpdateIngredientForm({ ingredientName, ingredientId, onS
             onSuccess: () => {
                 reset();
                 onSuccess()
+                AppToast.success("ماده اولیه با موفقیت به روزرسانی شد")
             },
             onError: (err: any) => {
                 console.error("Mutation Error:", err);
+                AppToast.error(err.message)
             }
         });
 

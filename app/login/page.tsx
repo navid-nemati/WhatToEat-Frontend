@@ -1,6 +1,7 @@
 'use client'
 
 import { useAuth } from "@/context/AuthContext"
+import AppToast from "@/lib/toast"
 import { LoginUserFormData, LoginUserSchema } from "@/schemas/LoginUser.Schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, TextField } from "@mui/material"
@@ -24,9 +25,11 @@ export default function Login() {
         setApiError(null)
         try {
             await login(data.username, data.password)
+            AppToast.success("خوش اومدی 🥰")
         }
         catch (err: any) {
             setApiError(err.response?.data?.message || "خطا در ورود")
+            AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
         }
     }
 

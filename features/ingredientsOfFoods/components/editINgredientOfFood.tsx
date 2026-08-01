@@ -3,6 +3,7 @@ import UseUpdateIngredientOfFood from "../hooks/useUpdateIngredientOfFood";
 import { UpdateIngredientFormData } from "../schemas/UpdateIngredient.schemas";
 import IngredientOfFoodForm from "./ingredientOfFoodForm";
 import { IIngredientsOfFoodDto } from "../types/IngredientOfFood";
+import AppToast from "@/lib/toast";
 
 interface EditFoodProps {
     ingredientOfFoodData: IIngredientsOfFoodDto
@@ -27,7 +28,7 @@ export default function EditIngredientOfFoodModal({
         ? parseApiError(error)
         : null;
 
-    const handleCreateIngredientOfFood = (
+    const handleUpdateIngredientOfFood = (
         data: UpdateIngredientFormData
     ) => {
 
@@ -42,6 +43,7 @@ export default function EditIngredientOfFoodModal({
             {
                 onSuccess: () => {
                     onSuccess();
+                    AppToast.success("ماده اولیه غذا به روزرسانی شد")
                 },
 
                 onError: (mutationError) => {
@@ -49,6 +51,7 @@ export default function EditIngredientOfFoodModal({
                         "Create food error:",
                         mutationError
                     );
+                    AppToast.error(mutationError.message)
                 },
             }
         );
@@ -63,7 +66,7 @@ export default function EditIngredientOfFoodModal({
                 value: ingredientOfFoodData.value
             }}
             loading={isPending}
-            onSubmit={handleCreateIngredientOfFood}
+            onSubmit={handleUpdateIngredientOfFood}
             apiError={parsedError?.message}
             fieldErrors={parsedError?.fieldErrors}
             submitButtonText="ویرایش ماده اولیه"

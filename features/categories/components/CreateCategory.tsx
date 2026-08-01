@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { CreateCategoryFormData, CreateCategorySchema } from "../schemas/CreateCategory.schema";
+import AppToast from "@/lib/toast";
 
 export default function CreateCategoryComponent() {
 
@@ -23,9 +24,12 @@ export default function CreateCategoryComponent() {
         mutate(data, {
             onSuccess: () => {
                 reset();
+                //alert("چشمت روشن دسته بندی اضافه شد")
+                AppToast.success("چشمت روشن دسته بندی اضافه شد")
             },
             onError: (err: any) => {
                 console.error("Mutation Erroraaaaaaaa:", err);
+                AppToast.error(err.message)
             }
         });
     }

@@ -2,6 +2,7 @@ import { parseApiError } from "@/utils/apiError";
 import UseCreateIngredientOfFood from "../hooks/useCreateIngredientOfFood";
 import { UpdateIngredientFormData } from "../schemas/UpdateIngredient.schemas";
 import IngredientOfFoodForm from "./ingredientOfFoodForm";
+import AppToast from "@/lib/toast";
 
 interface CreateFoodProps {
     foodId: string
@@ -37,6 +38,7 @@ export default function CreateIngredientOfFoodModal({
             {
                 onSuccess: () => {
                     onSuccess();
+                    AppToast.success("ماده اولیه به غذا اضافه شد")
                 },
 
                 onError: (mutationError) => {
@@ -44,6 +46,7 @@ export default function CreateIngredientOfFoodModal({
                         "Create food error:",
                         mutationError
                     );
+                    AppToast.error(mutationError.message)
                 },
             }
         );

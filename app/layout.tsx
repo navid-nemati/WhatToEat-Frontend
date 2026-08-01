@@ -7,6 +7,7 @@ import Footer from "@/shared/components/footer";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -26,6 +27,9 @@ export default function RootLayout({
         <body className="flex flex-col min-h-screen bg-linear-to-bl from-emerald-100/80 to-emerald-50">
           <ThemeRegistry>
             <QueryProviders>
+              <Toaster
+                position="top-center"
+              />
               <Navbar />
               <main className="grow">
                 {children}

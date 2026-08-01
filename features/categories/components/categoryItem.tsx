@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import useDeleteCategory from "@/features/categories/hooks/useDeleteCategory"
 import Modal from "@/shared/components/modal";
 import UpdateCategoryForm from "./UpdateCategoryForm";
+import AppToast from "@/lib/toast";
 
 interface CategoryItemProp {
     id: string
@@ -27,10 +28,13 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
         if (result) {
             dMutate(id, {
                 onSuccess: () => {
-                    alert("آیتم مورد نظر به درک واصل شد")
+                    //alert("آیتم مورد نظر به درک واصل شد")
+                    AppToast.success("آیتم مورد نظر به درک واصل شد")
                 },
                 onError: (err: any) => {
-                    alert(err.message)
+                    //alert(err.message)
+                    //AppToast.apiError(err)
+                    AppToast.error(err.message)
                     console.log("message", err.message)
                     console.log("parsed", parsedError?.message)
                     console.error("Mutation Error:", err);

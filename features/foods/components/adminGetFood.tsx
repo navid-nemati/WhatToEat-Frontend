@@ -7,6 +7,7 @@ import { useDeleteFood } from "@/features/foods/hooks/useDeleteFood";
 import Link from "next/link";
 import Modal from "@/shared/components/modal";
 import CreateFood from "./createFood";
+import AppToast from "@/lib/toast";
 
 export default function AdminGetFoods() {
 
@@ -17,8 +18,8 @@ export default function AdminGetFoods() {
     const onDeleteSubmit = (id: string) => {
         if (window.confirm("آیا از حذف این غذا مطمئن هستید؟")) {
             deleteMutate(id, {
-                onSuccess: () => alert("آیتم مورد نظر با موفقیت حذف شد"),
-                onError: (err: any) => console.error("Delete Mutation Error:", err)
+                onSuccess: () => AppToast.success("غذا با موفقیت حذف شد"),
+                onError: (err: any) => AppToast.error(err.message)
             })
         }
     }

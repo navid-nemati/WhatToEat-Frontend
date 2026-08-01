@@ -3,6 +3,7 @@ import { useUpdateFood } from "../hooks/useUpdateFood";
 import { UpdateFoodFormData } from "../schemas/UpdateFood.schema";
 import FoodForm from "./foodForm";
 import { IFoodDetailDto } from "../types/Food";
+import AppToast from "@/lib/toast";
 
 interface props {
     food: IFoodDetailDto
@@ -32,10 +33,11 @@ export default function EditFood({ food }: props) {
             },
             {
                 onSuccess: () => {
-                    //alert
+                    AppToast.success("اطلاعات غذا با موفقیت به روز رسانی شد")
                 },
 
                 onError: (mutationError) => {
+                    AppToast.error(mutationError.message)
                     console.error(
                         "update food error:",
                         mutationError

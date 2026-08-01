@@ -1,10 +1,10 @@
 import useCreateIngredient from "@/features/ingredients/hooks/useCreateIngredient";
 import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/ingredients/schemas/CreateIngredient.schemas";
+import AppToast from "@/lib/toast";
 import { parseApiError } from "@/utils/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast"
 
 export default function CreateIngredientComponent() {
 
@@ -24,11 +24,12 @@ export default function CreateIngredientComponent() {
         mutate(data, {
             onSuccess: () => {
                 reset();
+                AppToast.success("ماده اولیه با موفقیت اضافه شد")
             },
-            onError: (err: any) => {
-                console.error("Mutation Erroraaaaaaaa:", err);
-                console.log("errrrrrrroor", error)
-                toast.error(err.message || "خطا")
+            onError: (mutationError) => {
+                AppToast.error(mutationError.message)
+                console.log(mutationError);
+                console.log(mutationError.message);
             }
         });
     }

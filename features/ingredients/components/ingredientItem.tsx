@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import useDeleteIngredient from "@/features/ingredients/hooks/useDeleteIngredient"
 import Modal from "@/shared/components/modal"
 import UpdateIngredientForm from "./UpdateIngredientForm"
+import AppToast from "@/lib/toast"
 
 interface IngredientItemProp {
     id: string
@@ -28,11 +29,11 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
         if (result) {
             dMutate(id, {
                 onSuccess: () => {
-                    alert("آیتم مورد نظر به درک واصل شد")
+                    AppToast.success("آیتم مورد نظر به درک واصل شد")
                 },
                 onError: (err: any) => {
                     console.log(err.message)
-                    alert(parsedError?.message)
+                    AppToast.error(err.message)
                 }
             })
         }
