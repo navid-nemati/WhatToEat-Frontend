@@ -1,14 +1,11 @@
 "use client"
 
 import useGetFoodDetail from "@/features/foods/hooks/useGetFoodDetail";
-import UseDeleteIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useDeleteIngredientOfFood";
 import UseGetAllIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useGetAllIngredientOfFood";
 import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
-import { Card, CardContent, CardHeader } from "@mui/material";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface FoodDetailProp {
     params: Promise<{ id: string }>
@@ -16,16 +13,7 @@ interface FoodDetailProp {
 
 export default function FoodDetail({ params }: FoodDetailProp) {
 
-    //const [resolvedId, setResolvedId] = useState<string>('');
     const { id } = useParams<{ id: string }>();
-
-    // useEffect(() => {
-    //     const resolveParams = async () => {
-    //         const result = await params;
-    //         setResolvedId(result.id);
-    //     };
-    //     resolveParams();
-    // }, [params]);
 
     const {
         data,
@@ -60,28 +48,32 @@ export default function FoodDetail({ params }: FoodDetailProp) {
     return (
         <div className="">
             <Container>
-                <div className="pt-30 flex lg:flex-row flex-col gap-10">
+                <div className="pt-21 md:pt-30 flex md:flex-row flex-col gap-10">
                     {/* right side */}
-                    <div className="flex flex-col">
-                        {/* Image */}
-                        <div className="relative w-60 rounded-lg overflow-hidden">
-                            <div className="relative h-40 w-full overflow-hidden">
-                                <Image
-                                    src={'/foodImage.webp'}
-                                    alt="foodImage"
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 25vw"
-                                    className="object-contain"
-                                />
+                    <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-4 items-center bg-white p-4
+                        border border-slate-200/80 rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
+                            {/* Image */}
+                            <div className="relative w-60 rounded-lg overflow-hidden">
+                                <div className="relative h-40 w-full overflow-hidden">
+                                    <Image
+                                        src={'/foodImage.webp'}
+                                        alt="foodImage"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 25vw"
+                                        className="object-contain"
+                                    />
+                                </div>
+
                             </div>
 
+                            <div className="flex flex-col items-center gap-1">
+                                <div className="text-xl">{data?.name}</div>
+                                <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div>
+                            </div>
                         </div>
 
-                        <div className="text-xl">{data?.name}</div>
-                        <div className="text-xl">دسته بندی: {data?.categoryName}</div>
-
-                        {/* Ingredients List */}
-                        <table className="min-w-64 mt-6 rounded-lg overflow-hidden ring ring-emerald-300 border-collapse">
+                        {/* <table className="min-w-64 mt-6 rounded-lg overflow-hidden ring ring-emerald-300 border-collapse">
                             <thead className="bg-emerald-50">
                                 <tr className="divide-x">
                                     <th scope="col" className="px-6 py-2 text-right border-b border-emerald-300">
@@ -92,35 +84,6 @@ export default function FoodDetail({ params }: FoodDetailProp) {
                                     </th>
                                 </tr>
                             </thead>
-                            {/* <tbody>
-                                {ingredientData && ingredientData.length > 0 ? (
-                                    ingredientData.map((i) => (
-                                        <tr
-                                            key={i.id}
-                                            className="bg-emerald-50/60 hover:bg-emerald-100/30 transition-colors divide-x divide-emerald-300 select-none"
-                                        >
-                                            <th
-                                                scope="row"
-                                                className="px-6 py-3 whitespace-nowrap  text-right"
-                                            >
-                                                {i.ingredientName}
-                                            </th>
-                                            <td className="px-6 py-3  text-right">
-                                                <span className="">{i.value}</span>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <div>
-                                        {ingredientIsLoading == false && (
-                                            <div className="p-2">مواد اولیه در دسترس نیستند.</div>
-                                        )}
-                                    </div>
-                                )}
-                                {ingredientIsLoading && (
-                                    <div>در حال بارگذاری...</div>
-                                )}
-                            </tbody> */}
                             <tbody>
                                 {ingredientIsLoading ? (
                                     <tr className="bg-emerald-50/60 hover:bg-emerald-100/30 transition-colors divide-x divide-emerald-300 select-none">
@@ -143,7 +106,44 @@ export default function FoodDetail({ params }: FoodDetailProp) {
                                     </tr>
                                 )}
                             </tbody>
-                        </table>
+                        </table> */}
+
+                        {/* Ingredients List */}
+                        <div className="min-w-64 rounded-3xl overflow-hidden 
+                        flex flex-col gap-2 bg-white p-3 divide-y divide-emerald-200
+                        shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
+                            <div className="w-full flex items-center p-1 pb-3 divide-x divide-emerald-200">
+                                <div className="flex-1 text-center">ماده اولیه</div>
+                                <div className="flex-1 text-center">مقدار مورد نیاز</div>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                {ingredientIsLoading ? (
+                                    <div className="hover:bg-emerald-100/30 transition-colors select-none">
+                                        <div className="text-center p-4">
+                                            در حال بارگذاری...
+                                        </div>
+                                    </div>
+                                ) : ingredientData?.length ? (
+
+                                    ingredientData.map((i) => (
+                                        <div className="w-full flex items-center justify-between rounded-xl 
+                                        px-6 py-3 text-right transition-all duration-200 hover:bg-emerald-100
+                                        bg-emerald-50" key={i.id}>
+                                            <span>{i.ingredientName}</span>
+                                            <span>{i.value}</span>
+                                        </div>
+                                    ))
+
+                                ) : (
+                                    <div>
+                                        <span className="text-center p-4">
+                                            مواد اولیه در دسترس نیستند.
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     {/* left side | recipe */}
