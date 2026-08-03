@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext"
 import AppToast from "@/lib/toast"
-import { LoginUserFormData, LoginUserSchema } from "@/schemas/LoginUser.Schema"
+import { LoginUserFormData, LoginUserSchema } from "@/features/auth/schemas/LoginUser.Schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, TextField } from "@mui/material"
 import { useState } from "react"

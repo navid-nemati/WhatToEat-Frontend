@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import AppToast from "@/lib/toast";
-import { RegisterUserFormData, RegisterUserSchema } from "@/schemas/RegisterUser.Schema";
+import { RegisterUserFormData, RegisterUserSchema } from "@/features/auth/schemas/RegisterUser.Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
