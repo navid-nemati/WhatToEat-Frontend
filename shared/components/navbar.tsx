@@ -44,29 +44,11 @@ export default function Navbar() {
                                 href={''}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >دسته‌بندی</Link>
-                            {/* <Link
-                                href={'/admin'}
-                                className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
-                            >پنل ادمین</Link> */}
                             <Link
                                 href={'/food/mainPage'}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >غذاها</Link>
                         </nav>
-
-                        {/* <div className="hidden md:flex items-center gap-4">
-                            <div className="group p-1.5 border border-emerald-950/50 rounded-full transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer">
-                                <ShoppingBasket size={22} className="transition-all duration-200 text-emerald-950 group-hover:rotate-360" />
-                            </div>
-                            <Link href={'/register'}>
-                                <button className="text-emerald-950 transition-all duration-150 hover:text-emerald-800 text-shadow-sm hover:text-shadow-lg hover:scale-110">ثبت نام</button>
-                            </Link>
-                            <Link href={'/login'}>
-                                <button className="bg-emerald-600 ring ring-emerald-400 hover:ring-2 transition-all duration-200 px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:scale-110 text-shadow-sm">
-                                    <span className="text-white">ورود</span>
-                                </button>
-                            </Link>
-                        </div> */}
 
                         <div className="hidden md:flex gap-4 items-center">
                             {!loading && user ? (
