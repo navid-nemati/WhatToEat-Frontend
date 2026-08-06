@@ -56,7 +56,7 @@ export default function CreateIngredientComponent() {
                     className="absolute left-2 top-1/2 -translate-y-1/2 bg-emerald-600 px-4 py-2 rounded-lg 
                                 text-white text-sm font-medium transition-all hover:bg-emerald-700 hover:shadow-md"
                 >
-                    {isPending || isSubmitting ? " در حال ثبت..." : "افزودن دسته"}
+                    {isPending || isSubmitting ? " در حال ثبت..." : "افزودن ماده‌اولیه"}
                 </button>
             </form>
         </div>

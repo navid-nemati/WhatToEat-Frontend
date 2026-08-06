@@ -52,7 +52,7 @@ export default function AdminGetFoods() {
                     <div
 
                         key={food.id}
-                        className="group w-full p-5 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between"
+                        className="group w-full p-5 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-200 flex flex-col gap-2 justify-between"
                     >
                         <Link
                             href={`/admin/foods/${food.id}`}
