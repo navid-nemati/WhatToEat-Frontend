@@ -4,6 +4,7 @@ import useGetFoodDetail from "@/features/foods/hooks/useGetFoodDetail";
 import UseGetAllIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useGetAllIngredientOfFood";
 import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
+import { getFoodImageUrl } from "@/utils/image";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
@@ -45,6 +46,8 @@ export default function FoodDetail({ params }: FoodDetailProp) {
         );
     }
 
+    console.log(getFoodImageUrl(data?.imagePath));
+
     return (
         <div className="">
             <Container>
@@ -54,14 +57,15 @@ export default function FoodDetail({ params }: FoodDetailProp) {
                         <div className="flex flex-col gap-4 items-center bg-white p-4
                         border border-slate-200/80 rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
                             {/* Image */}
-                            <div className="relative w-60 rounded-lg overflow-hidden">
-                                <div className="relative h-40 w-full overflow-hidden">
-                                    <Image
-                                        src={'/foodImage.webp'}
-                                        alt="foodImage"
-                                        fill
+                            <div className="relative w-60">
+                                <div className="relative h-40 w-full rounded-lg overflow-hidden">
+                                    
+                                    <img
+                                        src={getFoodImageUrl(data?.imagePath)}
+                                        alt={`${data?.name}`}
                                         sizes="(max-width: 768px) 100vw, 25vw"
-                                        className="object-contain"
+                                        className="absolute inset-0 h-full w-full object-cover
+                                        object-center"
                                     />
                                 </div>
 

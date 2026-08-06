@@ -118,12 +118,9 @@ import {
 } from "lucide-react";
 import { parseApiError } from "@/utils/apiError";
 import Image from "next/image";
+import { getFoodImageUrl } from "@/utils/image";
 
-export default function GetFoods({
-  adminMode = false,
-}: {
-  adminMode?: boolean;
-}) {
+export default function GetFoods() {
   const { data, isLoading, isError, error } = useGetAllFoods();
 
   const parsedError = isError ? parseApiError(error) : null;
@@ -161,9 +158,7 @@ export default function GetFoods({
   return (
     <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       {data.map((food) => {
-        const foodHref = adminMode
-          ? `/admin/foods/${food.id}`
-          : `/food/${food.id}`;
+
 
         return (
           <article
@@ -180,7 +175,7 @@ export default function GetFoods({
           >
             {/* تصویر */}
             <Link
-              href={foodHref}
+              href={`/food/${food.id}`}
               className="
                 relative block h-44 w-full overflow-hidden rounded-2xl
                 outline-none
@@ -189,17 +184,18 @@ export default function GetFoods({
                 focus-visible:ring-offset-2
               "
             >
-              <Image
-                src="/foodImage.webp"
-                alt={`تصویر ${food.name}`}
-                fill
+              <img
+                src={getFoodImageUrl(food.imagePath)}
+                alt={food.name}
+
                 sizes="
                   (max-width: 640px) 100vw,
                   (max-width: 1024px) 50vw,
                   25vw
                 "
                 className="
-                  object-cover
+                  absolute inset-0 h-full w-full object-cover
+                  object-center
                 "
               />
 
@@ -228,7 +224,7 @@ export default function GetFoods({
             {/* محتوا */}
             <div className="flex flex-1 flex-col px-2 pb-2 pt-4">
               <Link
-                href={foodHref}
+                href={`/food/${food.id}`}
                 className="
                   group/title
                   rounded-lg
@@ -251,20 +247,6 @@ export default function GetFoods({
                   >
                     {food.name}
                   </h3>
-
-                  {!adminMode && (
-                    <ArrowLeft
-                      size={18}
-                      className="
-                        mt-1 shrink-0
-                        text-slate-300
-                        transition-all
-                        duration-300
-                        group-hover:-translate-x-1
-                        group-hover:text-emerald-600
-                      "
-                    />
-                  )}
                 </div>
               </Link>
 

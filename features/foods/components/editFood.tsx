@@ -24,12 +24,17 @@ export default function EditFood({ food }: props) {
     const handleUpdateFood = (
         data: UpdateFoodFormData
     ) => {
+
+        const selectedImage = data.image?.[0];
+
         mutate(
             {
                 id: food.id,
                 name: data.name,
                 recipe: data.recipe,
                 categoryId: data.categoryId,
+                image: selectedImage ?? null,
+                removeImage: data.removeImage ?? false,
             },
             {
                 onSuccess: () => {
@@ -55,6 +60,7 @@ export default function EditFood({ food }: props) {
                     recipe: food.recipe,
                     categoryId: food.categoryId
                 }}
+                currentImagePath={food.imagePath}
                 loading={isPending}
                 onSubmit={handleUpdateFood}
                 apiError={parsedError?.message}

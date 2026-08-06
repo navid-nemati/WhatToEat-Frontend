@@ -8,6 +8,7 @@ import Link from "next/link";
 import Modal from "@/shared/components/modal";
 import CreateFood from "./createFood";
 import AppToast from "@/lib/toast";
+import { getFoodImageUrl } from "@/utils/image";
 
 export default function AdminGetFoods() {
 
@@ -51,8 +52,54 @@ export default function AdminGetFoods() {
                     <div
 
                         key={food.id}
-                        className="w-full p-5 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between"
+                        className="group w-full p-5 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between"
                     >
+                        <Link
+                            href={`/admin/foods/${food.id}`}
+                            className="
+                                        relative block h-44 w-full overflow-hidden rounded-2xl
+                                        outline-none
+                                        focus-visible:ring-2
+                                        focus-visible:ring-emerald-500
+                                        focus-visible:ring-offset-2
+                                      "
+                        >
+                            <img
+                                src={getFoodImageUrl(food.imagePath)}
+                                alt={food.name}
+
+                                sizes="
+                                          (max-width: 640px) 100vw,
+                                          (max-width: 1024px) 50vw,
+                                          25vw
+                                        "
+                                className="
+                                          absolute inset-0 h-full w-full object-cover
+                                          object-center
+                                        "
+                            />
+
+                            {/* Badge دسته‌بندی */}
+                            <span
+                                className="
+                                          absolute right-3 top-3
+                                          max-w-[calc(100%-1.5rem)]
+                                          truncate rounded-full
+                                          border border-white/20
+                                          bg-black/35
+                                          px-3 py-1.5
+                                          text-xs font-medium
+                                          text-white
+                                          shadow-sm
+                                          backdrop-blur-md
+                                          transition-all
+                                          duration-300
+                                          group-hover:bg-emerald-600/90
+                                        "
+                            >
+                                {food.categoryName}
+                            </span>
+                        </Link>
                         <div className="flex flex-col gap-2 text-gray-800">
                             <div className="text-xl font-bold text-emerald-700">{food.name}</div>
                             <div className="text-sm text-gray-500">

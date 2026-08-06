@@ -27,11 +27,15 @@ export default function CreateFood({
     const handleCreateFood = (
         data: UpdateFoodFormData
     ) => {
+
+        const selectedImage = data.image?.[0];
+
         mutate(
             {
                 name: data.name,
                 recipe: data.recipe,
                 categoryId: data.categoryId,
+                image: selectedImage ?? null,
             },
             {
                 onSuccess: () => {

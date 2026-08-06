@@ -11,6 +11,12 @@ export const UpdateFoodSchema = z.object({
     recipe: z.string(),
 
     categoryId: z.string(),
+
+    image: z
+        .custom<FileList>()
+        .optional(),
+
+    removeImage: z.boolean().optional(),
 })
 
 export type UpdateFoodFormData = z.infer<typeof UpdateFoodSchema>;

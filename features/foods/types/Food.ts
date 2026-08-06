@@ -7,6 +7,7 @@ export interface IFoodDto {
     categoryId: string;
     categoryName: string;
     recipe: string
+    imagePath?: string | null;
 }
 
 export interface IFoodDetailDto extends IFoodDto{
@@ -16,7 +17,8 @@ export interface IFoodDetailDto extends IFoodDto{
 export interface ICreateFoodDto {
     name: string;
     categoryId: string;
-    recipe?: string
+    recipe?: string;
+    image?: File | null;
 }
 
 export interface IUpdateFoodDto {
@@ -24,4 +26,6 @@ export interface IUpdateFoodDto {
     name: string;
     categoryId: string;
     recipe: string
+    image?: File | null;
+    removeImage?: boolean
 }

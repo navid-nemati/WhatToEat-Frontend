@@ -21,6 +21,8 @@ interface FoodFormProps {
         categoryId: string;
     };
 
+    currentImagePath?: string | null;
+
     loading: boolean;
 
     apiError?: string;
@@ -29,6 +31,7 @@ interface FoodFormProps {
         Name?: string[];
         Recipe?: string[];
         CategoryId?: string[];
+        image?: string[]
     };
 
     submitButtonText?: string;
@@ -39,6 +42,7 @@ interface FoodFormProps {
 export default function FoodForm({
     title,
     defaultValues,
+    currentImagePath,
     loading,
     apiError,
     fieldErrors,
@@ -63,6 +67,7 @@ export default function FoodForm({
             name: defaultValues?.name ?? "",
             recipe: defaultValues?.recipe ?? "",
             categoryId: defaultValues?.categoryId ?? "",
+            removeImage: false,
         },
     });
 
@@ -107,6 +112,7 @@ export default function FoodForm({
                 </h2>
             )}
 
+            {/* نام غذا */}
             <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-600">
                     نام غذا
@@ -131,6 +137,45 @@ export default function FoodForm({
 
             <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-600">
+                    تصویر غذا
+                </label>
+
+                <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    {...register("image")}
+                    className="
+                        w-full rounded-lg border border-gray-300
+                        p-2 text-sm
+                        file:ml-3 file:rounded-md file:border-0
+                      file:bg-emerald-50 file:px-4 file:py-2
+                      file:text-emerald-700
+                      hover:file:bg-emerald-100
+                        "
+                />
+
+                {currentImagePath && (
+                    <label className="flex items-center gap-2 text-sm text-gray-700">
+                        <input
+                            type="checkbox"
+                            {...register("removeImage")}
+                            className="h-4 w-4 accent-emerald-500"
+                        />
+
+                        حذف تصویر فعلی
+                    </label>
+                )}
+
+                {errors.image?.message && (
+                    <p className="text-sm text-red-500">
+                        {String(errors.image.message)}
+                    </p>
+                )}
+            </div>
+
+            {/* طرز تهیه */}
+            <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-600">
                     طرز تهیه
                 </label>
 
@@ -142,21 +187,20 @@ export default function FoodForm({
                         w-full resize-y rounded-lg border p-3
                         outline-none transition-all
                         focus:ring-2 focus:ring-emerald-400
-                        ${
-                            errors.recipe || fieldErrors?.Recipe?.length
-                                ? "border-red-500"
-                                : "border-gray-300"
+                        ${errors.recipe || fieldErrors?.Recipe?.length
+                            ? "border-red-500"
+                            : "border-gray-300"
                         }
                     `}
                 />
 
                 {(errors.recipe?.message ||
                     fieldErrors?.Recipe?.[0]) && (
-                    <p className="text-sm text-red-500">
-                        {errors.recipe?.message ??
-                            fieldErrors?.Recipe?.[0]}
-                    </p>
-                )}
+                        <p className="text-sm text-red-500">
+                            {errors.recipe?.message ??
+                                fieldErrors?.Recipe?.[0]}
+                        </p>
+                    )}
             </div>
 
             <SelectCategory
@@ -166,11 +210,11 @@ export default function FoodForm({
 
             {(categoryError ||
                 fieldErrors?.CategoryId?.[0]) && (
-                <p className="text-sm text-red-500">
-                    {categoryError ||
-                        fieldErrors?.CategoryId?.[0]}
-                </p>
-            )}
+                    <p className="text-sm text-red-500">
+                        {categoryError ||
+                            fieldErrors?.CategoryId?.[0]}
+                    </p>
+                )}
 
             {apiError && (
                 <p className="rounded-lg bg-red-50 p-3 text-center text-sm text-red-600">
