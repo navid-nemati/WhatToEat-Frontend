@@ -4,6 +4,17 @@ import useDeleteIngredient from "@/features/ingredients/hooks/useDeleteIngredien
 import Modal from "@/shared/components/modal"
 import UpdateIngredientForm from "./UpdateIngredientForm"
 import AppToast from "@/lib/toast"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface IngredientItemProp {
     id: string
@@ -23,20 +34,34 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
 
     const parsedError = dIsError ? parseApiError(dError) : null;
 
-    const onDeleteIngredient = (ingredientId: string) => {
-        const result = confirm("مطمئن هستید که حذف شود ؟")
+    const handleDelete = () => {
+        // const result = confirm("مطمئن هستید که حذف شود ؟")
 
-        if (result) {
-            dMutate(id, {
-                onSuccess: () => {
-                    AppToast.success("آیتم مورد نظر به درک واصل شد")
-                },
-                onError: (err: any) => {
-                    console.log(err.message)
-                    AppToast.error(err.message)
-                }
-            })
-        }
+        // if (result) {
+        //     dMutate(id, {
+        //         onSuccess: () => {
+        //             AppToast.success("آیتم مورد نظر به درک واصل شد")
+        //         },
+        //         onError: (err: any) => {
+        //             console.log(err.message)
+        //             AppToast.error(err.message)
+        //         }
+        //     })
+        // }
+
+
+
+
+        dMutate(id, {
+            onSuccess: () => {
+                AppToast.success("آیتم مورد نظر به درک واصل شد")
+            },
+            onError: (err: any) => {
+                console.log(err.message)
+                AppToast.error(err.message)
+            }
+        })
+
     }
 
     return (
@@ -59,17 +84,92 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                         px-1.5 py-1 hover:bg-amber-400 rounded-md hover:text-white"
                         >ویرایش
                         </button>
-                        <button
+                        {/* <button
                             onClick={() => { onDeleteIngredient(id), setIsOpen(false) }}
                             className="text-red-500 transition-all duration-200
                      px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
                         >
                             {dIsPending ? "تأمل" : "حذف"}
-                        </button>
+                        </button> */}
+                        {/* <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <button
+                                    className="text-red-500 transition-all duration-200
+                                                                    px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
+                                    onClick={() => setIsOpen(false)}>
+                                    حذف
+                                </button>
+                            </AlertDialogTrigger>
+
+                            <AlertDialogContent dir="rtl">
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                        حذف ماده اولیه
+                                    </AlertDialogTitle>
+
+                                    <AlertDialogDescription>
+                                        آیا مطمئنی می‌خواهی این ماده را حذف کنی؟
+                                        این عملیات قابل بازگشت نیست.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                        انصراف
+                                    </AlertDialogCancel>
+
+                                    <AlertDialogAction
+                                        disabled={dIsPending}
+                                        onClick={handleDelete}
+                                    >
+                                        {dIsPending ? "در حال حذف..." : "حذف"}
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog> */}
+                        <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        <button
+                                                            className="text-red-500 transition-all duration-200
+                                                                                                                    px-1.5 py-1 hover:bg-red-400 rounded-md hover:text-white"
+                                                        >
+                                                            حذف
+                                                        </button>
+                                                    </AlertDialogTrigger>
+                        
+                                                    <AlertDialogContent dir="rtl">
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>
+                                                                حذف ماده اولیه
+                                                            </AlertDialogTitle>
+                        
+                                                            <AlertDialogDescription>
+                                                                آیا مطمئنی می‌خواهی این ماده را حذف کنی؟
+                                                                این عملیات قابل بازگشت نیست.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                        
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel
+                                                            onClick={() => setIsOpen(false)}
+                                                            >
+                                                                انصراف
+                                                            </AlertDialogCancel>
+                        
+                                                            <AlertDialogAction
+                                                                disabled={dIsPending}
+                        
+                                                                onClick={() => { handleDelete(), setIsOpen(false) }}
+                                                            >
+                                                                {dIsPending ? "در حال حذف..." : "حذف"}
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
                     </div>
                 )}
             </div>
-            
+
             <Modal
                 open={editModalOpen}
                 onOpenChange={setEditModalOpen}

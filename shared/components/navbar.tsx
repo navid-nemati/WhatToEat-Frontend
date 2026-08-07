@@ -48,6 +48,10 @@ export default function Navbar() {
                                 href={'/food/mainPage'}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >غذاها</Link>
+                            <Link
+                                href={'/shoppingList'}
+                                className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
+                            >لیست خرید</Link>
                         </nav>
 
                         <div className="hidden md:flex gap-4 items-center">

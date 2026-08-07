@@ -20,7 +20,6 @@ const theme = createTheme({
     },
   },
 
-  //1e88e5
   palette: {
     mode: "light",
     primary: { main: "#009966" },

@@ -8,5 +8,6 @@ export const queryKeys = {
     categories: ["categories"] as const,
     ingredientOfFood: ["ingredientOfFood"] as const,
     ingredientsFiltered: (params: IngredientQueryParams) => [...queryKeys.ingredients, params],
-    categoriesFiltered: (params: ICategoryQueryParams) => [...queryKeys.categories, params]
+    categoriesFiltered: (params: ICategoryQueryParams) => [...queryKeys.categories, params],
+    shoppingList: ["shopping-list"] as const,
 }

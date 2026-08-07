@@ -23,7 +23,8 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <html lang="fa" dir="rtl" className={cn("font-sans", geist.variable)}>
+      {/* <html lang="fa" dir="rtl" className={cn("font-sans", geist.variable)}> */}
+      <html lang="fa" dir="rtl" >
         <body className="flex flex-col min-h-screen bg-linear-to-bl from-emerald-100/80 to-emerald-50">
           <ThemeRegistry>
             <QueryProviders>
