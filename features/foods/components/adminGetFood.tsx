@@ -9,6 +9,17 @@ import Modal from "@/shared/components/modal";
 import CreateFood from "./createFood";
 import AppToast from "@/lib/toast";
 import { getFoodImageUrl } from "@/utils/image";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function AdminGetFoods() {
 
@@ -17,12 +28,10 @@ export default function AdminGetFoods() {
     const { mutate: deleteMutate, isPending: deleteIsPending } = useDeleteFood()
 
     const onDeleteSubmit = (id: string) => {
-        if (window.confirm("آیا از حذف این غذا مطمئن هستید؟")) {
-            deleteMutate(id, {
-                onSuccess: () => AppToast.success("غذا با موفقیت حذف شد"),
-                onError: (err: any) => AppToast.error(err.message)
-            })
-        }
+        deleteMutate(id, {
+            onSuccess: () => AppToast.success("غذا با موفقیت حذف شد"),
+            onError: (err: any) => AppToast.error(err.message)
+        })
     }
 
     if (isLoading) return <LoadingComponent />
@@ -119,13 +128,48 @@ export default function AdminGetFoods() {
                             >
                                 ویرایش
                             </Link>
-                            <button
+                            {/* <button
                                 onClick={() => onDeleteSubmit(food.id)}
                                 disabled={deleteIsPending}
                                 className="flex-1 px-3 py-2 text-sm rounded-lg bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100 transition-all disabled:opacity-50"
                             >
                                 حذف
-                            </button>
+                            </button> */}
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <button
+                                        className="flex-1 px-3 py-2 text-sm rounded-lg bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100 transition-all disabled:opacity-50">
+                                        حذف
+                                    </button>
+                                </AlertDialogTrigger>
+
+                                <AlertDialogContent dir="rtl">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>
+                                            حذف غذا
+                                        </AlertDialogTitle>
+
+                                        <AlertDialogDescription>
+                                            آیا مطمئنی می‌خواهی این غذا را حذف کنی؟
+                                            این عملیات قابل بازگشت نیست.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>
+                                            انصراف
+                                        </AlertDialogCancel>
+
+                                        <AlertDialogAction
+                                            disabled={deleteIsPending}
+
+                                            onClick={() => onDeleteSubmit(food.id)}
+                                        >
+                                            {deleteIsPending ? "در حال حذف..." : "حذف"}
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         </div>
                     </div>
                 ))}

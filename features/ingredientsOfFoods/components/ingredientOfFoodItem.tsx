@@ -4,6 +4,17 @@ import { IIngredientsOfFoodDto } from "../types/IngredientOfFood";
 import EditIngredientOfFoodModal from "./editINgredientOfFood";
 import { useState } from "react";
 import AppToast from "@/lib/toast";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface Props {
     data: IIngredientsOfFoodDto
@@ -19,14 +30,6 @@ export default function IngredientOfFoodItem({ data }: Props) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
     const handleDeleteIngredient = (ingredientOfFoodId: string) => {
-        const confirmed = window.confirm(
-            "آیا از حذف این ماده اولیه مطمئن هستید؟"
-        );
-
-        if (!confirmed) {
-            return;
-        }
-
         deleteIngredient(ingredientOfFoodId, {
             onSuccess: () => {
                 AppToast.success("ماده اولیه از غذا حذف شد")
@@ -52,11 +55,41 @@ export default function IngredientOfFoodItem({ data }: Props) {
                     className="flex-1 px-3 py-2 text-sm rounded-md bg-amber-50 text-amber-600 ring-1 ring-amber-200 hover:bg-amber-100 transition-all">
                     ویرایش
                 </button>
-                <button
-                    className="flex-1 px-3 py-2 text-sm rounded-md bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100 transition-all disabled:opacity-50"
-                    onClick={() => handleDeleteIngredient(data.id)}>
-                    حذف
-                </button>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <button
+                            className="flex-1 px-3 py-2 text-sm rounded-md bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100 transition-all disabled:opacity-50">
+                            حذف
+                        </button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent dir="rtl">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                حذف غذا
+                            </AlertDialogTitle>
+
+                            <AlertDialogDescription>
+                               آیا از حذف این ماده اولیه مطمئن هستید؟
+                                این عملیات قابل بازگشت نیست.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>
+                                انصراف
+                            </AlertDialogCancel>
+
+                            <AlertDialogAction
+                                disabled={deleteIsPending}
+
+                                onClick={() => handleDeleteIngredient(data.id)}
+                            >
+                                {deleteIsPending ? "در حال حذف..." : "حذف"}
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
 
             <Modal
