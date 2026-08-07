@@ -168,7 +168,7 @@ export default function ShoppingList() {
                             <div className="hidden md:block overflow-x-auto">
                                 <table className="w-full border-collapse bg-white rounded-lg shadow-sm overflow-hidden">
                                     <thead>
-                                        <tr className="bg-emerald-100 text-emerald-900 text-sm">
+                                        <tr className="bg-emerald-50 text-emerald-900 text-sm">
                                             <th className="py-3 px-4 text-right font-semibold">نام غذا</th>
                                             <th className="py-3 px-4 text-right font-semibold">ماده اولیه</th>
                                             <th className="py-3 px-4 text-right font-semibold">مقدار</th>
