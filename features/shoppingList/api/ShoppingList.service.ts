@@ -79,3 +79,11 @@ export async function deleteShoppingListItem(id: string): Promise<void> {
     // }
 
 }
+
+export async function deleteAllShoppingListItems() {
+  await api.delete("/ShoppingList/all");
+}
+
+export async function deletePurchasedShoppingListItems() {
+  await api.delete("/ShoppingList/purchased");
+}

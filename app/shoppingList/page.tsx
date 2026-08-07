@@ -55,6 +55,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useDeletePurchasedShoppingList } from "@/features/shoppingList/hooks/useDeletePurchasedShoppingList";
+import { useDeleteAllShoppingList } from "@/features/shoppingList/hooks/useDeleteAllShoppingList";
 
 export default function ShoppingList() {
     const { data,
@@ -71,6 +73,11 @@ export default function ShoppingList() {
         mutate: deleteItem,
         isPending: deleteIsPending
     } = UseDeleteShoppingListItem();
+
+    const { mutate: deleteAll } = useDeleteAllShoppingList();
+
+    const { mutate: deletePurchased } =
+        useDeletePurchasedShoppingList();
 
     const [selectedItem, setSelectedItem] =
         useState<ShoppingListDto | null>(null);
@@ -106,15 +113,19 @@ export default function ShoppingList() {
     };
 
     const handleDeleteAll = () => {
-        // confirm & delete all
-        console.log("Delete all items");
+        deleteAll(undefined, {
+            onSuccess: () => AppToast.success("همه موارد حذف شدند"),
+            onError: (err) => AppToast.error(err.message),
+        });
     };
 
     const handleDeletePurchased = () => {
-        // confirm & delete purchased items
-        console.log("Delete purchased items");
+        deletePurchased(undefined, {
+            onSuccess: () => AppToast.success("مواد خریداری شده حذف شدند"),
+            onError: (err) => AppToast.error(err.message),
+        });
     };
-    // -----------------------------------------------------------
+
 
     return (
         <ProtectedRoute>
@@ -122,7 +133,12 @@ export default function ShoppingList() {
                 <div className="pt-21 md:pt-30 pb-10">
                     {/* Header & Global Actions */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-                        <h3 className="text-2xl font-bold text-emerald-800">لیست خرید</h3>
+                        <div className="flex items-end gap-4">
+                            <h3 className="text-2xl font-bold text-emerald-800">لیست خرید</h3>
+                            <p className="text-slate-500 text-sm">
+                                مواد اولیه‌ای که در خانه نداری را به لیست خرید اضافه کن تا موقع خرید چیزی از قلم نیفتد.
+                            </p>
+                        </div>
 
                         <div className="flex flex-wrap gap-2">
                             <button

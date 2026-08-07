@@ -72,8 +72,6 @@ export default function FoodDetail() {
         );
     }
 
-    console.log(getFoodImageUrl(data?.imagePath));
-
     return (
         <div className="">
             <Container>
