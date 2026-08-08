@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, TextField } from "@mui/material"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import axios from "axios"
 
 export default function Login() {
 
@@ -27,11 +28,22 @@ export default function Login() {
             await login(data.username, data.password)
             AppToast.success("خوش اومدی 🥰")
         }
-        catch (err: any) {
+        catch (err: unknown) {
             console.log("catch");
-            setApiError(err.response?.data?.message || "خطا در ورود")
-            //AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
+
+            if (axios.isAxiosError(err)) {
+                setApiError(
+                    err.response?.data?.message || "خطا در ورود"
+                );
+            } else {
+                setApiError("خطا در ورود");
+            }
         }
+        // catch (err: any) {
+
+        //     setApiError(err.response?.data?.message || "خطا در ورود")
+        //     //AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
+        // }
     }
 
     //const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;
@@ -87,11 +99,11 @@ export default function Login() {
 
                         <div className="text-sm text-rose-500">{errors.password?.message}</div>
                     </div>
-                    
-                    <Button 
-                    variant="contained" 
-                    type="submit"
-                    disabled={isSubmitting}>
+
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={isSubmitting}>
                         {isSubmitting ? "در حال ورود" : "ورود"}
                     </Button>
                 </form>

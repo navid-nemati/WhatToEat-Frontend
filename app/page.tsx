@@ -114,7 +114,7 @@ export default function Home() {
                 {/* <span className="text-[140px] leading-none">🍝</span> */}
 
                   <Image
-                    src={'/heroImage.png'}
+                    src={'/heroImage.webp'}
                     alt="heroImage"
                     className="object-cover"
                     width={'288'}

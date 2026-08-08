@@ -62,6 +62,11 @@ export default function Sidebar() {
                                         غذاها
                                     </div>
                                 </Link>
+                                <Link href={'/shoppingList'} onClick={() => setIsOpen(false)}>
+                                    <div className="w-full py-2 px-3">
+                                        لیست خرید
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </div>

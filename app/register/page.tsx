@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function Register() {
 
@@ -27,10 +28,21 @@ export default function Register() {
             await registerUser(data.username, data.email, data.password)
             AppToast.success("سلااااام چطوری 😍")
         }
-        catch (err: any) {
-            setApiError(err.response?.data?.message || "خطا در ورود")
-            AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
+        catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                const message = err.response?.data?.message || "خطا در ثبت نام";
+
+                setApiError(message);
+                AppToast.apiError(message);
+            } else {
+                setApiError("خطا در ثبت نام");
+                AppToast.apiError("خطا در ثبت نام 💔");
+            }
         }
+        // catch (err: any) {
+        //     setApiError(err.response?.data?.message || "خطا در ورود")
+        //     AppToast.apiError(err.response?.data?.message || "خطا در ورود 💔")
+        // }
     }
 
     //const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;

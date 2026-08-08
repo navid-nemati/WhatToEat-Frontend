@@ -1,6 +1,6 @@
 'use client'
 
-import { GetTest, SendCode, VerifyCode } from "@/Services/login.service";
+//import { GetTest, SendCode, VerifyCode } from "@/Services/login.service";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -12,10 +12,10 @@ export default function Loginsignup() {
     const [code, setCode] = useState<string>("")
     const [codeSent, setCodeSent] = useState<boolean>(false);
 
-    const SendCodeHandler = (e: React.FormEvent) => {
-        e.preventDefault();
-        SendCode(phoneNumber);
-    }
+    // const SendCodeHandler = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     SendCode(phoneNumber);
+    // }
 
     const TheCode: VerifyCodeInputDto = { code: code, phoneNumber: phoneNumber }
 
@@ -68,7 +68,7 @@ export default function Loginsignup() {
 
                             </div>
 
-                            <form onSubmit={SendCodeHandler}>
+                            {/* <form onSubmit={SendCodeHandler}>
                                 <div className="flex flex-col gap-4">
                                     <TextField
                                         label="شماره موبایل"
@@ -86,7 +86,7 @@ export default function Loginsignup() {
                                         <span className="text-shadow-md">ثبت</span>
                                     </button>
                                 </div>
-                            </form>
+                            </form> */}
                         </div>
                     )}
 

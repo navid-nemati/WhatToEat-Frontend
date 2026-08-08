@@ -24,6 +24,7 @@ A web application for discovering meal ideas and managing recipes based on avail
 - Delete food
 - Associate ingredients with foods
 - Assign category to food
+- Shopping List
 
 ---
 

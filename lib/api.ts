@@ -6,9 +6,15 @@ const api = axios.create({
   withCredentials: true, // ⭐ برای ارسال کوکی HttpOnly الزامی است
 });
 
+type FailedRequest = {
+  resolve: (value?: unknown) => void;
+  reject: (error: unknown) => void;
+};
+
 // اینترسپتور برای رفرش خودکار
 let isRefreshing = false;
-let failedQueue: any[] = [];
+//let failedQueue: any[] = [];
+let failedQueue: FailedRequest[] = [];
 
 api.interceptors.response.use(
   (res) => res,
