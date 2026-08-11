@@ -42,10 +42,12 @@ export default function EditFood({ food }: props) {
                 },
 
                 onError: (mutationError) => {
-                    AppToast.error(mutationError.message)
-                    console.error(
-                        "update food error:",
-                        mutationError
+                    //AppToast.error(mutationError.message)
+
+                    const parsed = parseApiError(mutationError);
+
+                    AppToast.error(
+                        parsed.message ?? "خطایی رخ داد"
                     );
                 },
             }

@@ -40,8 +40,13 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                 AppToast.success("آیتم مورد نظر به درک واصل شد")
             },
             onError: (err: any) => {
-                console.log(err.message)
-                AppToast.error(err.message)
+                //AppToast.error(err.message)
+
+                const parsed = parseApiError(err);
+
+                AppToast.error(
+                    parsed.message ?? "خطایی رخ داد"
+                );
             }
         })
     }

@@ -15,6 +15,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { parseApiError } from "@/utils/apiError";
 
 interface Props {
     data: IIngredientsOfFoodDto
@@ -35,9 +36,14 @@ export default function IngredientOfFoodItem({ data }: Props) {
                 AppToast.success("ماده اولیه از غذا حذف شد")
             },
 
-            onError: (error) => {
-                console.error("Delete ingredient error:", error);
-                AppToast.error(error.message)
+            onError: (mutationError) => {
+                //AppToast.error(mutationError.message)
+
+                const parsed = parseApiError(mutationError);
+
+                AppToast.error(
+                    parsed.message ?? "خطایی رخ داد"
+                );
             },
         });
     };
@@ -70,7 +76,7 @@ export default function IngredientOfFoodItem({ data }: Props) {
                             </AlertDialogTitle>
 
                             <AlertDialogDescription>
-                               آیا از حذف این ماده اولیه مطمئن هستید؟
+                                آیا از حذف این ماده اولیه مطمئن هستید؟
                                 این عملیات قابل بازگشت نیست.
                             </AlertDialogDescription>
                         </AlertDialogHeader>

@@ -54,6 +54,7 @@ export default function UpdateCategoryForm({
                     onSuccess();
                     AppToast.success("دسته بندی با موفقیت به روزرسانی شد")
                 },
+                
             }
         );
     };
@@ -75,6 +76,12 @@ export default function UpdateCategoryForm({
             {errors.name && (
                 <p className="text-red-500">
                     {errors.name.message}
+                </p>
+            )}
+
+            {isError && parsedError?.message && (
+                <p className="text-sm text-rose-500 mt-2">
+                    {parsedError.message}
                 </p>
             )}
 

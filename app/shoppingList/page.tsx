@@ -57,6 +57,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useDeletePurchasedShoppingList } from "@/features/shoppingList/hooks/useDeletePurchasedShoppingList";
 import { useDeleteAllShoppingList } from "@/features/shoppingList/hooks/useDeleteAllShoppingList";
+import { parseApiError } from "@/utils/apiError";
 
 export default function ShoppingList() {
     const { data,
@@ -64,6 +65,10 @@ export default function ShoppingList() {
         isError,
         error
     } = useGetShoppingList();
+
+    const parsedError = isError
+        ? parseApiError(error)
+        : null;
 
     const {
         mutate: updateItemMutate
@@ -159,11 +164,16 @@ export default function ShoppingList() {
                     </div>
 
                     {/* Error State */}
-                    {isError && (
+                    {isError && parsedError?.message && (
+                        <p className="text-sm text-rose-500 text-center mt-2">
+                            {parsedError.message}
+                        </p>
+                    )}
+                    {/* {isError && (
                         <div className="p-4 mb-4 text-red-700 bg-red-50 rounded-lg border border-red-200">
                             {error?.message || "خطایی رخ داده است"}
                         </div>
-                    )}
+                    )} */}
 
                     {/* Loading State */}
                     {isLoading && (

@@ -20,12 +20,15 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { parseApiError } from "@/utils/apiError";
 
 export default function AdminGetFoods() {
 
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const { data, isLoading, isError, error } = useGetAllFoods()
     const { mutate: deleteMutate, isPending: deleteIsPending } = useDeleteFood()
+
+    const parsedError = isError ? parseApiError(error) : null;
 
     const onDeleteSubmit = (id: string) => {
         deleteMutate(id, {
@@ -36,10 +39,13 @@ export default function AdminGetFoods() {
 
     if (isLoading) return <LoadingComponent />
 
-    if (isError) {
+    if (isError && parsedError?.message) {
         return (
-            <div className="flex items-center justify-center p-10 text-red-500 font-bold">
-                {(error as Error).message}
+            <div className="flex items-center justify-center py-20">
+                <p className="rounded-xl bg-red-50 p-4 text-center text-red-500 ring-1 ring-red-200">
+                    {/* {(error as Error).message} */}
+                    {parsedError?.message}
+                </p>
             </div>
         );
     }

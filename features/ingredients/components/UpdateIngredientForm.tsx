@@ -69,6 +69,12 @@ export default function UpdateIngredientForm({ ingredientName, ingredientId, onS
                 </p>
             )}
 
+            {isError && parsedError?.message && (
+                <p className="text-sm text-rose-500 mt-2">
+                    {parsedError.message}
+                </p>
+            )}
+
             <button
                 type="submit"
                 disabled={isSubmitting || isPending}

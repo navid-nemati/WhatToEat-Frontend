@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import useGetAllIngredients from "@/features/ingredients/hooks/useGetAllIngredients";
+import { parseApiError } from "@/utils/apiError";
 
 interface SelectIngredientProps {
     value?: string;
@@ -28,6 +29,8 @@ export default function SelectIngredient({
     } = useGetAllIngredients({
         name: searchTerm,
     });
+
+    const parsedError = isError ? parseApiError(error) : null;
 
     useEffect(() => {
         setSelectedId(value);
@@ -84,6 +87,12 @@ export default function SelectIngredient({
                 >
                     🔎
                 </button>
+
+                {isError && parsedError?.message && (
+                    <p className="text-sm text-rose-500 text-center mt-2">
+                        {parsedError.message}
+                    </p>
+                )}
             </div>
 
             <div className="h-52 overflow-y-auto">

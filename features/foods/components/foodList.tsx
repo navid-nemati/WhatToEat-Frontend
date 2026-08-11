@@ -117,7 +117,6 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { parseApiError } from "@/utils/apiError";
-import Image from "next/image";
 import { getFoodImageUrl } from "@/utils/image";
 
 export default function GetFoods() {
@@ -129,7 +128,7 @@ export default function GetFoods() {
     return <LoadingComponent />;
   }
 
-  if (isError) {
+  if (isError && parsedError?.message) {
     return (
       <div className="flex items-center justify-center py-20">
         <p className="rounded-xl bg-red-50 p-4 text-center text-red-500 ring-1 ring-red-200">

@@ -72,9 +72,15 @@ export default function UpdateShoppingListItemForm({
                 helperText={parsedError?.fieldErrors?.Name?.[0]}
             />
 
-            {errors.value && (
+            {/* {errors.value && (
                 <p className="text-red-500">
                     {errors.value.message}
+                </p>
+            )} */}
+
+            {isError && parsedError?.message && (
+                <p className="text-sm text-rose-500 text-center mt-2">
+                    {parsedError.message}
                 </p>
             )}
 

@@ -6,6 +6,7 @@ import useAddShoppingList from "@/features/shoppingList/hooks/useAddShoppingList
 import AppToast from "@/lib/toast";
 import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
+import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
 import { ShoppingCart } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -20,6 +21,10 @@ export default function FoodDetail() {
         isError,
         error,
     } = useGetFoodDetail(id);
+
+    const parsedError = isError
+        ? parseApiError(error)
+        : null;
 
     const {
         data: ingredientData,
@@ -46,10 +51,12 @@ export default function FoodDetail() {
                     AppToast.success("ماده اولیه به لیست خریدتان افزوده شد")
                 },
                 onError: (mutationError) => {
-                    AppToast.error(mutationError.message)
-                    console.error(
-                        "Add to shopping list error:",
-                        mutationError
+                    //AppToast.error(mutationError.message)
+
+                    const parsed = parseApiError(mutationError);
+
+                    AppToast.error(
+                        parsed.message ?? "خطایی رخ داد"
                     );
                 }
             })
@@ -61,16 +68,17 @@ export default function FoodDetail() {
         <LoadingComponent />
     )
 
-    if (isError) {
+    if (isError && parsedError?.message) {
         return (
-            <div className="absolute inset-0 z-10 flex items-center justify-center">
-                <p className="text-red-500 text-center p-4">
-                    {(error as Error).message}
-                    {/* {toast.error((error as Error).message)} */}
+            <div className="flex items-center justify-center py-20">
+                <p className="rounded-xl bg-red-50 p-4 text-center text-red-500 ring-1 ring-red-200">
+                    {/* {(error as Error).message} */}
+                    {parsedError?.message}
                 </p>
             </div>
         );
     }
+
 
     return (
         <div className="">

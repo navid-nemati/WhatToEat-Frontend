@@ -26,10 +26,14 @@ export default function CreateIngredientComponent() {
                 reset();
                 AppToast.success("ماده اولیه با موفقیت اضافه شد")
             },
-            onError: (mutationError) => {
-                AppToast.error(mutationError.message)
-                console.log(mutationError);
-                console.log(mutationError.message);
+            onError: (mutationError: any) => {
+                //AppToast.error(mutationError.message)
+                
+                const parsed = parseApiError(mutationError);
+
+                AppToast.error(
+                    parsed.message ?? "خطایی رخ داد"
+                );
             }
         });
     }
@@ -59,6 +63,19 @@ export default function CreateIngredientComponent() {
                     {isPending || isSubmitting ? " در حال ثبت..." : "افزودن ماده‌اولیه"}
                 </button>
             </form>
+
+            {isError && parsedError?.message && (
+                <p className="text-sm text-rose-500 mt-2">
+                    {parsedError.message}
+                </p>
+            )}
+
+            {errors.name && (
+                <p className="text-sm text-red-500 mt-2">
+                    {errors.name.message}
+                </p>
+            )}
+
         </div>
     )
 }

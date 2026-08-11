@@ -31,7 +31,6 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
         isError: dIsError,
         error: dError
     } = useDeleteCategory()
-    const parsedError = dIsError ? parseApiError(dError) : null;
 
     const handleDelete = () => {
         dMutate(id, {
@@ -39,8 +38,13 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
                 AppToast.success("آیتم مورد نظر به درک واصل شد")
             },
             onError: (err: any) => {
-                console.log(err.message)
-                AppToast.error(err.message)
+                //AppToast.error(err.message)
+
+                const parsed = parseApiError(err);
+
+                AppToast.error(
+                    parsed.message ?? "خطایی رخ داد"
+                );
             }
         })
 
@@ -97,7 +101,7 @@ export default function CategoryItem({ id, name }: CategoryItemProp) {
 
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                    onClick={() => setIsOpen(false)}
+                                        onClick={() => setIsOpen(false)}
                                     >
                                         انصراف
                                     </AlertDialogCancel>

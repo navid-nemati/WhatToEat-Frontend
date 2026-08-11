@@ -65,7 +65,7 @@ export default function CreateCategoryComponent() {
             </form>
 
             {isError && parsedError?.message && (
-                <p className="text-sm text-rose-500 text-center mt-2">
+                <p className="text-sm text-rose-500 mt-2">
                     {parsedError.message}
                 </p>
             )}

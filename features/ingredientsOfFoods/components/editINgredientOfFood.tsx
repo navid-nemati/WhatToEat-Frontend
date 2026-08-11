@@ -47,11 +47,13 @@ export default function EditIngredientOfFoodModal({
                 },
 
                 onError: (mutationError) => {
-                    console.error(
-                        "Create food error:",
-                        mutationError
+                    //AppToast.error(mutationError.message)
+
+                    const parsed = parseApiError(mutationError);
+
+                    AppToast.error(
+                        parsed.message ?? "خطایی رخ داد"
                     );
-                    AppToast.error(mutationError.message)
                 },
             }
         );

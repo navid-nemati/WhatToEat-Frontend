@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import useGetAllCategories from "@/features/categories/hooks/useGetAllCategories";
+import { parseApiError } from "@/utils/apiError";
 
 interface SelectCategoryProps {
     value?: string;
@@ -25,6 +26,8 @@ export default function SelectCategory({
     } = useGetAllCategories({
         name: searchTerm,
     });
+
+    const parsedError = isError ? parseApiError(error) : null;
 
     useEffect(() => {
         setSelectedId(value);
@@ -89,6 +92,12 @@ export default function SelectCategory({
                 >
                     🔎
                 </button>
+
+                {isError && parsedError?.message && (
+                    <p className="text-sm text-rose-500 text-center mt-2">
+                        {parsedError.message}
+                    </p>
+                )}
             </div>
 
             <div className="h-52 overflow-y-auto">
@@ -108,10 +117,9 @@ export default function SelectCategory({
                                 className={`
                                     rounded-md px-3 py-2 text-right
                                     transition-colors
-                                    ${
-                                        category.id === selectedId
-                                            ? "bg-emerald-200 text-emerald-900"
-                                            : "bg-white hover:bg-emerald-50"
+                                    ${category.id === selectedId
+                                        ? "bg-emerald-200 text-emerald-900"
+                                        : "bg-white hover:bg-emerald-50"
                                     }
                                 `}
                             >
