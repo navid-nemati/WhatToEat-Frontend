@@ -28,7 +28,7 @@ api.interceptors.response.use(
       url.includes("/account/register") ||
       url.includes("/account/refresh")
     ) {
-      return Promise.reject(error);
+      return Promise.reject(error); // برای جلوگیری از loop اگه ارور مربوط به refresh login , register بود
     }
 
     // اگر 401 گرفتیم و قبلا retry نشده
