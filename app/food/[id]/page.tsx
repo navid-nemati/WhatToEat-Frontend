@@ -1,5 +1,6 @@
 "use client"
 
+import { useAuth } from "@/context/AuthContext";
 import useGetFoodDetail from "@/features/foods/hooks/useGetFoodDetail";
 import UseGetAllIngredientOfFood from "@/features/ingredientsOfFoods/hooks/useGetAllIngredientOfFood";
 import useAddShoppingList from "@/features/shoppingList/hooks/useAddShoppingList";
@@ -14,6 +15,7 @@ import { useParams } from "next/navigation";
 export default function FoodDetail() {
 
     const { id } = useParams<{ id: string }>();
+    const { user, loading } = useAuth()
 
     const {
         data,
@@ -41,6 +43,11 @@ export default function FoodDetail() {
     } = useAddShoppingList();
 
     const addToShoppingList = (foodId: string, ingredientId: string) => {
+
+        if (!user) {
+            AppToast.error("برای افزودن به لیست خرید ابتدا وارد شوید")
+            return
+        }
 
         shoppingListMutate({
             foodId,
