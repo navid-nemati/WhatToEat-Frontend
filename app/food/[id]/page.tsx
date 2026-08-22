@@ -141,11 +141,26 @@ export default function FoodDetail() {
                                             <span>{i.ingredientName}</span>
                                             <div className="flex items-center gap-3">
                                                 <span>{i.value}</span>
-                                                <button
+                                                {/* <button
                                                     disabled={shoppingListIsPending}
                                                     onClick={() => addToShoppingList(id, i.ingredientId)}
                                                     className="text-xl transition-all duration-200 text-emerald-700 p-1 
-                                                hover:text-emerald-900"><ShoppingCart size={20} /></button>
+                                                hover:text-emerald-900"><ShoppingCart size={20} /></button> */}
+                                                <button
+                                                    disabled={shoppingListIsPending}
+                                                    onClick={() => addToShoppingList(id, i.ingredientId)}
+                                                    className="
+    text-xl text-emerald-700 p-2 rounded-xl
+    transition-all duration-150
+    hover:text-emerald-900 hover:bg-emerald-50
+    active:scale-90 active:bg-emerald-100 active:text-emerald-900
+    disabled:opacity-50 disabled:pointer-events-none
+    touch-manipulation select-none
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+  "
+                                                >
+                                                    <ShoppingCart size={20} />
+                                                </button>
                                             </div>
 
                                         </div>
