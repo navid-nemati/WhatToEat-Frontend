@@ -170,6 +170,7 @@ export default function GetFoods() {
               hover:-translate-y-1.5
               hover:border-emerald-300
               hover:shadow-[0_18px_45px_rgba(16,185,129,0.14)]
+              active:scale-90
             "
           >
             {/* تصویر */}

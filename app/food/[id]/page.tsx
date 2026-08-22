@@ -153,7 +153,7 @@ export default function FoodDetail() {
     text-xl text-emerald-700 p-2 rounded-xl
     transition-all duration-150
     hover:text-emerald-900 hover:bg-emerald-50
-    active:scale-90 active:bg-emerald-100 active:text-emerald-900
+    active:scale-90 active:bg-emerald-200 active:text-emerald-900
     disabled:opacity-50 disabled:pointer-events-none
     touch-manipulation select-none
     focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
