@@ -6,5 +6,7 @@ export function getFoodImageUrl(imagePath?: string | null) {
         return "/foodImage.webp";
     }
 
-    return `${API_URL}${imagePath}`;
+    return imagePath;
+    
+    //return `${API_URL}${imagePath}`;
 }
