@@ -74,7 +74,7 @@ export default function Home() {
 
               {/* دکمه‌ها */}
               <div className="flex flex-wrap items-center gap-3">
-                <Link href="/food/mainPage">
+                <Link href="/food">
                   <button className="group flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-lg font-medium text-emerald-950 shadow-lg shadow-amber-400/30 transition-all duration-200 ring-amber-200 hover:ring-2 hover:shadow-xl hover:shadow-amber-400/40 hover:scale-105 active:scale-95 text-shadow-sm">
                     <ChefHat size={20} className="transition-transform group-hover:rotate-12" />
                     شروع آشپزی
