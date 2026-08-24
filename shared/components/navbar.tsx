@@ -1,10 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Sidebar from "./sidebar";
 import Link from "next/link";
-import { ShoppingBasket } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
