@@ -72,7 +72,7 @@ export default function IngredientsPage() {
                                     type="text"
                                     value={searchInput}
                                     onChange={handleSearchChange}
-                                    placeholder="نام دسته‌بندی مورد نظر را جستجو کنید..."
+                                    placeholder="نام ماده اولیه..."
                                     className="w-full pr-12 pl-32 py-3 bg-slate-50 border border-slate-200 rounded-xl 
                                 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white 
                                 transition-all duration-200"
