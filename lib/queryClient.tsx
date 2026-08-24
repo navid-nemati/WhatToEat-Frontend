@@ -1,5 +1,34 @@
 import { onlineManager, QueryClient } from "@tanstack/react-query";
 
+export const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+            retryDelay: 1000,
+            staleTime: 1000 * 60 * 5,
+            gcTime: 30 * 60 * 1000,
+            refetchOnReconnect: true,
+        },
+    },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // onlineManager.setEventListener((setOnline) => {
 //     const onOnline = () => setOnline(true)
 //     const onOffline = () => setOnline(false)
@@ -12,15 +41,3 @@ import { onlineManager, QueryClient } from "@tanstack/react-query";
 //         window.removeEventListener("offline", onOffline)
 //     }
 // })
-
-export const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-            retry: 1,
-            retryDelay: 1000,
-            staleTime: 1000 * 60 * 5,
-            refetchOnReconnect: true,
-        },
-    },
-});

@@ -5,6 +5,7 @@ import { getAllShoppingListItems } from "../api/ShoppingList.service";
 export default function useGetShoppingList() {
     return useQuery({
         queryKey: queryKeys.shoppingList,
-        queryFn: getAllShoppingListItems
+        queryFn: getAllShoppingListItems,
+        staleTime: 0
     })
 }
