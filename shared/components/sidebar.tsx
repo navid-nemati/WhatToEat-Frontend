@@ -52,7 +52,7 @@ export default function Sidebar() {
                                         خانه
                                     </div>
                                 </Link>
-                                <Link href={''} onClick={() => setIsOpen(false)}>
+                                <Link href={'/category'} onClick={() => setIsOpen(false)}>
                                     <div className="w-full py-2 px-3">
                                         دسته‌بندی
                                     </div>
