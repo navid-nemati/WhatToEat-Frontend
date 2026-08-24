@@ -118,9 +118,17 @@ import {
 } from "lucide-react";
 import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
+import { useSearchParams } from "next/navigation";
 
 export default function GetFoods() {
-  const { data, isLoading, isError, error } = useGetAllFoods();
+
+  const searchParams = useSearchParams();
+
+  const categoryId = searchParams.get("categoryId");
+
+  const { data, isLoading, isError, error } = useGetAllFoods({
+    categoryId: categoryId ?? undefined
+  });
 
   const parsedError = isError ? parseApiError(error) : null;
 

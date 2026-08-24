@@ -41,11 +41,11 @@ export default function Navbar() {
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >خانه</Link>
                             <Link
-                                href={''}
+                                href={'/category'}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >دسته‌بندی</Link>
                             <Link
-                                href={'/food/mainPage'}
+                                href={'/food'}
                                 className="transition-all duration-200 hover:text-emerald-800 text-shadow-xs hover:text-shadow-lg hover:scale-115"
                             >غذاها</Link>
                             <Link

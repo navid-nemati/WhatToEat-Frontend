@@ -29,3 +29,7 @@ export interface IUpdateFoodDto {
     image?: File | null;
     removeImage?: boolean
 }
+
+export interface IFoodQueryParams {
+    categoryId?: string
+}

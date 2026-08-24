@@ -1,4 +1,5 @@
 import { ICategoryQueryParams } from "@/features/categories/types/Category";
+import { IFoodQueryParams } from "@/features/foods/types/Food";
 import { IngredientQueryParams } from "@/features/ingredients/types/Ingredient";
 
 
@@ -9,5 +10,6 @@ export const queryKeys = {
     ingredientOfFood: ["ingredientOfFood"] as const,
     ingredientsFiltered: (params: IngredientQueryParams) => [...queryKeys.ingredients, params],
     categoriesFiltered: (params: ICategoryQueryParams) => [...queryKeys.categories, params],
+    foodsFiltered: (params: IFoodQueryParams) => [...queryKeys.foods, params],
     shoppingList: ["shopping-list"] as const,
 }

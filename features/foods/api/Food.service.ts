@@ -2,6 +2,7 @@ import {
     ICreateFoodDto,
     IFoodDetailDto,
     IFoodDto,
+    IFoodQueryParams,
     IUpdateFoodDto
 } from "@/features/foods/types/Food";
 import api from "@/lib/api";
@@ -18,10 +19,14 @@ import api from "@/lib/api";
 //     }
 // }
 
-export async function GetAllFoods(): Promise<IFoodDto[]> {
+export async function GetAllFoods(
+    params?: IFoodQueryParams
+): Promise<IFoodDto[]> {
 
 
-    const { data } = await api.get<IFoodDto[]>("/Food")
+    const { data } = await api.get<IFoodDto[]>("/Food", {
+        params
+    })
 
     return data;
 
