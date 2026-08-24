@@ -133,7 +133,7 @@ export default function Sidebar() {
         onClose={() => setIsOpen(false)}
         PaperProps={{
           sx: {
-            width: 300,
+            width: 250,
             maxWidth: '85vw',
             backgroundColor: 'rgba(255,255,255,0.92)',
             backdropFilter: 'blur(16px)',

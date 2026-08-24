@@ -9,13 +9,16 @@ import Container from "@/shared/components/container";
 import LoadingComponent from "@/shared/components/loading";
 import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
-import { ShoppingCart } from "lucide-react";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Loader2, ShoppingCart } from "lucide-react";
 
 export default function FoodDetail() {
 
     const { id } = useParams<{ id: string }>();
     const { user, loading } = useAuth()
+
+    const [pendingIngredientId, setPendingIngredientId] = useState<string | null>(null);
 
     const {
         data,
@@ -43,32 +46,59 @@ export default function FoodDetail() {
     } = useAddShoppingList();
 
     const addToShoppingList = (foodId: string, ingredientId: string) => {
-
         if (!user) {
-            AppToast.error("برای افزودن به لیست خرید ابتدا وارد شوید")
-            return
+            AppToast.error("برای افزودن به لیست خرید ابتدا وارد شوید");
+            return;
         }
 
-        shoppingListMutate({
-            foodId,
-            ingredientId
-        },
+        if (pendingIngredientId) return; // جلوگیری از کلیک همزمان روی چند دکمه
+
+        setPendingIngredientId(ingredientId);
+
+        shoppingListMutate(
+            { foodId, ingredientId },
             {
                 onSuccess: () => {
-                    AppToast.success("ماده اولیه به لیست خریدتان افزوده شد")
+                    AppToast.success("ماده اولیه به لیست خریدتان افزوده شد");
                 },
                 onError: (mutationError) => {
-                    //AppToast.error(mutationError.message)
-
                     const parsed = parseApiError(mutationError);
+                    AppToast.error(parsed.message ?? "خطایی رخ داد");
+                },
+                onSettled: () => {
+                    setPendingIngredientId(null);
+                },
+            }
+        );
+    };
 
-                    AppToast.error(
-                        parsed.message ?? "خطایی رخ داد"
-                    );
-                }
-            })
+    // const addToShoppingList = (foodId: string, ingredientId: string) => {
 
-    }
+    //     if (!user) {
+    //         AppToast.error("برای افزودن به لیست خرید ابتدا وارد شوید")
+    //         return
+    //     }
+
+    //     shoppingListMutate({
+    //         foodId,
+    //         ingredientId
+    //     },
+    //         {
+    //             onSuccess: () => {
+    //                 AppToast.success("ماده اولیه به لیست خریدتان افزوده شد")
+    //             },
+    //             onError: (mutationError) => {
+    //                 //AppToast.error(mutationError.message)
+
+    //                 const parsed = parseApiError(mutationError);
+
+    //                 AppToast.error(
+    //                     parsed.message ?? "خطایی رخ داد"
+    //                 );
+    //             }
+    //         })
+
+    // }
 
 
     if (isLoading) return (
@@ -141,26 +171,44 @@ export default function FoodDetail() {
                                             <span>{i.ingredientName}</span>
                                             <div className="flex items-center gap-3">
                                                 <span>{i.value}</span>
+                                                <button
+                                                    aria-disabled={pendingIngredientId === i.ingredientId}
+                                                    onClick={() => {
+                                                        if (pendingIngredientId === i.ingredientId) return;
+                                                        addToShoppingList(id, i.ingredientId);
+                                                    }}
+                                                    className={`
+    relative flex h-9 w-9 items-center justify-center rounded-xl
+    text-emerald-700 transition-all duration-150 ease-out
+    hover:bg-emerald-50 hover:text-emerald-900
+    active:scale-90 active:bg-emerald-200 active:text-emerald-900
+    touch-manipulation select-none
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+    ${pendingIngredientId === i.ingredientId ? "cursor-not-allowed opacity-60" : ""}
+  `}
+                                                >
+                                                    {pendingIngredientId === i.ingredientId ? (
+                                                        <Loader2 className="size-5 animate-spin" />
+                                                    ) : (
+                                                        <ShoppingCart size={20} />
+                                                    )}
+                                                </button>
+
                                                 {/* <button
                                                     disabled={shoppingListIsPending}
                                                     onClick={() => addToShoppingList(id, i.ingredientId)}
-                                                    className="text-xl transition-all duration-200 text-emerald-700 p-1 
-                                                hover:text-emerald-900"><ShoppingCart size={20} /></button> */}
-                                                <button
-                                                    disabled={shoppingListIsPending}
-                                                    onClick={() => addToShoppingList(id, i.ingredientId)}
                                                     className="
-    text-xl text-emerald-700 p-2 rounded-xl
-    transition-all duration-150
-    hover:text-emerald-900 hover:bg-emerald-50
-    active:scale-90 active:bg-emerald-200 active:text-emerald-900
-    disabled:pointer-events-none
-    touch-manipulation select-none
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
-  "
+                                                        text-xl text-emerald-700 p-2 rounded-xl
+                                                        transition-all duration-150
+                                                        hover:text-emerald-900 hover:bg-emerald-50
+                                                        active:scale-90 active:bg-emerald-200 active:text-emerald-900
+                                                        disabled:pointer-events-none
+                                                        touch-manipulation select-none
+                                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+                                                      "
                                                 >
                                                     <ShoppingCart size={20} />
-                                                </button>
+                                                </button> */}
                                             </div>
 
                                         </div>
