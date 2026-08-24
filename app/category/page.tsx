@@ -37,7 +37,7 @@ export default function CategoryPage() {
             
                 <div className="flex flex-wrap gap-3 mt-5">
                     {data?.map((i) => (
-                        <CategoryFilterItem id={i.id} name={i.name}/>
+                        <CategoryFilterItem key={i.id} id={i.id} name={i.name}/>
                     ))}
                 </div>
             </Container>
