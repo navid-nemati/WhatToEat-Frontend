@@ -100,7 +100,7 @@ import { useAuth } from '@/context/AuthContext';
 const navItems = [
   { href: '/', label: 'خانه', icon: Home },
   { href: '/category', label: 'دسته‌بندی', icon: LayoutGrid },
-  { href: '/food/mainPage', label: 'غذاها', icon: Utensils },
+  { href: '/food', label: 'غذاها', icon: Utensils },
   { href: '/shoppingList', label: 'لیست خرید', icon: ShoppingCart },
 ];
 
