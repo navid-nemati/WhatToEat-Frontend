@@ -12,4 +12,5 @@ export const queryKeys = {
     categoriesFiltered: (params: ICategoryQueryParams) => [...queryKeys.categories, params],
     foodsFiltered: (params: IFoodQueryParams) => [...queryKeys.foods, params],
     shoppingList: ["shopping-list"] as const,
+    favoriteList: ["favorite-list"] as const,
 }

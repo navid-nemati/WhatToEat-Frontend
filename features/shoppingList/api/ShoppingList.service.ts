@@ -1,4 +1,3 @@
-import { ApiError } from "@/types/api-error";
 import { ShoppingListDto } from "../types/ShoppingList";
 import { AddShoppingList } from "../types/AddShoppingList";
 import { UpdateShoppingList } from "../types/UpdateShoppingList";

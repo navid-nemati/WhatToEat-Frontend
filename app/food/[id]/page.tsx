@@ -11,7 +11,11 @@ import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Loader2, ShoppingCart } from "lucide-react";
+import { Loader2, ShoppingCart, Heart } from "lucide-react";
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import AddToFavoriteListHook from "@/features/favoriteList/hooks/useAddToFavoriteList";
+import { AddFavoriteDto } from "@/features/favoriteList/types/addFavorite";
+import Food from "../page";
 
 export default function FoodDetail() {
 
@@ -19,6 +23,9 @@ export default function FoodDetail() {
     const { user, loading } = useAuth()
 
     const [pendingIngredientId, setPendingIngredientId] = useState<string | null>(null);
+    const [pendingFavorite, setPendingFavorite] = useState<boolean>(false);
+
+    const [isClick, setIsClick] = useState(false)
 
     const {
         data,
@@ -44,6 +51,13 @@ export default function FoodDetail() {
         isError: shoppingListIsError,
         error: shoppingListError,
     } = useAddShoppingList();
+
+    const {
+        mutate: favoriteListMutate,
+        isPending: favoriteListIsPending,
+        isError: favoriteListIsError,
+        error: favoriteListError,
+    } = AddToFavoriteListHook();
 
     const addToShoppingList = (foodId: string, ingredientId: string) => {
         if (!user) {
@@ -71,6 +85,33 @@ export default function FoodDetail() {
             }
         );
     };
+
+    const addToFavoriteList = (foodId: string) => {
+
+        if (!user) {
+            AppToast.error("برای افزودن به علاقه مندی ابتدا وارد شوید");
+            return;
+        }
+
+        setPendingFavorite(true)
+
+        favoriteListMutate(
+            { foodId },
+            {
+                onSuccess: () => {
+                    AppToast.success("غذا به علاقه مندی افزوده شد");
+                },
+                onError: (mutationError) => {
+                    const parsed = parseApiError(mutationError);
+                    AppToast.error(parsed.message ?? "خطایی رخ داد");
+                },
+                onSettled: () => {
+                    setPendingFavorite(false);
+                },
+            }
+        )
+
+    }
 
     // const addToShoppingList = (foodId: string, ingredientId: string) => {
 
@@ -123,11 +164,11 @@ export default function FoodDetail() {
                 <div className="pt-21 md:pt-30 flex md:flex-row flex-col gap-10">
                     {/* right side */}
                     <div className="flex flex-col gap-5">
-                        <div className="flex flex-col gap-4 items-center bg-white p-5
+                        <div className="flex flex-col gap-4 items-center 
                         border border-slate-200/80 rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
                             {/* Image */}
-                            <div className="relative w-full md:w-60 lg:w-70">
-                                <div className="relative h-100 md:h-50 lg:h-60 w-full rounded-lg overflow-hidden">
+                            <div className="relative w-full md:w-60 lg:w-75">
+                                <div className="relative h-75 md:h-50 lg:h-60 w-full rounded-3xl overflow-hidden">
 
                                     <img
                                         src={getFoodImageUrl(data?.imagePath)}
@@ -140,10 +181,19 @@ export default function FoodDetail() {
 
                             </div>
 
+
+                        </div>
+
+                        <div className=" flex items-center justify-between border border-slate-200/80 rounded-3xl 
+                        shadow-[0_4px_20px_rgba(15,23,42,0.05)] bg-white p-4">
                             <div className="flex flex-col items-center gap-1">
-                                <div className="text-2xl">{data?.name}</div>
-                                <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div>
+                                <div className="text-2xl text-emerald-950">{data?.name}</div>
+                                {/* <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div> */}
                             </div>
+
+                            <button onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90`}>
+                                <FavoriteBorderOutlinedIcon className="text-xl" />
+                            </button>
                         </div>
 
                         {/* Ingredients List */}

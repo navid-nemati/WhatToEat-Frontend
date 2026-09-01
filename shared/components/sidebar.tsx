@@ -87,6 +87,7 @@ import {
   LayoutGrid,
   Utensils,
   ShoppingCart,
+  Heart,
   User,
   Shield,
   LogOut,
@@ -102,6 +103,7 @@ const navItems = [
   { href: '/category', label: 'دسته‌بندی', icon: LayoutGrid },
   { href: '/food', label: 'غذاها', icon: Utensils },
   { href: '/shoppingList', label: 'لیست خرید', icon: ShoppingCart },
+  { href: '/favoriteList', label: 'علاقه مندی ها', icon: Heart },
 ];
 
 export default function Sidebar() {
