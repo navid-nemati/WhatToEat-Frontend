@@ -47,7 +47,7 @@ export default function Home() {
       </div>
 
       {/* ===== Hero ===== */}
-      <section className="pt-28 md:pt-44 pb-10">
+      <section className="pt-24 md:pt-30 pb-10">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* 👈 سمت راست: متن */}
