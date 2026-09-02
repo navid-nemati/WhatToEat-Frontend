@@ -5,6 +5,7 @@ import DeleteFavoriteListItemHook from "@/features/favoriteList/hooks/useDeleteF
 import GetFavoriteList from "@/features/favoriteList/hooks/useGetFavoriteList";
 import AppToast from "@/lib/toast";
 import Container from "@/shared/components/container";
+import LoadingComponent from "@/shared/components/loading";
 import ProtectedRoute from "@/shared/components/ProtectedRoute";
 import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
@@ -49,14 +50,18 @@ export default function FavoriteListPage() {
         });
     };
 
+    if (isLoading) {
+        return <LoadingComponent />;
+    }
+
     return (
         <ProtectedRoute>
             <Container>
                 <div className="pt-21 md:pt-30 pb-10">
                     {/* Header & Global Actions */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between mb-6 gap-4">
                         <div className="flex items-end gap-4">
-                            <h3 className="text-2xl font-bold text-emerald-800">علاقه مندی ها</h3>
+                            <h3 className="text-2xl font-bold text-emerald-800 text-nowrap">علاقه مندی ها</h3>
                             <p className="text-slate-500 text-sm">
                                 غذا های مورد علاقه ات رو اینجا ببین
                             </p>
@@ -90,7 +95,6 @@ export default function FavoriteListPage() {
               hover:-translate-y-1.5
               hover:border-emerald-300
               hover:shadow-[0_18px_45px_rgba(16,185,129,0.14)]
-              active:scale-90
             "
                                 >
                                     {/* تصویر */}
@@ -171,7 +175,8 @@ export default function FavoriteListPage() {
                                                 <button
                                                     onClick={() => handleDelete(food.id)}
                                                     className="p-1.5 text-gray-500 hover:text-red-600
-                                                            hover:bg-red-50 rounded-md transition-colors"
+                                                            hover:bg-red-50 rounded-md transition-colors
+                                                            active:text-red-500 active:bg-red-50"
                                                 >
                                                     <Trash2 size={18} />
                                                 </button>
@@ -205,6 +210,20 @@ export default function FavoriteListPage() {
                                     </div>
                                 </article>
                             ))}
+                        </div>
+                    )}
+
+                    {!data?.length && (
+                        <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-16 text-center">
+                            <span className="mb-3 text-5xl">🍽️</span>
+
+                            <h3 className="text-lg font-bold text-slate-800">
+                                هنوز غذایی را به علاقه مندی خود اضافه نکرده اید.
+                            </h3>
+
+                            <p className="mt-1 text-sm text-slate-500">
+                                غذاهای جدید پس از ثبت، اینجا نمایش داده می‌شوند.
+                            </p>
                         </div>
                     )}
                 </div>
