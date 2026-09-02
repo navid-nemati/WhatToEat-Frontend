@@ -23,8 +23,7 @@ export default function FoodDetail() {
     const { user, loading } = useAuth()
 
     const [pendingIngredientId, setPendingIngredientId] = useState<string | null>(null);
-    const [pendingFavorite, setPendingFavorite] = useState<boolean>(false);
-
+    
     const [isClick, setIsClick] = useState(false)
 
     const {
@@ -93,8 +92,6 @@ export default function FoodDetail() {
             return;
         }
 
-        setPendingFavorite(true)
-
         favoriteListMutate(
             { foodId },
             {
@@ -106,7 +103,7 @@ export default function FoodDetail() {
                     AppToast.error(parsed.message ?? "خطایی رخ داد");
                 },
                 onSettled: () => {
-                    setPendingFavorite(false);
+                    
                 },
             }
         )
@@ -191,10 +188,10 @@ export default function FoodDetail() {
                                 {/* <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div> */}
                             </div>
 
-                            <button aria-disabled={pendingFavorite === true} onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90 ${pendingFavorite ? "cursor-not-allowed opacity-60" : ""}`}>
+                            <button aria-disabled={favoriteListIsPending === true} onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90 ${favoriteListIsPending ? "cursor-not-allowed opacity-60" : ""}`}>
 
 
-                                {pendingFavorite ? (
+                                {favoriteListIsPending ? (
                                     <Loader2 className="size-5 animate-spin" />
                                 ) : (
                                     <FavoriteBorderOutlinedIcon className="text-xl" />
