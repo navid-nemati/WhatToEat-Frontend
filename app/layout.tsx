@@ -8,6 +8,7 @@ import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import FooterWrapper from "@/shared/components/footerWrapper";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -35,7 +36,7 @@ export default function RootLayout({
               <main className="grow">
                 {children}
               </main>
-              <Footer />
+              <FooterWrapper />
             </QueryProviders>
           </ThemeRegistry>
         </body>
