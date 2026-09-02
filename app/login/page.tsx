@@ -49,9 +49,11 @@ export default function Login() {
     //const parsedError = updateFoodIsError ? parseApiError(updateFoodError) : null;
 
     return (
-        <div className="flex items-center justify-center h-dvh">
-            <div className="w-70 md:w-80 px-8 py-7 bg-emerald-50 rounded-xl
-                border-2 border-emerald-100 flex flex-col items-center gap-5">
+        <div className="flex items-center justify-center h-dvh bg-[url('/login-bg.webp')]
+            bg-cover bg-center">
+            <div className="w-10/12 md:w-80 px-8 py-7 bg-emerald-50/40 rounded-xl
+                border-2 border-emerald-100/40 flex flex-col items-center gap-5
+                backdrop-blur-2xl">
                 <span className="text-xl text-emerald-900 estedad-bold">ورود</span>
 
                 {apiError && <div className="text-sm text-rose-500 bg-rose-50 p-2 rounded w-full text-center">{apiError}</div>}
@@ -100,12 +102,19 @@ export default function Login() {
                         <div className="text-sm text-rose-500">{errors.password?.message}</div>
                     </div>
 
-                    <Button
+                    {/* <Button
                         variant="contained"
                         type="submit"
                         disabled={isSubmitting}>
                         {isSubmitting ? "در حال ورود" : "ورود"}
-                    </Button>
+                    </Button> */}
+
+                    <button type="submit"
+                        disabled={isSubmitting}
+                        className="button1">
+                        {isSubmitting ? "در حال ورود" : "ورود"}
+                    </button>
+
                 </form>
             </div>
         </div>
