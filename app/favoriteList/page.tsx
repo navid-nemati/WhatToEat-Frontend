@@ -9,8 +9,9 @@ import LoadingComponent from "@/shared/components/loading";
 import ProtectedRoute from "@/shared/components/ProtectedRoute";
 import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
-import { Clock, Flame, Star, Trash2 } from "lucide-react";
+import { Clock, Flame, Loader2, Star, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function FavoriteListPage() {
 
@@ -20,6 +21,8 @@ export default function FavoriteListPage() {
         isError,
         error
     } = GetFavoriteList()
+
+    const [pendingFoodId, setPendingFoodId] = useState<string | null>(null);
 
     const parsedError = isError
         ? parseApiError(error)
@@ -33,12 +36,20 @@ export default function FavoriteListPage() {
     const { mutate: deleteAll } = DeleteAllFavoriteList()
 
     const handleDelete = (id: string) => {
+
+        if (pendingFoodId) return;
+
+        setPendingFoodId(id);
+
         deleteItem(id, {
             onSuccess: () => {
                 AppToast.success("آیتم حذف شد");
             },
             onError: (err) => {
                 AppToast.error(err.message);
+            },
+            onSettled: () => {
+                setPendingFoodId(null)
             }
         });
     };
@@ -173,12 +184,22 @@ export default function FavoriteListPage() {
                                                     </h3>
                                                 </Link>
                                                 <button
-                                                    onClick={() => handleDelete(food.id)}
-                                                    className="p-1.5 text-gray-500 hover:text-red-600
+                                                    aria-disabled={pendingFoodId === food.id}
+                                                    onClick={() => {
+                                                        handleDelete(food.id);
+                                                        if (pendingFoodId === food.id) return;
+                                                    }}
+                                                    className={`p-1.5 text-gray-500 hover:text-red-600
                                                             hover:bg-red-50 rounded-md transition-colors
-                                                            active:text-red-500 active:bg-red-50"
+                                                            active:text-red-500 active:bg-red-50
+                                                            ${pendingFoodId === food.id ? "cursor-not-allowed opacity-60" : ""}`}
                                                 >
-                                                    <Trash2 size={18} />
+                                                    {pendingFoodId === food.id ? (
+                                                        <Loader2 className="size-5 animate-spin" />
+                                                    ) : (
+                                                        <Trash2 size={18} />
+                                                    )}
+
                                                 </button>
                                             </div>
                                         </div>
