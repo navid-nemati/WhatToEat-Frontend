@@ -191,8 +191,14 @@ export default function FoodDetail() {
                                 {/* <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div> */}
                             </div>
 
-                            <button onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90`}>
-                                <FavoriteBorderOutlinedIcon className="text-xl" />
+                            <button aria-disabled={pendingFavorite === true} onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90 ${pendingFavorite ? "cursor-not-allowed opacity-60" : ""}`}>
+
+
+                                {pendingFavorite ? (
+                                    <Loader2 className="size-5 animate-spin" />
+                                ) : (
+                                    <FavoriteBorderOutlinedIcon className="text-xl" />
+                                )}
                             </button>
                         </div>
 
