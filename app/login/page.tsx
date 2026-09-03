@@ -112,7 +112,7 @@ export default function Login() {
                     <button type="submit"
                         disabled={isSubmitting}
                         className="button1">
-                        {isSubmitting ? "در حال ورود" : "ورود"}
+                        {isSubmitting ? "در حال ورود..." : "ورود"}
                     </button>
 
                 </form>

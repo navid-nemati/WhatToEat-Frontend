@@ -341,6 +341,14 @@ button {
   transition: all 0.2s ease-out;
 }
 
+.button1:disabled {
+  background: #b9ffe8;
+  color: black;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
 .button1:active {
   background: #009966;
   box-shadow: 0 0 30px 5px #00d18b;
