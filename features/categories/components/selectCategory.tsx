@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import useGetAllCategories from "@/features/categories/hooks/useGetAllCategories";
 import { parseApiError } from "@/utils/apiError";
+import Modal from "@/shared/components/modal";
+import CreateCategoryComponent from "./CreateCategory";
 
 interface SelectCategoryProps {
     value?: string;
@@ -17,6 +19,8 @@ export default function SelectCategory({
     const [searchTerm, setSearchTerm] = useState("");
     const [searchInput, setSearchInput] = useState("");
     const [selectedId, setSelectedId] = useState(value);
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
     const {
         data: categories,
@@ -126,13 +130,38 @@ export default function SelectCategory({
                                 {category.name}
                             </button>
                         ))}
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            type="button"
+                            className="rounded-md px-3 py-2 text-right
+                                    bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 active:scale-95 transition ">
+                            ایجاد دسته بندی جدید
+                        </button>
                     </div>
                 ) : (
-                    <p className="py-4 text-center text-sm text-gray-500">
-                        دسته‌بندی‌ای پیدا نشد.
-                    </p>
+                    <div>
+                        <p className="py-5 text-center text-sm text-gray-500">
+                            دسته بندی ای پیدا نشد.
+                        </p>
+
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            type="button"
+                            className="rounded-md px-3 py-2 text-right
+                                    bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 active:scale-95 transition ">
+                            ایجاد دسته بندی جدید
+                        </button>
+                    </div>
                 )}
             </div>
+
+            <Modal
+                open={isCreateModalOpen}
+                onOpenChange={setIsCreateModalOpen}
+                title="افزدون دسته بندی"
+                size="md">
+                <CreateCategoryComponent />
+            </Modal>
         </div>
     );
 }
