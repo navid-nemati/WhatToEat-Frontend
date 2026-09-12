@@ -43,9 +43,9 @@ export default function UpdateIngredientForm({ ingredientName, ingredientId, onS
                 onSuccess()
                 AppToast.success("ماده اولیه با موفقیت به روزرسانی شد")
             },
-            onError: (err: any) => {
-                console.error("Mutation Error:", err);
-                AppToast.error(err.message)
+            onError: (mutationError) => {
+                const parsed = parseApiError(mutationError);
+                AppToast.error(parsed.message ?? "خطایی رخ داد");
             }
         });
 
