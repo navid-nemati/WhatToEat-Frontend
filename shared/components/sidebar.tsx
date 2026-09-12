@@ -88,7 +88,7 @@ import {
   Utensils,
   ShoppingCart,
   Heart,
-  User,
+  UserRound,
   Shield,
   LogOut,
   LogIn,
@@ -241,6 +241,15 @@ export default function Sidebar() {
                 پنل مدیریت
               </Link>
             )}
+
+            <Link
+                href="/profile"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 active:scale-95 transition"
+              >
+                <UserRound className="size-4" />
+                پروفایل
+              </Link>
 
             <button
               onClick={() => {

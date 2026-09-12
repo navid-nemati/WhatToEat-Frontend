@@ -63,11 +63,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (data.roles?.includes("Admin")) {
                 router.push("/admin");
             } else {
-                router.push("/profile");
+                router.push("/");
             }
         }
         finally {
-            console.log("finally");
             //setLoading(false)
         }
     };
