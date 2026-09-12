@@ -31,8 +31,6 @@ import { useAuth } from "@/context/AuthContext";
 import ProtectedRoute from "@/shared/components/ProtectedRoute";
 import Link from "next/link";
 import useUpdateUser from "@/features/auth/hooks/useUpdateUser";
-import { UpdateCategoryFormData } from "@/features/categories/schemas/UpdateCategory.schema";
-import { UpdateUserDto } from "@/features/auth/types/user";
 import AppToast from "@/lib/toast";
 import { parseApiError } from "@/utils/apiError";
 import { useForm } from "react-hook-form";

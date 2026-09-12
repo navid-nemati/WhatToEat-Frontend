@@ -4,15 +4,19 @@ import { useAuth } from "@/context/AuthContext"
 import AppToast from "@/lib/toast"
 import { LoginUserFormData, LoginUserSchema } from "@/features/auth/schemas/LoginUser.Schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button, TextField } from "@mui/material"
+import { IconButton, InputAdornment, TextField } from "@mui/material"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import axios from "axios"
+import { Eye, EyeOff } from "lucide-react"
 
 export default function Login() {
 
     const { login } = useAuth()
     const [apiError, setApiError] = useState<string | null>(null);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -88,8 +92,7 @@ export default function Login() {
                         <TextField
                             label="رمز عبور"
                             variant="outlined"
-                            type="password"
-                            autoSave="false"
+                            type={showPassword ? "text" : "password"}
                             size="small"
                             sx={{
                                 '& .MuiOutlinedInput-root': {
@@ -97,6 +100,21 @@ export default function Login() {
                                 },
                             }}
                             {...register("password")}
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword(prev => !prev)}
+                                                edge="end"
+                                                aria-label={showPassword ? "مخفی کردن رمز عبور" : "نمایش رمز عبور"}
+                                            >
+                                                {showPassword ? <EyeOff /> : <Eye />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
                         />
 
                         <div className="text-sm text-rose-500">{errors.password?.message}</div>

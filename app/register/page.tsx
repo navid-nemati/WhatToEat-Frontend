@@ -4,15 +4,18 @@ import { useAuth } from "@/context/AuthContext";
 import AppToast from "@/lib/toast";
 import { RegisterUserFormData, RegisterUserSchema } from "@/features/auth/schemas/RegisterUser.Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react"
 
 export default function Register() {
 
     const { register: registerUser } = useAuth()
     const [apiError, setApiError] = useState<string | null>(null);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -103,8 +106,7 @@ export default function Register() {
                         <TextField
                             label="رمز عبور"
                             variant="outlined"
-                            type="password"
-                            autoSave="false"
+                            type={showPassword ? "text" : "password"}
                             size="small"
                             sx={{
                                 '& .MuiOutlinedInput-root': {
@@ -112,6 +114,21 @@ export default function Register() {
                                 },
                             }}
                             {...register("password")}
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword(prev => !prev)}
+                                                edge="end"
+                                                aria-label={showPassword ? "مخفی کردن رمز عبور" : "نمایش رمز عبور"}
+                                            >
+                                                {showPassword ? <EyeOff /> : <Eye />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
                         />
 
                         <div className="text-sm text-rose-500">{errors.password?.message}</div>
