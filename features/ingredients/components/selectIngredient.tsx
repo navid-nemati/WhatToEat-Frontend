@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import useGetAllIngredients from "@/features/ingredients/hooks/useGetAllIngredients";
 import { parseApiError } from "@/utils/apiError";
 import { IIngredientItem } from "../types/Ingredient";
+import Modal from "@/shared/components/modal";
+import CreateIngredientComponent from "./createIngredient";
 
 interface SelectedIngredient {
     id: string;
@@ -25,8 +27,9 @@ export default function SelectIngredient({
 
     const [searchInput, setSearchInput] = useState("");
 
-    const [selectedId, setSelectedId] =
-        useState(value);
+    const [selectedId, setSelectedId] = useState(value);
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
     const {
         data: ingredients,
@@ -114,8 +117,7 @@ export default function SelectIngredient({
                     <p className="py-5 text-center text-sm text-gray-500">
                         در حال بارگذاری...
                     </p>
-                ) : ingredients &&
-                    ingredients.length > 0 ? (
+                ) : ingredients && ingredients.length > 0 ? (
                     // <div className="flex flex-col gap-1">
                     <div className="grid grid-cols-2 gap-1.5">
                         {ingredients.map((ingredient) => (
@@ -138,13 +140,38 @@ export default function SelectIngredient({
                                 {ingredient.name}
                             </button>
                         ))}
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="rounded-md px-3 py-2 text-right
+                                    bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 active:scale-95 transition ">
+                            ایجاد ماده اولیه جدید
+                        </button>
                     </div>
                 ) : (
-                    <p className="py-5 text-center text-sm text-gray-500">
-                        ماده اولیه‌ای پیدا نشد.
-                    </p>
+                    <div>
+                        <p className="py-5 text-center text-sm text-gray-500">
+                            ماده اولیه‌ای پیدا نشد.
+                        </p>
+
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            type="button"
+                            className="rounded-md px-3 py-2 text-right
+                                    bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 active:scale-95 transition ">
+                            ایجاد ماده اولیه جدید
+                        </button>
+                    </div>
                 )}
             </div>
+
+            <Modal
+                open={isCreateModalOpen}
+                onOpenChange={setIsCreateModalOpen}
+                title="افزدون ماده اولیه"
+                size="md">
+                <CreateIngredientComponent
+                />
+            </Modal>
         </div>
     );
 }
