@@ -36,6 +36,7 @@ import GetFoods from "@/features/foods/components/foodList";
 import Link from "next/link";
 import { ChefHat, Sparkles, ArrowLeft, Clock, Star, Flame } from "lucide-react";
 import Image from "next/image";
+import HeroSearch from "@/shared/components/HeroSearch";
 
 export default function Home() {
   return (
@@ -68,25 +69,12 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="max-w-md text-base md:text-lg text-slate-600">
-                صدها دستور پخت خوشمزه و ساده، با راهنمای قدم به قدم. فقط انتخاب کن، بپز و لذت ببر! 🍳
+              <p className="max-w-md text-base md:text-lg text-slate-600 px-5 sm:px-0">
+                صدها دستور پخت خوشمزه و ساده، با راهنمای قدم به قدم. فقط با چیزایی که توی یخچالت داری، بپز و لذت ببر! 🍳
               </p>
 
-              {/* دکمه‌ها */}
-              <div className="flex flex-wrap items-center gap-3">
-                <Link href="/food">
-                  <button className="group flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-lg font-medium text-emerald-950 shadow-lg shadow-amber-400/30 transition-all duration-200 ring-amber-200 hover:ring-2 hover:shadow-xl hover:shadow-amber-400/40 hover:scale-105 active:scale-95 text-shadow-sm">
-                    <ChefHat size={20} className="transition-transform group-hover:rotate-12" />
-                    شروع آشپزی
-                  </button>
-                </Link>
-                <Link href="#foods">
-                  <button className="flex items-center gap-2 rounded-full border-2 border-emerald-200 px-6 py-3 text-lg text-emerald-800 transition-all duration-200 hover:border-emerald-400 hover:scale-105 active:scale-95 text-shadow-sm">
-                    مرور غذاها
-                    <ArrowLeft size={20} />
-                  </button>
-                </Link>
-              </div>
+              {/* سرچ */}
+              <HeroSearch />
 
               {/* آمار */}
               <div className="flex items-center gap-5 mt-2">
@@ -108,20 +96,20 @@ export default function Home() {
             </div>
 
             {/* 👈 سمت چپ: صحنه تزئینی غذا + کارت‌های شناور */}
-            <div className="relative hidden md:block h-[460px]">
+            <div className="relative hidden md:block h-115">
               {/* دایره مرکزی با گرادینت و اموجی غذا */}
               <div className="absolute inset-0 m-auto h-72 w-72 rounded-full bg-linear-to-br from-emerald-200 via-emerald-100 to-amber-100 shadow-2xl shadow-emerald-300/40 flex items-center justify-center animate-float-slow">
                 {/* <span className="text-[140px] leading-none">🍝</span> */}
 
-                  <Image
-                    src={'/heroImage.webp'}
-                    alt="heroImage"
-                    className="object-cover"
-                    width={'288'}
-                    height={'288'}
-                  />
+                <Image
+                  src={'/heroImage.webp'}
+                  alt="heroImage"
+                  className="object-cover"
+                  width={'288'}
+                  height={'288'}
+                />
 
-                  
+
               </div>
 
               {/* کارت شناور ۱: زمان */}

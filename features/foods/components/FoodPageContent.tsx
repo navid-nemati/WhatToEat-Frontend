@@ -21,9 +21,10 @@ export default function FoodPageContent() {
   const searchParams = useSearchParams();
 
   const categoryId = searchParams.get("categoryId");
+  const search = searchParams.get("search")
 
   const [filter, setFilter] = useState<IFoodQueryParams>({
-    search: "",
+    search: search || undefined,
     categoryId: categoryId  || undefined,
     includedIngredientIds: [],
     excludedIngredientIds: [],
