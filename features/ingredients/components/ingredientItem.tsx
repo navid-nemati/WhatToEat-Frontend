@@ -59,7 +59,7 @@ export default function IngredientItem({ id, name }: IngredientItemProp) {
                 onClick={() => setIsOpen(true)}
                 className="relative bg-slate-50 border border-slate-200 px-4 py-2 rounded-lg text-slate-700 
                 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 
-                transition-all duration-200 cursor-pointer flex items-center">
+                transition-all duration-200 cursor-pointer flex items-center animate-item-pop">
                 {name}
                 {isOpen && (
                     <div className="absolute px-2 py-1 bg-white rounded-md border 
