@@ -49,7 +49,7 @@ export default function IngredientOfFoodItem({ data }: Props) {
     };
 
     return (
-        <div className="w-full flex items-center justify-between gap-3 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+        <div className="w-full flex items-center justify-between gap-3 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 animate-item-pop">
             <div className="flex justify-between gap-3">
                 <span>{data.ingredientName}</span>
                 <span>:</span>
