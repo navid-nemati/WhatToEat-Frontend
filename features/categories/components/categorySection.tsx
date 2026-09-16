@@ -86,7 +86,7 @@ export default function CategorySection() {
                     text-shadow-md">دسته بندی ها</span>
                 </div>
 
-                <div className="mt-6 mb-3 w-full grid grid-cols-3 md:grid-cols-4 gap-2.5 md:gap-4 overflow-x-auto pb-5">
+                <div className="categorySection mt-6 mb-3 w-full grid grid-cols-3 md:grid-cols-4 gap-2.5 md:gap-4 overflow-x-auto pb-5 [&>*:last-child]:col-span-2 md:[&>*:last-child]:col-span-1">
                     {categories.map((category, index) => {
 
                         const style = categoryStyles[index % categoryStyles.length];
@@ -110,7 +110,7 @@ export default function CategorySection() {
             absolute inset-0
             w-full h-full
             object-cover
-            opacity-10
+            opacity-20
         "
                                 />
 
