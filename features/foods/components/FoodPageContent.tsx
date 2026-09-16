@@ -72,7 +72,7 @@ export default function FoodPageContent() {
         setFilter={setFilter}
       />
 
-      <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div className="grid w-full gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 
         {data?.length ? (
           data.map((food) => {
@@ -96,7 +96,7 @@ export default function FoodPageContent() {
                 <Link
                   href={`/food/${food.id}`}
                   className="
-                relative block h-44 w-full overflow-hidden rounded-2xl
+                relative block h-35 md:h-44 w-full overflow-hidden rounded-2xl
                 outline-none
                 focus-visible:ring-2
                 focus-visible:ring-emerald-500
@@ -118,7 +118,7 @@ export default function FoodPageContent() {
                 "
                   />
 
-                  {/* Badge دسته‌بندی */}
+                  {/* Category Badge */}
                   <span
                     className="
                   absolute right-3 top-3
@@ -126,8 +126,10 @@ export default function FoodPageContent() {
                   truncate rounded-full
                   border border-white/20
                   bg-black/35
-                  px-3 py-1.5
-                  text-xs font-medium
+                  px-2 py-1
+                  md:px-3 md:py-1.5
+                  text-[0.7rem]
+                  md:text-xs font-medium
                   text-white
                   shadow-sm
                   backdrop-blur-md
@@ -178,15 +180,15 @@ export default function FoodPageContent() {
 
                     <span className="h-3 w-px bg-slate-200" />
 
-                    <span className="flex items-center gap-1.5">
+                    {/* <span className="flex items-center gap-1.5">
                       <Star
                         size={14}
                         className="fill-amber-400 text-amber-400"
                       />
                       ۴.۸
-                    </span>
+                    </span> 
 
-                    <span className="h-3 w-px bg-slate-200" />
+                    <span className="h-3 w-px bg-slate-200" /> */}
 
                     <span className="flex items-center gap-1.5">
                       <Flame size={14} className="text-orange-500" />
