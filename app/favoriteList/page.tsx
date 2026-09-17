@@ -225,10 +225,10 @@ export default function FavoriteListPage() {
 
                                             <span className="h-3 w-px bg-slate-200" /> */}
 
-                                            <span className="flex items-center gap-1">
+                                            {/* <span className="flex items-center gap-1">
                                                 <Flame size={14} className="text-orange-500" />
                                                 آسان
-                                            </span>
+                                            </span> */}
                                         </div>
                                     </div>
                                 </article>
