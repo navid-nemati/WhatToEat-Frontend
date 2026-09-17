@@ -94,7 +94,7 @@ export default function FavoriteListPage() {
                     )}
 
                     {!isLoading && data && data.length > 0 && (
-                        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                        <div className="grid w-full gap-3 md:gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                             {data.map((food) => (
                                 <article
                                     key={food.id}
@@ -112,7 +112,7 @@ export default function FavoriteListPage() {
                                     <Link
                                         href={`/food/${food.foodId}`}
                                         className="
-                relative block h-44 w-full overflow-hidden rounded-2xl
+                relative block h-35 md:h-44 w-full overflow-hidden rounded-2xl
                 outline-none
                 focus-visible:ring-2
                 focus-visible:ring-emerald-500
@@ -134,7 +134,7 @@ export default function FavoriteListPage() {
                 "
                                         />
 
-                                        {/* Badge دسته‌بندی */}
+                                        {/* Category Badge */}
                                         <span
                                             className="
                   absolute right-3 top-3
@@ -142,8 +142,10 @@ export default function FavoriteListPage() {
                   truncate rounded-full
                   border border-white/20
                   bg-black/35
-                  px-3 py-1.5
-                  text-xs font-medium
+                  px-2 py-1
+                  md:px-3 md:py-1.5
+                  text-[0.7rem]
+                  md:text-xs font-medium
                   text-white
                   shadow-sm
                   backdrop-blur-md
@@ -205,15 +207,15 @@ export default function FavoriteListPage() {
                                         </div>
 
                                         {/* اطلاعات غذا */}
-                                        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-slate-500">
-                                            <span className="flex items-center gap-1.5">
+                                        <div className="mt-3 flex flex-wrap items-center gap-x-2 md:gap-x-3 gap-y-2 text-xs text-slate-500">
+                                            <span className="flex items-center gap-1">
                                                 <Clock size={14} className="text-emerald-600" />
                                                 ۳۰ دقیقه
                                             </span>
 
                                             <span className="h-3 w-px bg-slate-200" />
 
-                                            <span className="flex items-center gap-1.5">
+                                            {/* <span className="flex items-center gap-1.5">
                                                 <Star
                                                     size={14}
                                                     className="fill-amber-400 text-amber-400"
@@ -221,9 +223,9 @@ export default function FavoriteListPage() {
                                                 ۴.۸
                                             </span>
 
-                                            <span className="h-3 w-px bg-slate-200" />
+                                            <span className="h-3 w-px bg-slate-200" /> */}
 
-                                            <span className="flex items-center gap-1.5">
+                                            <span className="flex items-center gap-1">
                                                 <Flame size={14} className="text-orange-500" />
                                                 آسان
                                             </span>
