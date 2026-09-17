@@ -38,6 +38,7 @@ import { ChefHat, Sparkles, ArrowLeft, Clock, Star, Flame } from "lucide-react";
 import Image from "next/image";
 import HeroSearch from "@/shared/components/HeroSearch";
 import CategorySection from "@/features/categories/components/categorySection";
+import RefrigeratorSection from "@/features/ingredients/components/refrigeratorSection";
 
 export default function Home() {
   return (
@@ -151,6 +152,8 @@ export default function Home() {
       </section>
 
       <CategorySection />
+
+      <RefrigeratorSection />
 
       {/* ===== لیست غذاها ===== */}
       <section id="foods" className="pt-6 pb-24 scroll-mt-28">
