@@ -138,8 +138,8 @@ export default function ShoppingList() {
                 <div className="pt-21 md:pt-30 pb-10">
                     {/* Header & Global Actions */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-                        <div className="flex items-end gap-4">
-                            <h3 className="text-2xl font-bold text-emerald-800">لیست خرید</h3>
+                        <div className="flex flex-col md:flex-row gap-2 md:gap-4 md:items-end">
+                            <h3 className="text-2xl font-bold text-emerald-800 text-nowrap">لیست خرید</h3>
                             <p className="text-slate-500 text-sm">
                                 مواد اولیه‌ای که در خانه نداری را به لیست خرید اضافه کن تا موقع خرید چیزی از قلم نیفتد.
                             </p>
@@ -155,7 +155,7 @@ export default function ShoppingList() {
                             </button>
                             <button
                                 onClick={handleDeletePurchased}
-                                className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-emerald-600 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors"
+                                className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-emerald-600 bg-emerald-100 rounded-lg hover:bg-emerald-50 transition-colors"
                             >
                                 <CheckCircle size={16} />
                                 حذف مواد خریداری شده
@@ -190,7 +190,7 @@ export default function ShoppingList() {
                     {/* Data Table / Cards */}
                     {!isLoading && data && data.length > 0 && (
                         <>
-                            {/* Desktop Table (hidden on small screens) */}
+                            {/* Desktop Table */}
                             <div className="hidden md:block overflow-x-auto">
                                 <table className="w-full border-collapse bg-white rounded-lg shadow-sm overflow-hidden">
                                     <thead>
@@ -218,18 +218,6 @@ export default function ShoppingList() {
                                                     {item.value}
                                                 </td>
                                                 <td className="py-3 px-4 text-center">
-                                                    {/* {item.isPurchased ? (
-                                                        <span className="inline-flex items-center gap-1 text-emerald-600">
-                                                            <CheckCircle size={18} />
-                                                            <span className="text-xs hidden lg:inline">خریداری شده</span>
-                                                        </span>
-                                                    ) : (
-                                                        <span className="inline-flex items-center gap-1 text-gray-400">
-                                                            <Circle size={18} />
-                                                            <span className="text-xs hidden lg:inline">خرید نشده</span>
-                                                        </span>
-                                                    )} */}
-
                                                     <button
                                                         onClick={() => handleTogglePurchased(item)}
 
@@ -251,7 +239,7 @@ export default function ShoppingList() {
                                                     <div className="flex items-center justify-center gap-1">
                                                         <button
                                                             onClick={() => setSelectedItem(item)}
-                                                            className="p-1.5 text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
+                                                            className="p-1.5 text-gray-500 hover:text-amber-400 hover:bg-amber-50 rounded-md transition-colors"
                                                             title="ویرایش"
                                                         >
                                                             <Pencil size={18} />
@@ -319,7 +307,7 @@ export default function ShoppingList() {
                                 </table>
                             </div>
 
-                            {/* Mobile Cards (visible on small screens) */}
+                            {/* Mobile Cards */}
                             <div className="md:hidden space-y-3">
                                 {data.map((item) => (
                                     <div
@@ -329,22 +317,14 @@ export default function ShoppingList() {
                                         {/* Food name & purchase status */}
                                         <div className="flex items-center justify-between">
                                             <h4 className="font-semibold text-emerald-800 text-base">
-                                                {item.foodName}
+                                                {item.ingredientName}
                                             </h4>
-                                            {/* <span
-                                                className={`inline-flex items-center gap-1 text-sm ${item.isPurchased
-                                                    ? "text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full"
-                                                    : "text-gray-400"
-                                                    }`}
-                                            >
-                                                {item.isPurchased ? (
-                                                    <CheckCircle size={16} />
-                                                ) : (
-                                                    <Circle size={16} />
-                                                )}
-                                                {item.isPurchased ? "خریداری شده" : "خرید نشده"}
-                                            </span> */}
-                                            <button
+
+                                            <div>
+                                                <span className="text-gray-400">مقدار:</span>{" "}
+                                                <span className="font-medium text-lg">{item.value}</span>
+                                            </div>
+                                            {/* <button
                                                 onClick={() => handleTogglePurchased(item)}
                                                 className="inline-flex items-center gap-1"
                                             >
@@ -355,73 +335,78 @@ export default function ShoppingList() {
                                                 )}
 
                                                 {item.isPurchased ? "خریداری شده" : "خرید نشده"}
-                                            </button>
+                                            </button> */}
                                         </div>
 
-                                        {/* Ingredient details */}
                                         <div className="grid grid-cols-2 text-sm text-gray-600">
                                             <div>
-                                                <span className="text-gray-400">ماده اولیه:</span>{" "}
-                                                <span className="font-medium">{item.ingredientName}</span>
-                                            </div>
-                                            <div>
-                                                <span className="text-gray-400">مقدار:</span>{" "}
-                                                <span className="font-medium">{item.value}</span>
+                                                <span className="text-gray-400">برای:</span>{" "}
+                                                <span className="font-medium">{item.foodName}</span>
                                             </div>
                                         </div>
 
                                         {/* Actions */}
-                                        <div className="flex justify-end gap-1 pt-1 border-t border-gray-50">
+                                        <div className="flex justify-between gap-1 pt-2 border-t border-gray-50">
                                             <button
-                                                onClick={() => setSelectedItem(item)}
-                                                className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 rounded-md hover:bg-emerald-100"
+                                                onClick={() => handleTogglePurchased(item)}
+                                                className={`inline-flex items-center gap-1 
+                                                    ${item.isPurchased ? 'text-emerald-700' : ''}`}
                                             >
-                                                <Pencil size={14} />
-                                                ویرایش
+                                                {item.isPurchased ? (
+                                                    <CheckCircle size={16} />
+                                                ) : (
+                                                    <Circle size={16} />
+                                                )}
+
+                                                {item.isPurchased ? "خریداری شده" : "خرید نشده"}
                                             </button>
-                                            {/* <button
-                                                onClick={() => handleDelete(item.id)}
-                                                className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100"
-                                            >
-                                                <Trash2 size={14} />
-                                                حذف
-                                            </button> */}
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <button
-                                                        className="p-1.5 text-gray-500 hover:text-red-600
+
+                                            <div className="flex gap-1">
+                                                <button
+                                                    onClick={() => setSelectedItem(item)}
+                                                    className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 rounded-md hover:bg-emerald-100"
+                                                >
+                                                    <Pencil size={14} />
+                                                    ویرایش
+                                                </button>
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        <button
+                                                            className="p-1.5 text-gray-500 hover:text-red-600
             hover:bg-red-50 rounded-md transition-colors"
-                                                    >
-                                                        <Trash2 size={18} />
-                                                    </button>
-                                                </AlertDialogTrigger>
-
-                                                <AlertDialogContent dir="rtl">
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle>
-                                                            حذف ماده اولیه
-                                                        </AlertDialogTitle>
-
-                                                        <AlertDialogDescription>
-                                                            آیا مطمئنی می‌خواهی این ماده را از لیست خرید حذف کنی؟
-                                                            این عملیات قابل بازگشت نیست.
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-
-                                                    <AlertDialogFooter>
-                                                        <AlertDialogCancel>
-                                                            انصراف
-                                                        </AlertDialogCancel>
-
-                                                        <AlertDialogAction
-                                                            disabled={deleteIsPending}
-                                                            onClick={() => handleDelete(item.id)}
                                                         >
-                                                            {deleteIsPending ? "در حال حذف..." : "حذف"}
-                                                        </AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
+                                                            <Trash2 size={18} />
+                                                        </button>
+                                                    </AlertDialogTrigger>
+
+                                                    <AlertDialogContent dir="rtl">
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>
+                                                                حذف ماده اولیه
+                                                            </AlertDialogTitle>
+
+                                                            <AlertDialogDescription>
+                                                                آیا مطمئنی می‌خواهی این ماده را از لیست خرید حذف کنی؟
+                                                                این عملیات قابل بازگشت نیست.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>
+                                                                انصراف
+                                                            </AlertDialogCancel>
+
+                                                            <AlertDialogAction
+                                                                disabled={deleteIsPending}
+                                                                onClick={() => handleDelete(item.id)}
+                                                            >
+                                                                {deleteIsPending ? "در حال حذف..." : "حذف"}
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                            </div>
+
                                         </div>
                                     </div>
                                 ))}
