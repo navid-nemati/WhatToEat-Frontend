@@ -42,7 +42,7 @@ import AppToast from "@/lib/toast";
 import Container from "@/shared/components/container";
 import Modal from "@/shared/components/modal";
 import ProtectedRoute from "@/shared/components/ProtectedRoute";
-import { Pencil, Trash2, CheckCircle, Circle } from "lucide-react";
+import { Pencil, Trash2, CheckCircle, Circle, Loader2 } from "lucide-react";
 import { useState } from "react";
 import {
     AlertDialog,
@@ -60,6 +60,9 @@ import { useDeleteAllShoppingList } from "@/features/shoppingList/hooks/useDelet
 import { parseApiError } from "@/utils/apiError";
 
 export default function ShoppingList() {
+
+    const [pendingIsPurchased, setPendingIsPurchased] = useState<string | null>(null);
+
     const { data,
         isLoading,
         isError,
@@ -89,19 +92,18 @@ export default function ShoppingList() {
 
     const handleTogglePurchased = (item: ShoppingListDto) => {
 
-        // updateItemMutate({
-        //     id: item.id,
-        //     dto: {
-        //         value: item.value,
-        //         isPurchased: !item.isPurchased
-        //     }
-        // });
+        if (pendingIsPurchased) return
+
+        setPendingIsPurchased(item.id)
 
         updateItemMutate({
             id: item.id,
             value: item.value,
             isPurchased: !item.isPurchased
-
+        }, {
+            onSettled: () => {
+                setPendingIsPurchased(null)
+            }
         });
 
     }
@@ -219,20 +221,29 @@ export default function ShoppingList() {
                                                 </td>
                                                 <td className="py-3 px-4 text-center">
                                                     <button
-                                                        onClick={() => handleTogglePurchased(item)}
+                                                        onClick={() => {
+                                                            if (pendingIsPurchased === item.id) return
+                                                            handleTogglePurchased(item)
+                                                        }}
 
                                                     >
-                                                        {item.isPurchased ? (
-                                                            <span className="inline-flex items-center gap-1 text-emerald-600">
-                                                                <CheckCircle className="transition hover:scale-115" size={18} />
-                                                                <span className="text-xs hidden lg:inline">خریداری شده</span>
-                                                            </span>
-                                                        ) : (
-                                                            <span className="inline-flex items-center gap-1 text-gray-400">
-                                                                <Circle className="transition hover:scale-115" size={18} />
-                                                                <span className="text-xs hidden lg:inline">خرید نشده</span>
-                                                            </span>
-                                                        )}
+                                                        <span className={`inline-flex items-center gap-1
+                                                            ${item.isPurchased ? 'text-emerald-600' : 'text-gray-400'}`}>
+                                                            {pendingIsPurchased === item.id ? (
+                                                                <Loader2 className="size-5 animate-spin" />
+                                                            ) : (
+
+                                                                item.isPurchased ? (
+                                                                    <CheckCircle className="transition hover:scale-115" size={18} />
+                                                                ) : (
+                                                                    <Circle className="transition hover:scale-115" size={18} />
+                                                                )
+
+                                                            )}
+                                                            <span className="text-xs hidden lg:inline">خریداری شده</span>
+                                                        </span>
+
+
                                                     </button>
                                                 </td>
                                                 <td className="py-3 px-4">
