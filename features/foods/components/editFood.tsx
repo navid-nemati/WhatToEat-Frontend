@@ -35,6 +35,8 @@ export default function EditFood({ food }: props) {
                 categoryId: data.categoryId,
                 image: selectedImage ?? null,
                 removeImage: data.removeImage ?? false,
+                cookingTimeMinutes: data.cookingTimeMinutes,
+                servings: data.servings,
             },
             {
                 onSuccess: () => {
@@ -60,7 +62,9 @@ export default function EditFood({ food }: props) {
                 defaultValues={{
                     name: food.name,
                     recipe: food.recipe,
-                    categoryId: food.categoryId
+                    categoryId: food.categoryId,
+                    cookingTimeMinutes: food.cookingTimeMinutes,
+                    servings: food.servings,
                 }}
                 currentImagePath={food.imagePath}
                 loading={isPending}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextareaAutosize, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 
 import SelectCategory from "@/features/categories/components/selectCategory";
 
@@ -20,6 +20,8 @@ interface FoodFormProps {
         name: string;
         recipe: string;
         categoryId: string;
+        cookingTimeMinutes: number,
+        servings: number,
     };
 
     currentImagePath?: string | null;
@@ -32,7 +34,9 @@ interface FoodFormProps {
         Name?: string[];
         Recipe?: string[];
         CategoryId?: string[];
-        image?: string[]
+        image?: string[];
+        CookingTimeMinutes?: string[]
+        Servings?: string[]
     };
 
     submitButtonText?: string;
@@ -70,6 +74,8 @@ export default function FoodForm({
             recipe: defaultValues?.recipe ?? "",
             categoryId: defaultValues?.categoryId ?? "",
             removeImage: false,
+            cookingTimeMinutes: defaultValues?.cookingTimeMinutes ?? undefined,
+            servings: defaultValues?.servings ?? undefined,
         },
     });
 
@@ -78,6 +84,8 @@ export default function FoodForm({
             name: defaultValues?.name ?? "",
             recipe: defaultValues?.recipe ?? "",
             categoryId: defaultValues?.categoryId ?? "",
+            cookingTimeMinutes: defaultValues?.cookingTimeMinutes ?? undefined,
+            servings: defaultValues?.servings ?? undefined,
         });
 
         setSelectedCategoryId(defaultValues?.categoryId ?? "");
@@ -138,6 +146,7 @@ export default function FoodForm({
 
             </div>
 
+            {/* تصویر غذا */}
             <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-600">
                     تصویر غذا
@@ -216,10 +225,80 @@ export default function FoodForm({
                     )}
             </div>
 
-            <SelectCategory
-                value={selectedCategoryId}
-                onSelect={handleCategorySelect}
-            />
+            <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/2">
+                    {/* دسته بندی */}
+                    <SelectCategory
+                        value={selectedCategoryId}
+                        onSelect={handleCategorySelect}
+                    />
+                </div>
+
+
+                <div className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-600">
+                            مدت پخت
+                        </label>
+
+                        <div className="flex items-center gap-2">
+                            <TextField
+                                type="number"
+                                size="small"
+                                placeholder="مثال: 120 "
+                                variant="outlined"
+                                style={{width: '120px'}}
+                                {...register("cookingTimeMinutes", {
+                                    valueAsNumber: true
+                                })}
+                                error={
+                                    Boolean(errors.cookingTimeMinutes) ||
+                                    Boolean(fieldErrors?.CookingTimeMinutes?.length)
+                                }
+                                helperText={
+                                    errors.cookingTimeMinutes?.message ??
+                                    fieldErrors?.CookingTimeMinutes?.[0]
+                                }
+                            />
+                            دقیقه
+                        </div>
+
+                        <span className="text-red-950 text-sm">لطفا زمان را <span className="text-red-700">فقط</span> به دقیقه وارد کنید.</span>
+
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-600">
+                            تعداد نفرات
+                        </label>
+
+                        <div className="flex items-center gap-2">
+                            <TextField
+                                type="number"
+                                size="small"
+                                placeholder="مثال: 4"
+                                variant="outlined"
+                                style={{width: '120px'}}
+                                {...register("servings", {
+                                    setValueAs: (value) =>
+                                        value === "" ? undefined : Number(value),
+                                })}
+                                error={
+                                    Boolean(errors.servings) ||
+                                    Boolean(fieldErrors?.Servings?.length)
+                                }
+                                helperText={
+                                    errors.servings?.message ??
+                                    fieldErrors?.Servings?.[0]
+                                }
+                            />
+                            نفر
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
 
             {(categoryError ||
                 fieldErrors?.CategoryId?.[0]) && (

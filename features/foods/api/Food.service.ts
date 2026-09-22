@@ -63,6 +63,16 @@ export async function CreateFood(dto: ICreateFoodDto): Promise<IFoodDto> {
         formData.append("Image", dto.image);
     }
 
+    // formData.append(
+    //     "CookingTimeMinutes",
+    //     String(dto.cookingTimeMinutes)
+    // );
+
+    // formData.append(
+    //     "Servings",
+    //     String(dto.servings)
+    // );
+
     const { data } = await api.post<IFoodDto>("/Food", formData);
 
     return data;
@@ -99,6 +109,17 @@ export async function UpdateFood(dto: IUpdateFoodDto): Promise<void> {
         String(dto.removeImage ?? false)
     );
 
+    if (dto.cookingTimeMinutes !== undefined) {
+        formData.append(
+            "CookingTimeMinutes",
+            String(dto.cookingTimeMinutes)
+        );
+    }
+
+    if (dto.servings !== undefined) {
+        formData.append("Servings", String(dto.servings));
+    }
+
     if (dto.image) {
         formData.append("Image", dto.image);
     }
@@ -125,5 +146,5 @@ export async function UpdateFood(dto: IUpdateFoodDto): Promise<void> {
 export async function DeleteFood(id: string): Promise<void> {
 
     await api.delete(`/Food/${id}`)
-    
+
 }

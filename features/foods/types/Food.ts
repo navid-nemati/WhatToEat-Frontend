@@ -8,10 +8,12 @@ export interface IFoodDto {
     categoryName: string;
     recipe: string
     imagePath?: string | null;
+    cookingTimeMinutes: number
 }
 
 export interface IFoodDetailDto extends IFoodDto {
     ingredients: IIngredientsOfFoodDto[];
+    servings: number
 }
 
 export interface ICreateFoodDto {
@@ -19,6 +21,8 @@ export interface ICreateFoodDto {
     categoryId: string;
     recipe?: string;
     image?: File | null;
+    cookingTimeMinutes?: number
+    servings?: number
 }
 
 export interface IUpdateFoodDto {
@@ -28,6 +32,8 @@ export interface IUpdateFoodDto {
     recipe: string
     image?: File | null;
     removeImage?: boolean
+    cookingTimeMinutes?: number
+    servings?: number
 }
 
 export interface IFoodQueryParams {
@@ -35,4 +41,5 @@ export interface IFoodQueryParams {
     search?: string
     includedIngredientIds?: string[]
     excludedIngredientIds?: string[]
+    cookingTimeMinutes?: number
 }

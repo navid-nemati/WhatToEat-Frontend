@@ -101,14 +101,15 @@ export default function FoodCard({food}: props) {
 
                 {/* اطلاعات غذا */}
                 <div className="mt-3 flex flex-wrap items-center gap-x-2 md:gap-x-3 gap-y-2 text-xs text-slate-500">
-                    <span className="flex items-center gap-1">
-                        <Clock size={14} className="text-emerald-600" />
-                        ۳۰ دقیقه
+                    <span className="flex items-center ">
+                        <Clock size={14} className="text-emerald-600 me-1" />
+                        <span>{food.cookingTimeMinutes}</span>
+                        <span className="mr-1">دقیقه</span>
                     </span>
 
-                    <span className="h-3 w-px bg-slate-200" />
+                    {/* <span className="h-3 w-px bg-slate-200" />
 
-                    {/* <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1">
                       <Star
                         size={14}
                         className="fill-amber-400 text-amber-400"

@@ -11,7 +11,7 @@ import { parseApiError } from "@/utils/apiError";
 import { getFoodImageUrl } from "@/utils/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { Loader2, ShoppingCart, Heart } from "lucide-react";
+import { Loader2, ShoppingCart, Users, CookingPot } from "lucide-react";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AddToFavoriteListHook from "@/features/favoriteList/hooks/useAddToFavoriteList";
 import DOMPurify from "dompurify";
@@ -180,22 +180,48 @@ export default function FoodDetail() {
 
                         </div>
 
-                        <div className=" flex items-center justify-between border border-slate-200/80 rounded-3xl 
+                        <div className=" flex flex-col gap-2 border border-slate-200/80 rounded-3xl 
                         shadow-[0_4px_20px_rgba(15,23,42,0.05)] bg-white p-4">
-                            <div className="flex flex-col items-center gap-1">
-                                <div className="text-2xl text-emerald-950">{data?.name}</div>
-                                {/* <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div> */}
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col items-center gap-1">
+                                    <div className="text-2xl text-emerald-950">{data?.name}</div>
+                                    {/* <div className="text-emerald-600 text-shadow-sm">دسته بندی: <span className="text-slate-900">{data?.categoryName}</span></div> */}
+                                </div>
+
+                                <button onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90 ${favoriteListIsPending ? "cursor-not-allowed opacity-60" : ""}`}>
+
+
+                                    {favoriteListIsPending ? (
+                                        <Loader2 className="size-5 animate-spin" />
+                                    ) : (
+                                        <FavoriteBorderOutlinedIcon className="text-xl" />
+                                    )}
+                                </button>
                             </div>
 
-                            <button aria-disabled={favoriteListIsPending === true} onClick={() => { setIsClick(!isClick), addToFavoriteList(id) }} className={`flex items-center justify-center w-12 h-12 ease-out duration-200 rounded-full border border-slate-200 text-emerald-950 hover:text-white ${isClick == false && 'hover:bg-slate-800'} hover:border-transparent ${isClick ? 'bg-emerald-600 border-transparent text-white' : 'bg-white'} active:scale-90 ${favoriteListIsPending ? "cursor-not-allowed opacity-60" : ""}`}>
+                            {/* info */}
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-1.5">
+                                        <div className="flex items-center justify-center p-1.5
+                                        rounded-full bg-amber-50">
+                                            <CookingPot className="text-amber-400" size={18} />
+                                        </div>
+                                        زمان پخت :
+                                    </div>
+
+                                    <span className="font-bold">{data?.cookingTimeMinutes}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center justify-center p-1.5
+                                        rounded-full bg-emerald-50">
+                                        <Users className="text-emerald-600" size={16} />
+                                    </div>
 
 
-                                {favoriteListIsPending ? (
-                                    <Loader2 className="size-5 animate-spin" />
-                                ) : (
-                                    <FavoriteBorderOutlinedIcon className="text-xl" />
-                                )}
-                            </button>
+                                    برای <span className="font-bold">{data?.servings}</span> نفر
+                                </div>
+                            </div>
                         </div>
 
                         {/* Ingredients List */}

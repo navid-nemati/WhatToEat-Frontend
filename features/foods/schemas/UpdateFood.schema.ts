@@ -17,6 +17,13 @@ export const UpdateFoodSchema = z.object({
         .optional(),
 
     removeImage: z.boolean().optional(),
+
+    cookingTimeMinutes: z.number()
+        .min(1, "زمان پخت نمی تواند کمتر از 1 دقیقه باشد.")
+        .max(1440, "زمان پخت نمی تواند بیشتر از 1440 دقیقه(24 ساعت) باشد.").optional(),
+    servings: z.number()
+        .min(1, "تعداد نفرات نمی تواند کمتر از 1 باشد.")
+        .max(20, "تعداد نفرات نمی تواند بیشتر از 20 باید ").optional()
 })
 
 export type UpdateFoodFormData = z.infer<typeof UpdateFoodSchema>;
