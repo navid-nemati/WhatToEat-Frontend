@@ -3,7 +3,7 @@ import Container from "@/shared/components/container";
 
 export default function Food() {
     return (
-        <div className="pt-30">
+        <div className="pt-24 md:pt-30">
             <Container>
                 <FoodList />
             </Container>

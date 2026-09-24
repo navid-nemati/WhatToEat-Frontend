@@ -29,6 +29,7 @@ export default function FoodFilter({
 
     const [searchInput, setSearchInput] = useState('');
     const [categoryIdInput, setCategoryIdInput] = useState('');
+    const [cookingTimeMinutesInput, setCookingTimeMinutesInput] = useState('');
 
     const [includedIngredientIsOpen, setIncludedIngredientIsOpen] = useState(false)
     const [includedIngredients, setIncludedIngredients] = useState<IIngredientItem[]>([]);
@@ -49,6 +50,7 @@ export default function FoodFilter({
             categoryId: categoryIdInput === "all" ? undefined : categoryIdInput,
             includedIngredientIds: includedIngredients.map(ingredient => ingredient.id),
             excludedIngredientIds: excludedIngredients.map(ingredient => ingredient.id),
+            cookingTimeMinutes: Number(cookingTimeMinutesInput),
         }))
     }
 
@@ -77,42 +79,78 @@ export default function FoodFilter({
     };
 
     return (
-        <div className="flex flex-col lg:flex-row lg:items-center gap-3 transition-all duration-300 bg-white p-4 lg:p-5 rounded-xl mb-8 shadow-md">
-            
+        <div className="w-full lg:w-70 md:w-60 flex flex-col gap-3 transition-all duration-300 bg-white p-4 lg:p-5 rounded-xl mb-8 shadow-md">
+
             {/* Search Input */}
             <input
                 type="text"
                 value={searchInput}
                 onChange={handleSearchChange}
                 placeholder="نام غذا..."
-                className="w-full lg:w-48 h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl 
+                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl 
                            focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white 
                            transition-all duration-200 text-sm"
             />
 
-            {/* Category Filter (RTL Fixed) */}
-            <Select
-                value={categoryIdInput}
-                onValueChange={(value) => setCategoryIdInput(value)}
-            >
-                <SelectTrigger className="w-full lg:w-48 rounded-lg focus:ring-2 focus:ring-emerald-500 flex-row-reverse text-right bg-slate-50 ">
-                    <SelectValue placeholder="دسته‌بندی" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectGroup>
-                        <SelectLabel>دسته‌بندی‌ها</SelectLabel>
-                        <SelectItem value="all">همه غذاها</SelectItem>
-                        {data?.map((item) => (
-                            <SelectItem key={item.id} value={item.id}>
-                                {item.name}
+            <div className="flex flex-col gap-1.5">
+                {/* Category Filter */}
+                <Select
+                    value={categoryIdInput}
+                    onValueChange={(value) => setCategoryIdInput(value)}
+                >
+                    <SelectTrigger className="w-full rounded-lg focus:ring-2 focus:ring-emerald-500 flex-row-reverse text-right bg-slate-50 ">
+                        <SelectValue placeholder="دسته‌بندی" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>دسته‌بندی‌ها</SelectLabel>
+                            <SelectItem value="all">همه غذاها</SelectItem>
+                            {data?.map((item) => (
+                                <SelectItem key={item.id} value={item.id}>
+                                    {item.name}
+                                </SelectItem>
+                            ))}
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+
+                {/* Cooking Time Filter */}
+                <Select
+                    value={cookingTimeMinutesInput}
+                    onValueChange={(value) => setCookingTimeMinutesInput(value)}
+                >
+                    <SelectTrigger className="w-full rounded-lg focus:ring-2 focus:ring-emerald-500 flex-row-reverse text-right bg-slate-50 ">
+                        <SelectValue placeholder="زمان پخت" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>زمان پخت</SelectLabel>
+                            <SelectItem value="0">همه غذاها</SelectItem>
+
+                            <SelectItem value={'30'}>
+                                تا نیم ساعت
                             </SelectItem>
-                        ))}
-                    </SelectGroup>
-                </SelectContent>
-            </Select>
+                            <SelectItem value={'60'}>
+                                تا 1 ساعت
+                            </SelectItem>
+                            <SelectItem value={'90'}>
+                                تا 1 ساعت و نیم
+                            </SelectItem>
+                            <SelectItem value={'120'}>
+                                تا 2 ساعت
+                            </SelectItem>
+                            <SelectItem value={'180'}>
+                                تا 3 ساعت
+                            </SelectItem>
+
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            </div>
+
 
             {/* Included Ingredients */}
-            <div className="flex flex-col gap-1.5 flex-1 bg-slate-50 border border-slate-200 p-2.5 rounded-xl transition-all duration-300 min-h-12 justify-center">
+            <div className="flex flex-col gap-1.5 bg-slate-50 border border-slate-200 p-2.5 rounded-xl transition-all duration-300 min-h-12 justify-center">
                 <div className="flex w-full justify-between items-center">
                     <span className="text-xs sm:text-sm font-medium text-slate-600">شامل این مواد (دارم)</span>
                     <button
@@ -149,9 +187,9 @@ export default function FoodFilter({
             </div>
 
             {/* Excluded Ingredients */}
-            <div className="flex flex-col gap-1.5 flex-1 bg-slate-50 border border-slate-200 p-2.5 rounded-xl transition-all duration-300 min-h-12 justify-center">
+            <div className="flex flex-col gap-1.5 bg-slate-50 border border-slate-200 p-2.5 rounded-xl transition-all duration-300 min-h-12 justify-center">
                 <div className="flex w-full justify-between items-center">
-                    <span className="text-xs sm:text-sm font-medium text-slate-600">بدون این مواد (نمی‌خوام)</span>
+                    <span className="text-xs sm:text-sm font-medium text-slate-600">بدون این مواد (ندارم)</span>
                     <button
                         type="button"
                         onClick={() => setExcludedIngredientIsOpen(true)}
@@ -189,7 +227,7 @@ export default function FoodFilter({
             <button
                 type="button"
                 onClick={handleFilter}
-                className="bg-emerald-600 px-6 h-12 rounded-xl text-white text-sm font-medium transition-all hover:bg-emerald-700 hover:shadow-md w-full lg:w-auto"
+                className="bg-emerald-600 px-6 h-12 rounded-xl text-white text-sm font-medium transition-all hover:bg-emerald-700 hover:shadow-md w-full"
             >
                 اعمال فیلتر
             </button>

@@ -8,8 +8,12 @@ import { useState } from "react";
 import { IFoodQueryParams } from "../types/Food";
 import FoodFilter from "./foodFilter";
 import FoodCard from "./foodCard";
+import Modal from "@/shared/components/modal";
+import { SlidersHorizontal } from "lucide-react";
 
 export default function FoodPageContent() {
+
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const searchParams = useSearchParams();
 
@@ -60,14 +64,40 @@ export default function FoodPageContent() {
   // }
 
   return (
-    <>
+    <div className="flex flex-col md:flex-row gap-4 items-start">
 
-      <FoodFilter
-        filter={filter}
-        setFilter={setFilter}
-      />
+      <div className="hidden md:block">
+        <FoodFilter
+          filter={filter}
+          setFilter={setFilter}
+        />
+      </div>
 
-      <div className="grid w-full gap-3 md:gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div className="md:hidden">
+        <button
+          type="button"
+          onClick={() => setIsFilterModalOpen(true)}
+          className="flex items-center gap-1 text-white bg-emerald-600 ring ring-emerald-400 transition-all duration-200 px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:scale-110 text-shadow-sm"
+        >
+          <SlidersHorizontal size={18}/>
+          فیلتر ها
+        </button>
+
+        <Modal
+          open={isFilterModalOpen}
+          onOpenChange={setIsFilterModalOpen}
+          title="فیلتر غذاها"
+          size="xl"
+        >
+          <FoodFilter
+            filter={filter}
+            setFilter={setFilter}
+          />
+        </Modal>
+      </div>
+
+
+      <div className="grid w-full gap-3 md:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4">
 
         {data?.length ? (
           data.map((food) => {
@@ -91,6 +121,6 @@ export default function FoodPageContent() {
 
 
       </div>
-    </>
+    </div>
   );
 }
