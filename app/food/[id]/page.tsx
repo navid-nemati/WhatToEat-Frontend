@@ -210,7 +210,7 @@ export default function FoodDetail() {
                                         زمان پخت :
                                     </div>
 
-                                    <span className="font-bold">{data?.cookingTimeMinutes}</span>
+                                    <span className="font-bold">{data?.cookingTimeMinutes}</span> دقیقه 
                                 </div>
                                 <div className="flex items-center gap-1.5">
                                     <div className="flex items-center justify-center p-1.5
