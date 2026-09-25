@@ -17,6 +17,7 @@ export default function HeroSearch() {
             <input
                 onChange={handleSearchChange}
                 type="text"
+                enterKeyHint="search"
                 className="flex-1 ring ring-emerald-300 p-3 outline-none
                     right-round pr-4
                     focus:ring-offset-2 focus:ring-2 focus:border-emerald-400 placeholder:text-sm md:placeholder:text-md"
