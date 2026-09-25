@@ -109,6 +109,7 @@ export default function Home() {
                   className="object-cover"
                   width={'288'}
                   height={'288'}
+                  priority
                 />
 
 
