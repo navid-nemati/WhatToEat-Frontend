@@ -244,6 +244,7 @@ export default function FoodForm({
                         <div className="flex items-center gap-2">
                             <TextField
                                 type="number"
+                                inputMode="numeric"
                                 size="small"
                                 placeholder="مثال: 120 "
                                 variant="outlined"
@@ -275,6 +276,7 @@ export default function FoodForm({
                         <div className="flex items-center gap-2">
                             <TextField
                                 type="number"
+                                inputMode="numeric"
                                 size="small"
                                 placeholder="مثال: 4"
                                 variant="outlined"

@@ -168,6 +168,8 @@ function ProfileContent() {
 
                         <TextField size="small"
                             label="شماره موبایل"
+                            type="tel"
+                            inputMode="numeric"
                             variant="outlined"
                             sx={{
                                 '& .MuiOutlinedInput-root': {
