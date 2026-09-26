@@ -200,20 +200,20 @@ export default function FoodDetail() {
                             </div>
 
                             {/* info */}
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between text-sm">
                                 <div className="flex items-center gap-1">
                                     <div className="flex items-center gap-1.5">
-                                        <div className="flex items-center justify-center p-1.5
+                                        <div className="flex items-center justify-center p-1
                                         rounded-full bg-amber-50">
-                                            <CookingPot className="text-amber-400" size={18} />
+                                            <CookingPot className="text-amber-400" size={17} />
                                         </div>
                                         زمان پخت :
                                     </div>
 
-                                    <span className="font-bold">{data?.cookingTimeMinutes}</span> دقیقه 
+                                    <span className="font-bold">{data?.cookingTimeMinutes}</span>دقیقه 
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                    <div className="flex items-center justify-center p-1.5
+                                    <div className="flex items-center justify-center p-1
                                         rounded-full bg-emerald-50">
                                         <Users className="text-emerald-600" size={16} />
                                     </div>
