@@ -3,8 +3,6 @@ import {
     DialogContent,
     DialogDescription,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 
 interface ModalProps {
@@ -38,7 +36,7 @@ export default function Modal({
             open={open}
             onOpenChange={onOpenChange}
         >
-            <DialogContent className={`${sizes[size ?? "md"]} max-h-[90vh] overflow-y-auto p-5`}>
+            <DialogContent className={`${sizes[size ?? "md"]} max-h-[90vh] overflow-y-auto p-5 scrollbar-custom`}>
                 {(title || description) && (
                     <DialogHeader className="flex items-center justify-center">
                         {title && <span className="text-lg">{title}</span>}

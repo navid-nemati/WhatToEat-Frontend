@@ -249,7 +249,7 @@ button {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border outline-ring/50;
   }
@@ -259,7 +259,7 @@ button {
   html {
     @apply font-sans;
   }
-}
+} */
 
 
 @keyframes float {
@@ -487,4 +487,27 @@ button {
   100% {
     transform: scale(1);
   }
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+    background: #a7f3d0;
+    border-radius: 9999px;
+    padding-left: 5px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #6ee7b7;
+}
+
+/* حذف فلش‌های بالا و پایین */
+.scrollbar-custom::-webkit-scrollbar-button {
+    display: none;
 }
