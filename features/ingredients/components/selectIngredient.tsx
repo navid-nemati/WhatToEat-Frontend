@@ -142,7 +142,8 @@ export default function SelectIngredient({
                         ))}
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="rounded-md px-3 py-2 text-right
+                            type="button"
+                            className="rounded-md px-3 py-2 text-right text-nowrap
                                     bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 active:scale-95 transition ">
                             ایجاد ماده اولیه جدید
                         </button>
@@ -170,6 +171,7 @@ export default function SelectIngredient({
                 title="افزدون ماده اولیه"
                 size="md">
                 <CreateIngredientComponent
+                onClose={() => setIsCreateModalOpen(false)}
                 />
             </Modal>
         </div>
