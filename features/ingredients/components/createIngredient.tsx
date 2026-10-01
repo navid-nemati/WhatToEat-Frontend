@@ -3,10 +3,14 @@ import { CreateIngredientFormData, CreateIngredientSchema } from "@/features/ing
 import AppToast from "@/lib/toast";
 import { parseApiError } from "@/utils/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextField } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 
-export default function CreateIngredientComponent() {
+interface Props {
+    onClose?: ()=> void
+}
+
+export default function CreateIngredientComponent({onClose}: Props) {
 
     const { mutate, isPending, isError, error } = useCreateIngredient()
     const parsedError = isError ? parseApiError(error) : null;
@@ -24,6 +28,7 @@ export default function CreateIngredientComponent() {
         mutate(data, {
             onSuccess: () => {
                 reset();
+                onClose?.()
                 AppToast.success("ماده اولیه با موفقیت اضافه شد")
             },
             onError: (mutationError: any) => {
