@@ -34,40 +34,56 @@
 import Container from "@/shared/components/container";
 import GetFoods from "@/features/foods/components/foodList";
 import Link from "next/link";
-import { ChefHat, Sparkles, ArrowLeft, Clock, Star, Flame } from "lucide-react";
+import { ChefHat, Sparkles, ArrowLeft, Search, Clock, Star, Flame, Leaf, Sparkle } from "lucide-react";
 import Image from "next/image";
 import HeroSearch from "@/shared/components/HeroSearch";
 import CategorySection from "@/features/categories/components/categorySection";
 import RefrigeratorSection from "@/features/ingredients/components/refrigeratorSection";
+import { useState } from "react";
+
+const QUICK_TAGS = ["املت", "قرمه سبزی", "ماکارونی", "سالاد", "سوپ"];
 
 export default function Home() {
+
   return (
     <div className="relative overflow-hidden">
       {/* بک‌گراند تزئینی: دو تا بلاب گرادینت محو */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
+      {/* <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-200/30 blur-3xl" />
         <div className="absolute top-32 -left-24 h-80 w-80 rounded-full md:bg-amber-300/30 blur-3xl" />
-      </div>
+      </div> */}
 
       {/* ===== Hero ===== */}
       <section className="pt-24 md:pt-30 pb-10">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* 👈 سمت راست: متن */}
-            <div className="flex flex-col gap-6 items-center md:items-start text-center md:text-right">
-              {/* بَج بالای عنوان */}
-              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-medium text-emerald-700 ring-1 ring-emerald-200">
-                <Sparkles size={16} />
-                {/* هر روز یه غذای جدید */}
-                نگران ناهار نباش، ردیفه !
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+            <div className="lg:col-span-7 flex flex-col gap-6 items-center md:items-start text-center md:text-right">
+            
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 border-b border-slate-300 pb-1">
+                <Sparkles size={14} className="text-emerald-500" />
+                دستورپخت‌های خونگی و سریع
               </span>
 
-              {/* عنوان اصلی */}
-              <h1 className="estedad-bold text-4xl md:text-5xl lg:text-6xl text-emerald-900 leading-tight drop-shadow-md">
+              <h1 className="estedad-bold text-4xl md:text-6xl text-emerald-900 drop-shadow-md leading-tight">
                 امروز
                 <br />
-                <span className="bg-linear-to-l from-emerald-600 to-green-400 bg-clip-text text-transparent">
-                  چی بپزم؟
+                <span className="relative inline-block mt-2">
+                  <span className="relative z-10 bg-linear-to-l from-emerald-700 to-green-600 bg-clip-text text-transparent">چی بپزم؟</span>
+                  {/* خط زرد زیر کلمه برای جلب توجه بدون استفاده از رنگ متن */}
+                  <svg
+                    className="absolute bottom-1 right-0 w-full h-3 z-0"
+                    viewBox="0 0 200 12"
+                    fill="none"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M2 9C50 3 150 3 198 9"
+                      stroke="#fbbf24"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </span>
               </h1>
 
@@ -96,57 +112,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* 👈 سمت چپ: صحنه تزئینی غذا + کارت‌های شناور */}
-            <div className="relative hidden md:block h-115">
-              {/* دایره مرکزی با گرادینت و اموجی غذا */}
-              <div className="absolute inset-0 m-auto h-72 w-72 rounded-full bg-linear-to-br from-emerald-200 via-emerald-100 to-amber-100 shadow-2xl shadow-emerald-300/40 flex items-center justify-center animate-float-slow">
-                {/* <span className="text-[140px] leading-none">🍝</span> */}
-
-                <Image
-                  src={'/heroImage.webp'}
-                  alt="heroImage"
-                  className="object-cover"
-                  width={'288'}
-                  height={'288'}
-                  priority
-                />
-
-
-              </div>
-
-              {/* کارت شناور ۱: زمان */}
-              <div className="absolute top-6 left-2 rounded-2xl bg-white/90 backdrop-blur-md px-4 py-3 shadow-xl ring-1 ring-emerald-100 animate-float">
-                <div className="flex items-center gap-2 text-emerald-800">
-                  <Clock size={18} className="text-emerald-600" />
-                  <div>
-                    <div className="text-sm font-bold">آماده در</div>
-                    <div className="text-xs text-slate-500">۲۵ دقیقه</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* کارت شناور ۲: امتیاز */}
-              <div className="absolute bottom-16 left-0 rounded-2xl bg-white/90 backdrop-blur-md px-4 py-3 shadow-xl ring-1 ring-amber-100 animate-float-slow">
-                <div className="flex items-center gap-2 text-amber-700">
-                  <Star size={18} className="fill-amber-400 text-amber-400" />
-                  <div>
-                    <div className="text-sm font-bold">۴.۹ / ۵</div>
-                    <div className="text-xs text-slate-500">محبوب کاربران</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* کارت شناور ۳: سختی */}
-              <div className="absolute bottom-4 right-6 rounded-2xl bg-white/90 backdrop-blur-md px-4 py-3 shadow-xl ring-1 ring-orange-100 animate-float">
-                <div className="flex items-center gap-2 text-orange-700">
-                  <Flame size={18} className="text-orange-500" />
-                  <div>
-                    <div className="text-sm font-bold">سطح آسان</div>
-                    <div className="text-xs text-slate-500">برای مبتدی</div>
-                  </div>
-                </div>
-              </div>
+        
+            <div className="flex md:hidden lg:flex justify-center lg:col-span-5 lg:justify-end">
+              <PlateVisual />
             </div>
           </div>
         </Container>
@@ -162,6 +130,46 @@ export default function Home() {
           <GetFoods />
         </Container>
       </section>
+    </div>
+  );
+}
+function PlateVisual() {
+  return (
+    <div className="relative h-70 w-70 sm:h-90 sm:w-90 md:h-110 md:w-110">
+
+      {/* هاله */}
+      <div className="absolute inset-4 rounded-full bg-linear-to-br from-emerald-200/50 via-amber-100/40 to-transparent blur-2xl" />
+
+      {/* حلقه‌ی نقطه‌چین — کمی بزرگ‌تر از بشقاب */}
+      <svg
+        className="absolute inset-0 animate-[spin_40s_linear_infinite] text-emerald-500/40"
+        viewBox="0 0 400 400"
+        fill="none"
+      >
+        <circle
+          cx="200" cy="200" r="196"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeDasharray="1 12"
+          strokeLinecap="round"
+        />
+        <circle cx="200" cy="5" r="5" fill="#10B981" />
+      </svg>
+
+      {/* بشقاب — با inset از حلقه کوچیک‌تره */}
+      <div className="absolute inset-6 sm:inset-8 md:inset-10 overflow-hidden rounded-full shadow-2xl shadow-emerald-300/40 animate-float-slow">
+        <Image
+          src="/heroImage.webp"
+          alt="بشقاب غذا"
+          fill
+          sizes="(max-width: 768px) 280px, 440px"
+          className="object-cover"
+          priority
+        />
+      </div>
+
+      <Leaf className="absolute -right-2 top-10 h-8 w-8 rotate-45 fill-emerald-400/40 text-emerald-500" />
+      <Sparkle className="absolute -left-2 bottom-20 h-7 w-7 fill-amber-300 text-amber-400" />
     </div>
   );
 }
