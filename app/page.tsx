@@ -1,47 +1,10 @@
-// import Container from "@/shared/components/container";
-// import GetFoods from "@/features/foods/components/foodList"
-
-// export default function Home() {
-
-//   return (
-//     <div>
-
-//       {/* Hero Section */}
-//       <div className="pt-25 md:pt-40">
-//         <Container>
-//           <div className="flex flex-col gap-15">
-//             <div className="flex flex-col md:flex-row">
-//               <div className="flex flex-col gap-15 items-center md:items-start">
-//                 <p
-//                   className="estedad-bold text-3xl md:text-4xl text-emerald-900 drop-shadow-md text-shadow-sm leading-13"
-//                 >بهترین <br /><span className="bg-linear-to-l from-green-600 to-green-500 bg-clip-text text-transparent">دستورهای آشپزی</span> را اینجا پیدا کنید.</p>
-
-//                 <button className="bg-amber-400 transition-all duration-200 px-5 py-3 md:py-3 rounded-full text-lg md:text-xl shadow-md hover:shadow-xl hover:scale-[1.05] cursor-pointer">
-//                   شروع آشپزی 🍳
-//                 </button>
-//               </div>
-//             </div>
-//             <GetFoods />
-//           </div>
-//         </Container>
-//       </div>
-//     </div>
-//   );
-// }
-
-////-----------------------------
-
 import Container from "@/shared/components/container";
 import GetFoods from "@/features/foods/components/foodList";
-import Link from "next/link";
-import { ChefHat, Sparkles, ArrowLeft, Search, Clock, Star, Flame, Leaf, Sparkle } from "lucide-react";
+import { Sparkles, Leaf, Sparkle } from "lucide-react";
 import Image from "next/image";
 import HeroSearch from "@/shared/components/HeroSearch";
 import CategorySection from "@/features/categories/components/categorySection";
 import RefrigeratorSection from "@/features/ingredients/components/refrigeratorSection";
-import { useState } from "react";
-
-const QUICK_TAGS = ["املت", "قرمه سبزی", "ماکارونی", "سالاد", "سوپ"];
 
 export default function Home() {
 
