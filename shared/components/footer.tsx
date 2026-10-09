@@ -8,9 +8,15 @@ export default function Footer() {
                 <span className="text-white text-shadow-md">
                     با ما همیشه خوشمزه زندگی کنید.
                 </span>
-                <p className="text-sm text-slate-100 mt-2">
-                    نوید نعمتی 2026 &copy;
-                </p>
+                <div className="flex items-center gap-2">
+                    <p className="text-sm text-slate-100 mt-2">
+                        نوید نعمتی 2026 &copy;
+                    </p>
+                    <a href="https://github.com/navid-nemati"
+                        target="_blank" rel="noopener norefferer"
+                        className="mt-2 text-white text-shadow-md hover:text-amber-200">گیت هاب من</a>
+                </div>
+
             </Container>
         </footer>
     )
